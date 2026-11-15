@@ -144,16 +144,8 @@ button.danger{background:#a52b2b}
 }
 
 /* Continuous horizontal line connecting all sons */
-.children-row:before{
- content:"";
- position:absolute;
- top:0;
- left:0;
- right:0;
- border-top:4px solid var(--line);
- border-radius:4px
-}
-
+left:calc(var(--person-width)/2);
+right:calc(var(--person-width)/2);
 /* Vertical line from father to sons' line */
 .children-row:after{
  content:"";
