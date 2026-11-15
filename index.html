@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -8,23 +7,44 @@
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <style>
 *{box-sizing:border-box}
-body{font-family:Arial;background:#f1f6f1;color:#183b2b;margin:0;padding:14px}
+body{font-family:Arial,sans-serif;background:#f1f6f1;color:#183b2b;margin:0;padding:12px}
 header{background:#145c3b;color:white;text-align:center;padding:22px;border-radius:14px}
-.card{background:white;padding:17px;margin-top:15px;border-radius:12px;box-shadow:0 2px 8px #0001}
+.card{background:white;padding:16px;margin-top:14px;border-radius:12px;box-shadow:0 2px 8px #0001}
 input,select,button{width:100%;padding:13px;margin:7px 0;border-radius:8px;font-size:16px}
 input,select{border:1px solid #bdcbbf;background:white}
 button{background:#145c3b;color:white;border:0;font-weight:bold;cursor:pointer}
 button.secondary{background:#65766b}
 button.danger{background:#a52b2b}
 .hidden{display:none}
-.person{background:#e7f3e9;border:1px solid #c6dfcb;padding:12px;border-radius:9px;margin:8px 0}
-.root{background:#145c3b;color:white}
-.tree ul{list-style:none;margin-left:15px;padding-left:15px;border-left:2px solid #a8c9b1}
-.tree li{margin:10px 0}
 .small{font-size:13px;color:#617267}
-.actions{display:flex;gap:7px}
-.actions button{font-size:13px;padding:10px}
 #status{overflow-wrap:anywhere}
+.actions{display:flex;gap:7px;margin-top:8px}
+.actions button{font-size:13px;padding:9px;margin:0}
+.tree-scroll{width:100%;overflow-x:auto;overflow-y:visible;padding:18px 8px 30px;-webkit-overflow-scrolling:touch}
+.tree-canvas{display:inline-block;min-width:100%;text-align:center}
+.family-node{display:flex;flex-direction:column;align-items:center;flex:0 0 auto;position:relative}
+.person{background:#e7f3e9;border:1px solid #b8d5bf;border-radius:11px;padding:12px 10px;width:190px;min-height:58px;text-align:center;box-shadow:0 2px 6px #0000000d;overflow-wrap:anywhere}
+.person strong{font-size:15px}
+.person.root{background:#145c3b;color:white;border-color:#145c3b}
+.person .small{margin-top:5px}
+.person.root .small{color:#e1f1e5}
+.children-row{display:flex;align-items:flex-start;justify-content:center;gap:18px;position:relative;padding-top:30px}
+.children-row:before{content:"";position:absolute;top:0;left:50%;height:1px;width:0;border-left:2px solid #9abda3}
+.children-row>.family-node:before{content:"";position:absolute;top:0;height:30px;border-left:2px solid #9abda3}
+.children-row>.family-node:after{content:"";position:absolute;top:0;left:50%;right:50%;border-top:2px solid #9abda3}
+.children-row>.family-node:first-child:after{left:50%;right:0}
+.children-row>.family-node:last-child:after{left:0;right:50%}
+.children-row>.family-node:only-child:after{display:none}
+.generation-label{font-size:12px;color:#718477;margin:14px 0 2px}
+.unlinked-area{margin-top:22px;border-top:1px dashed #c5d3c8;padding-top:14px;text-align:left}
+.unlinked-area h3{font-size:15px}
+@media(max-width:600px){
+body{padding:8px}
+.card{padding:12px}
+.tree-scroll{padding-left:4px;padding-right:4px}
+.person{width:160px;padding:10px 7px}
+.children-row{gap:12px}
+}
 </style>
 </head>
 <body>
@@ -61,7 +81,10 @@ button.danger{background:#a52b2b}
 
 <section class="card">
 <h2>Our Family Tree</h2>
-<div id="tree" class="tree"></div>
+<p class="small">Each generation appears in a horizontal row. Swipe sideways to see all family branches.</p>
+<div class="tree-scroll">
+<div id="tree" class="tree-canvas"></div>
+</div>
 </section>
 
 <script>
@@ -69,6 +92,7 @@ const SUPABASE_URL = "https://mkpgibnfftqihoztpnhy.supabase.co";
 const SUPABASE_KEY = "sb_publishable_t8OgRxv90fao6omiHsTmiw_1UfkbkUc";
 
 const db = window.supabase.createClient(SUPABASE_URL,SUPABASE_KEY);
+
 let members=[];
 let isAdmin=false;
 let editingId=null;
@@ -90,12 +114,13 @@ async function loadMembers(){
 async function checkAdmin(){
  const {data:{session}}=await db.auth.getSession();
  if(!session){showAdmin(false);return;}
+
  const {data,error}=await db.from("family_admins")
  .select("user_id").eq("user_id",session.user.id).maybeSingle();
 
  if(error){status("Admin check failed: "+error.message);return;}
  showAdmin(!!data);
- if(data) await ensureRoot();
+ if(data)await ensureRoot();
 }
 
 function showAdmin(value){
@@ -108,14 +133,23 @@ function showAdmin(value){
 async function login(){
  const email=document.getElementById("email").value.trim();
  const password=document.getElementById("password").value;
- if(!email||!password){status("Enter your email and password.");return;}
+
+ if(!email||!password){
+  status("Enter your email and password.");
+  return;
+ }
 
  const {error}=await db.auth.signInWithPassword({email,password});
  if(error){status("Login failed: "+error.message);return;}
 
  await checkAdmin();
- if(isAdmin){status("Administrator login successful.");await loadMembers();}
- else{status("This account is not an administrator.");}
+
+ if(isAdmin){
+  status("Administrator login successful.");
+  await loadMembers();
+ }else{
+  status("This account is not an administrator.");
+ }
 }
 
 async function logout(){
@@ -131,32 +165,42 @@ async function ensureRoot(){
  .select("id").eq("name","Peer Baba").limit(1);
 
  if(error){status(error.message);return;}
+
  if(!data.length){
   const {error:insertError}=await db.from("family_members")
   .insert({name:"Peer Baba",branch:"Common Ancestor",approved:true});
-  if(insertError){status("Could not add starting ancestor: "+insertError.message);return;}
+
+  if(insertError){
+   status("Could not add starting ancestor: "+insertError.message);
+   return;
+  }
  }
 }
 
 function loadFatherOptions(){
  const select=document.getElementById("father");
  const previous=select.value;
+
  select.innerHTML='<option value="">Father unknown / not added</option>';
+
  members.forEach(m=>{
   if(m.id===editingId)return;
+
   const o=document.createElement("option");
   o.value=m.id;
   o.textContent=m.name;
   select.appendChild(o);
  });
- if([...select.options].some(o=>o.value===previous))select.value=previous;
+
+ if([...select.options].some(o=>o.value===previous)){
+  select.value=previous;
+ }
 }
 
-function makePerson(m,seen){
- if(seen.has(m.id))return null;
- seen.add(m.id);
+function makePersonCard(m){
+ const node=document.createElement("div");
+ node.className="family-node";
 
- const li=document.createElement("li");
  const card=document.createElement("div");
  card.className="person"+(m.name==="Peer Baba"?" root":"");
 
@@ -170,9 +214,11 @@ function makePerson(m,seen){
   b.textContent=m.branch;
   card.appendChild(b);
  }
+
  if(isAdmin){
   const actions=document.createElement("div");
   actions.className="actions";
+
   const edit=document.createElement("button");
   edit.textContent="Edit";
   edit.onclick=()=>editMember(m.id);
@@ -183,75 +229,127 @@ function makePerson(m,seen){
   del.className="danger";
   del.onclick=()=>deleteMember(m.id);
   actions.appendChild(del);
+
   card.appendChild(actions);
  }
- li.appendChild(card);
 
+ node.appendChild(card);
+ return node;
+}
+
+function makeBranch(m,seen){
+ if(seen.has(m.id))return null;
+ seen.add(m.id);
+
+ const node=makePersonCard(m);
  const children=members.filter(x=>x.father_id===m.id);
+
  if(children.length){
-  const ul=document.createElement("ul");
+  const row=document.createElement("div");
+  row.className="children-row";
+
   children.forEach(child=>{
-   const node=makePerson(child,seen);
-   if(node)ul.appendChild(node);
+   const branch=makeBranch(child,seen);
+   if(branch)row.appendChild(branch);
   });
-  li.appendChild(ul);
+
+  if(row.children.length)node.appendChild(row);
  }
- return li;
+
+ return node;
 }
 
 function renderTree(){
  const box=document.getElementById("tree");
  box.innerHTML="";
+
  const seen=new Set();
  const root=members.find(m=>m.name==="Peer Baba");
 
  if(root){
-  const ul=document.createElement("ul");
-  const node=makePerson(root,seen);
-  if(node)ul.appendChild(node);
-  box.appendChild(ul);
+  const label=document.createElement("div");
+  label.className="generation-label";
+  label.textContent="COMMON ANCESTOR";
+  box.appendChild(label);
+
+  const branch=makeBranch(root,seen);
+  if(branch)box.appendChild(branch);
  }
+
  const unlinked=members.filter(m=>!seen.has(m.id));
+
  if(unlinked.length){
-  const heading=document.createElement("p");
-  heading.textContent="Members not yet connected to Peer Baba:";
-  box.appendChild(heading);
-  const ul=document.createElement("ul");
+  const area=document.createElement("div");
+  area.className="unlinked-area";
+
+  const heading=document.createElement("h3");
+  heading.textContent="Members not yet connected to Peer Baba";
+  area.appendChild(heading);
+
+  const row=document.createElement("div");
+  row.className="children-row";
+
   unlinked.forEach(m=>{
-   const node=makePerson(m,seen);
-   if(node)ul.appendChild(node);
+   const branch=makeBranch(m,seen);
+   if(branch)row.appendChild(branch);
   });
-  box.appendChild(ul);
+
+  area.appendChild(row);
+  box.appendChild(area);
  }
- if(!members.length)box.textContent="No family members have been added yet.";
+
+ if(!members.length){
+  box.textContent="No family members have been added yet.";
+ }
 }
 
 async function saveMember(){
  if(!isAdmin)return;
+
  const name=document.getElementById("memberName").value.trim();
  const fatherId=document.getElementById("father").value||null;
  const branch=document.getElementById("branch").value.trim();
 
- if(!name){status("Enter a member name.");return;}
- if(name.toLowerCase()==="peer baba"&&editingId){status("The common ancestor cannot be renamed.");return;}
+ if(!name){
+  status("Enter a member name.");
+  return;
+ }
+
+ if(name.toLowerCase()==="peer baba"&&editingId){
+  status("The common ancestor cannot be renamed.");
+  return;
+ }
 
  const duplicate=members.some(m=>
   m.name.toLowerCase()===name.toLowerCase()&&m.id!==editingId
  );
- if(duplicate){status("This name already exists. Check before adding.");return;}
+
+ if(duplicate){
+  status("This name already exists. Check before adding.");
+  return;
+ }
 
  if(editingId){
   const {error}=await db.from("family_members")
   .update({name,father_id:fatherId,branch})
   .eq("id",editingId);
-  if(error){status("Update failed: "+error.message);return;}
+
+  if(error){
+   status("Update failed: "+error.message);
+   return;
+  }
   status("Member updated.");
  }else{
   const {error}=await db.from("family_members")
   .insert({name,father_id:fatherId,branch,approved:true});
-  if(error){status("Add failed: "+error.message);return;}
+
+  if(error){
+   status("Add failed: "+error.message);
+   return;
+  }
   status("Member added successfully.");
  }
+
  cancelEditing();
  await loadMembers();
 }
@@ -259,11 +357,14 @@ async function saveMember(){
 function editMember(id){
  const m=members.find(x=>x.id===id);
  if(!m||m.name==="Peer Baba")return;
+
  editingId=id;
  document.getElementById("memberName").value=m.name;
  document.getElementById("branch").value=m.branch||"";
+
  loadFatherOptions();
  document.getElementById("father").value=m.father_id||"";
+
  document.getElementById("formTitle").textContent="Edit Family Member";
  document.getElementById("cancelEdit").classList.remove("hidden");
  document.getElementById("addBox").scrollIntoView({behavior:"smooth"});
@@ -281,6 +382,7 @@ function cancelEditing(){
 
 async function deleteMember(id){
  if(!isAdmin)return;
+
  const m=members.find(x=>x.id===id);
  if(!m||m.name==="Peer Baba")return;
 
@@ -288,10 +390,16 @@ async function deleteMember(id){
   status("Cannot delete this person yet. They have children connected to them.");
   return;
  }
+
  if(!confirm("Delete "+m.name+"? This cannot be undone."))return;
 
  const {error}=await db.from("family_members").delete().eq("id",id);
- if(error){status("Delete failed: "+error.message);return;}
+
+ if(error){
+  status("Delete failed: "+error.message);
+  return;
+ }
+
  status("Member deleted.");
  await loadMembers();
 }
@@ -301,9 +409,11 @@ async function start(){
   status("Please add your Supabase Project URL and Publishable key in the code.");
   return;
  }
+
  await checkAdmin();
  await loadMembers();
 }
+
 start();
 </script>
 </body>
