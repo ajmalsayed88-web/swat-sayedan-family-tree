@@ -132,21 +132,26 @@ button.danger{background:#a52b2b}
 
 .children-row{
  display:flex;
+ width:max-content;
+ max-width:none;
  align-items:flex-start;
  justify-content:center;
  gap:22px;
  position:relative;
- padding-top:42px
+ padding-top:42px;
+ margin-left:auto;
+ margin-right:auto
 }
 
-/* Horizontal line joining all sons */
+/* Continuous horizontal line connecting all sons */
 .children-row:before{
  content:"";
  position:absolute;
  top:0;
- left:calc(var(--person-width)/2);
- right:calc(var(--person-width)/2);
- border-top:4px solid var(--line)
+ left:0;
+ right:0;
+ border-top:4px solid var(--line);
+ border-radius:4px
 }
 
 /* Vertical line from father to sons' line */
