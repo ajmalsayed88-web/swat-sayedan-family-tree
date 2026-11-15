@@ -1,1 +1,49 @@
 
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Swat Sayedan Family Tree</title>
+<style>
+*{box-sizing:border-box}
+body{margin:0;font-family:Arial,sans-serif;background:#f3f7f4;color:#18352a}
+header{background:#145c3b;color:white;padding:25px 15px;text-align:center}
+header h1{margin:0;font-size:25px}
+header p{margin:8px 0 0}
+main{max-width:850px;margin:25px auto;padding:15px}
+.card{background:white;padding:20px;border-radius:14px;box-shadow:0 3px 15px #0001}
+input{width:100%;padding:13px;border:1px solid #ccc;border-radius:8px;font-size:16px;margin:12px 0}
+.person{padding:14px;margin:10px 0;background:#e9f4ed;border-left:4px solid #16834d;border-radius:8px}
+.person strong{display:block;font-size:17px}
+small{color:#567365}
+footer{text-align:center;padding:25px;color:#718278}
+</style>
+</head>
+<body>
+<header>
+<h1>Swat Sayedan Family Tree</h1>
+<p>Preserving Our Family Heritage</p>
+</header>
+<main>
+<div class="card">
+<h2>Search Family Tree</h2>
+<input id="search" placeholder="Search a family member..." oninput="searchPeople()">
+<div id="people">
+<p>No family records have been added yet.</p>
+</div>
+</div>
+</main>
+<footer>Swat Sayedan Shajra Project</footer>
+<script>
+const family = [];
+function searchPeople(){
+ const q=document.getElementById("search").value.toLowerCase();
+ const results=family.filter(p=>p.name.toLowerCase().includes(q));
+ document.getElementById("people").innerHTML=results.length
+ ? results.map(p=>`<div class="person"><strong>${p.name}</strong><small>${p.relation}</small></div>`).join("")
+ : "<p>No matching family member found.</p>";
+}
+</script>
+</body>
+</html>
