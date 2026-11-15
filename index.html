@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -5,49 +6,221 @@
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <title>Swat Sayedan Family Tree</title>
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
 <style>
 *{box-sizing:border-box}
-body{font-family:Arial,sans-serif;background:#f1f6f1;color:#183b2b;margin:0;padding:12px}
-header{background:#145c3b;color:white;text-align:center;padding:22px;border-radius:14px}
-.card{background:white;padding:16px;margin-top:14px;border-radius:12px;box-shadow:0 2px 8px #0001}
-input,select,button{width:100%;padding:13px;margin:7px 0;border-radius:8px;font-size:16px}
-input,select{border:1px solid #bdcbbf;background:white}
-button{background:#145c3b;color:white;border:0;font-weight:bold;cursor:pointer}
+:root{--person-width:190px;--line:#145c3b}
+
+body{
+ font-family:Arial,sans-serif;
+ background:#f1f6f1;
+ color:#183b2b;
+ margin:0;
+ padding:12px
+}
+
+header{
+ background:#145c3b;
+ color:white;
+ text-align:center;
+ padding:22px;
+ border-radius:14px
+}
+
+.card{
+ background:white;
+ padding:16px;
+ margin-top:14px;
+ border-radius:12px;
+ box-shadow:0 2px 8px #0001
+}
+
+input,select,button{
+ width:100%;
+ padding:13px;
+ margin:7px 0;
+ border-radius:8px;
+ font-size:16px
+}
+
+input,select{
+ border:1px solid #bdcbbf;
+ background:white
+}
+
+button{
+ background:#145c3b;
+ color:white;
+ border:0;
+ font-weight:bold;
+ cursor:pointer
+}
+
 button.secondary{background:#65766b}
 button.danger{background:#a52b2b}
 .hidden{display:none}
 .small{font-size:13px;color:#617267}
 #status{overflow-wrap:anywhere}
-.actions{display:flex;gap:7px;margin-top:8px}
-.actions button{font-size:13px;padding:9px;margin:0}
-.tree-scroll{width:100%;overflow-x:auto;overflow-y:visible;padding:18px 8px 30px;-webkit-overflow-scrolling:touch}
-.tree-canvas{display:inline-block;min-width:100%;text-align:center}
-.family-node{display:flex;flex-direction:column;align-items:center;flex:0 0 auto;position:relative}
-.person{background:#e7f3e9;border:1px solid #b8d5bf;border-radius:11px;padding:12px 10px;width:190px;min-height:58px;text-align:center;box-shadow:0 2px 6px #0000000d;overflow-wrap:anywhere}
+
+.actions{
+ display:flex;
+ gap:7px;
+ margin-top:8px
+}
+
+.actions button{
+ font-size:13px;
+ padding:9px;
+ margin:0
+}
+
+.tree-scroll{
+ width:100%;
+ overflow-x:auto;
+ overflow-y:visible;
+ padding:22px 8px 35px;
+ -webkit-overflow-scrolling:touch
+}
+
+.tree-canvas{
+ display:inline-block;
+ min-width:100%;
+ text-align:center
+}
+
+.family-node{
+ display:flex;
+ flex-direction:column;
+ align-items:center;
+ flex:0 0 auto;
+ position:relative
+}
+
+.person{
+ width:var(--person-width);
+ background:#e7f3e9;
+ border:1px solid #b8d5bf;
+ border-radius:11px;
+ padding:12px 10px;
+ min-height:58px;
+ text-align:center;
+ box-shadow:0 2px 6px #0000000d;
+ overflow-wrap:anywhere;
+ position:relative;
+ z-index:1
+}
+
 .person strong{font-size:15px}
-.person.root{background:#145c3b;color:white;border-color:#145c3b}
+
+.person.root{
+ background:#145c3b;
+ color:white;
+ border-color:#145c3b
+}
+
 .person .small{margin-top:5px}
 .person.root .small{color:#e1f1e5}
-.children-row{display:flex;align-items:flex-start;justify-content:center;gap:18px;position:relative;padding-top:30px}
-.children-row:before{content:"";position:absolute;top:0;left:50%;height:1px;width:0;border-left:2px solid #9abda3}
-.children-row>.family-node:before{content:"";position:absolute;top:0;height:30px;border-left:2px solid #9abda3}
-.children-row>.family-node:after{content:"";position:absolute;top:0;left:50%;right:50%;border-top:2px solid #9abda3}
-.children-row>.family-node:first-child:after{left:50%;right:0}
-.children-row>.family-node:last-child:after{left:0;right:50%}
-.children-row>.family-node:only-child:after{display:none}
-.generation-label{font-size:12px;color:#718477;margin:14px 0 2px}
-.unlinked-area{margin-top:22px;border-top:1px dashed #c5d3c8;padding-top:14px;text-align:left}
+
+.person.search-match{
+ background:#fff0a8!important;
+ color:#183b2b!important;
+ border:3px solid #d18b00;
+ box-shadow:0 0 0 5px #f5d98a
+}
+
+/* CLEAR FATHER-TO-SON CONNECTORS */
+
+.children-row{
+ display:flex;
+ align-items:flex-start;
+ justify-content:center;
+ gap:22px;
+ position:relative;
+ padding-top:42px
+}
+
+/* Horizontal line joining all sons */
+.children-row:before{
+ content:"";
+ position:absolute;
+ top:0;
+ left:calc(var(--person-width)/2);
+ right:calc(var(--person-width)/2);
+ border-top:4px solid var(--line)
+}
+
+/* Vertical line from father to sons' line */
+.children-row:after{
+ content:"";
+ position:absolute;
+ top:-42px;
+ left:50%;
+ height:42px;
+ border-left:4px solid var(--line)
+}
+
+/* Vertical line from connecting line to each son */
+.children-row>.family-node:before{
+ content:"";
+ position:absolute;
+ top:0;
+ left:50%;
+ height:29px;
+ border-left:4px solid var(--line)
+}
+
+/* Downward arrow pointing to each son */
+.children-row>.family-node:after{
+ content:"";
+ position:absolute;
+ top:24px;
+ left:calc(50% - 7px);
+ border-left:7px solid transparent;
+ border-right:7px solid transparent;
+ border-top:10px solid var(--line);
+ z-index:2
+}
+
+/* Hide horizontal line if there is only one son */
+.children-row:has(>.family-node:only-child):before{
+ display:none
+}
+
+.generation-label{
+ font-size:12px;
+ color:#718477;
+ margin:14px 0 2px
+}
+
+.unlinked-area{
+ margin-top:22px;
+ border-top:1px dashed #c5d3c8;
+ padding-top:14px;
+ text-align:left
+}
+
 .unlinked-area h3{font-size:15px}
+
+#searchStatus{
+ margin:4px 0 10px
+}
+
 @media(max-width:600px){
-body{padding:8px}
-.card{padding:12px}
-.tree-scroll{padding-left:4px;padding-right:4px}
-.person{width:160px;padding:10px 7px}
-.children-row{gap:12px}
+ body{padding:8px}
+ .card{padding:12px}
+ .tree-scroll{
+  padding-left:4px;
+  padding-right:4px
+ }
+ :root{--person-width:160px}
+ .person{padding:10px 7px}
+ .children-row{gap:12px}
 }
 </style>
 </head>
+
 <body>
+
 <header>
 <h1>Swat Sayedan</h1>
 <p>Family Tree — Shajra</p>
@@ -55,33 +228,56 @@ body{padding:8px}
 
 <section class="card">
 <h2>Administrator Login</h2>
+
 <div id="loginBox">
 <input id="email" type="email" placeholder="Administrator email">
 <input id="password" type="password" placeholder="Password">
 <button onclick="login()">Login</button>
 </div>
+
 <div id="adminBox" class="hidden">
 <p>Administrator logged in</p>
 <button class="secondary" onclick="logout()">Logout</button>
 </div>
+
 <p id="status" class="small">Loading family tree...</p>
 </section>
 
 <section class="card hidden" id="addBox">
 <h2 id="formTitle">Add Family Member</h2>
+
 <input id="memberName" placeholder="Member's name">
+
 <label>Father's name</label>
 <select id="father">
 <option value="">Father unknown / not added</option>
 </select>
+
 <input id="branch" placeholder="Family branch (optional)">
+
 <button onclick="saveMember()">Save Member</button>
 <button class="secondary hidden" id="cancelEdit" onclick="cancelEditing()">Cancel Edit</button>
 </section>
 
 <section class="card">
 <h2>Our Family Tree</h2>
-<p class="small">Each generation appears in a horizontal row. Swipe sideways to see all family branches.</p>
+
+<p class="small">
+Every father is connected to his sons with clear lines and arrows.
+Swipe sideways to see all family branches.
+</p>
+
+<input
+ id="searchInput"
+ type="search"
+ placeholder="Search family member by name"
+ oninput="searchFamily()"
+>
+
+<p id="searchStatus" class="small">
+Type a name to find a family member.
+</p>
+
 <div class="tree-scroll">
 <div id="tree" class="tree-canvas"></div>
 </div>
@@ -105,7 +301,11 @@ async function loadMembers(){
  const {data,error}=await db.from("family_members")
  .select("*").eq("approved",true).order("name");
 
- if(error){status("Database error: "+error.message);return;}
+ if(error){
+  status("Database error: "+error.message);
+  return;
+ }
+
  members=data||[];
  loadFatherOptions();
  renderTree();
@@ -113,13 +313,22 @@ async function loadMembers(){
 
 async function checkAdmin(){
  const {data:{session}}=await db.auth.getSession();
- if(!session){showAdmin(false);return;}
+
+ if(!session){
+  showAdmin(false);
+  return;
+ }
 
  const {data,error}=await db.from("family_admins")
  .select("user_id").eq("user_id",session.user.id).maybeSingle();
 
- if(error){status("Admin check failed: "+error.message);return;}
+ if(error){
+  status("Admin check failed: "+error.message);
+  return;
+ }
+
  showAdmin(!!data);
+
  if(data)await ensureRoot();
 }
 
@@ -140,7 +349,11 @@ async function login(){
  }
 
  const {error}=await db.auth.signInWithPassword({email,password});
- if(error){status("Login failed: "+error.message);return;}
+
+ if(error){
+  status("Login failed: "+error.message);
+  return;
+ }
 
  await checkAdmin();
 
@@ -164,11 +377,18 @@ async function ensureRoot(){
  const {data,error}=await db.from("family_members")
  .select("id").eq("name","Peer Baba").limit(1);
 
- if(error){status(error.message);return;}
+ if(error){
+  status(error.message);
+  return;
+ }
 
  if(!data.length){
   const {error:insertError}=await db.from("family_members")
-  .insert({name:"Peer Baba",branch:"Common Ancestor",approved:true});
+  .insert({
+   name:"Peer Baba",
+   branch:"Common Ancestor",
+   approved:true
+  });
 
   if(insertError){
    status("Could not add starting ancestor: "+insertError.message);
@@ -203,6 +423,7 @@ function makePersonCard(m){
 
  const card=document.createElement("div");
  card.className="person"+(m.name==="Peer Baba"?" root":"");
+ card.dataset.memberId=m.id;
 
  const name=document.createElement("strong");
  name.textContent=m.name;
@@ -257,6 +478,52 @@ function makeBranch(m,seen){
  }
 
  return node;
+}
+
+function searchFamily(){
+ const input=document.getElementById("searchInput");
+ const message=document.getElementById("searchStatus");
+ const query=input.value.trim().toLowerCase();
+
+ document.querySelectorAll(".person.search-match").forEach(el=>{
+  el.classList.remove("search-match");
+ });
+
+ if(!query){
+  message.textContent="Type a name to find a family member.";
+  return;
+ }
+
+ const matches=members.filter(m=>
+  m.name.toLowerCase().includes(query)
+ );
+
+ if(!matches.length){
+  message.textContent="No family member found with that name.";
+  return;
+ }
+
+ message.textContent=matches.length+" matching member(s) found.";
+
+ matches.forEach(m=>{
+  const card=document.querySelector(
+   '[data-member-id="'+m.id+'"]'
+  );
+
+  if(card)card.classList.add("search-match");
+ });
+
+ const firstCard=document.querySelector(
+  '[data-member-id="'+matches[0].id+'"]'
+ );
+
+ if(firstCard){
+  firstCard.scrollIntoView({
+   behavior:"smooth",
+   block:"center",
+   inline:"center"
+  });
+ }
 }
 
 function renderTree(){
@@ -338,15 +605,22 @@ async function saveMember(){
    status("Update failed: "+error.message);
    return;
   }
+
   status("Member updated.");
  }else{
   const {error}=await db.from("family_members")
-  .insert({name,father_id:fatherId,branch,approved:true});
+  .insert({
+   name,
+   father_id:fatherId,
+   branch,
+   approved:true
+  });
 
   if(error){
    status("Add failed: "+error.message);
    return;
   }
+
   status("Member added successfully.");
  }
 
@@ -356,9 +630,11 @@ async function saveMember(){
 
 function editMember(id){
  const m=members.find(x=>x.id===id);
+
  if(!m||m.name==="Peer Baba")return;
 
  editingId=id;
+
  document.getElementById("memberName").value=m.name;
  document.getElementById("branch").value=m.branch||"";
 
@@ -372,11 +648,14 @@ function editMember(id){
 
 function cancelEditing(){
  editingId=null;
+
  document.getElementById("memberName").value="";
  document.getElementById("branch").value="";
  document.getElementById("father").value="";
+
  document.getElementById("formTitle").textContent="Add Family Member";
  document.getElementById("cancelEdit").classList.add("hidden");
+
  loadFatherOptions();
 }
 
@@ -384,6 +663,7 @@ async function deleteMember(id){
  if(!isAdmin)return;
 
  const m=members.find(x=>x.id===id);
+
  if(!m||m.name==="Peer Baba")return;
 
  if(members.some(x=>x.father_id===id)){
