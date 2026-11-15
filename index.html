@@ -3,94 +3,60 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Swat Sayedan Shajra</title>
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Swat Sayedan Family Tree</title>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <style>
 *{box-sizing:border-box}
-body{
-  font-family:Arial,sans-serif;
-  background:#f1f6f1;
-  margin:0;padding:14px;color:#183b2b
-}
-header{
-  background:#145c3b;color:white;text-align:center;
-  padding:24px 12px;border-radius:14px
-}
-header h1{margin:0 0 8px}
-.card{
-  background:white;padding:17px;margin-top:16px;
-  border-radius:13px;box-shadow:0 2px 9px #0000000d
-}
-h2{font-size:19px}
-label{display:block;font-weight:bold;margin:13px 0 6px}
-input,select{
-  display:block;width:100%;padding:14px;
-  border:1px solid #b8c8bc;border-radius:8px;
-  font-size:16px;background:white
-}
-button{
-  width:100%;padding:15px;margin-top:16px;
-  background:#145c3b;color:white;border:0;
-  border-radius:8px;font-size:17px;font-weight:bold
-}
-.tree ul{
-  list-style:none;margin:10px 0 0 14px;
-  padding-left:18px;border-left:2px solid #a8c9b1
-}
-.tree li{
-  position:relative;margin:13px 0;padding-left:8px
-}
-.tree li:before{
-  content:"";position:absolute;left:-18px;
-  top:19px;width:17px;border-top:2px solid #a8c9b1
-}
-.tree ul.root-list{
-  border:0;margin:0;padding:0
-}
-.person{
-  display:inline-block;background:#e7f3e9;
-  border:1px solid #c6dfcb;border-radius:9px;
-  padding:12px;max-width:100%;overflow-wrap:anywhere
-}
-.person.root{
-  background:#145c3b;color:white;
-  border-color:#145c3b;font-weight:bold
-}
-.person small{
-  display:block;margin-top:5px;
-  opacity:.8;font-weight:normal
-}
-.hint{font-size:13px;color:#617267;line-height:1.5}
+body{font-family:Arial;background:#f1f6f1;color:#183b2b;margin:0;padding:14px}
+header{background:#145c3b;color:white;text-align:center;padding:22px;border-radius:14px}
+.card{background:white;padding:17px;margin-top:15px;border-radius:12px;box-shadow:0 2px 8px #0001}
+input,select,button{width:100%;padding:13px;margin:7px 0;border-radius:8px;font-size:16px}
+input,select{border:1px solid #bdcbbf;background:white}
+button{background:#145c3b;color:white;border:0;font-weight:bold;cursor:pointer}
+button.secondary{background:#65766b}
+button.danger{background:#a52b2b}
+.hidden{display:none}
+.person{background:#e7f3e9;border:1px solid #c6dfcb;padding:12px;border-radius:9px;margin:8px 0}
+.root{background:#145c3b;color:white}
+.tree ul{list-style:none;margin-left:15px;padding-left:15px;border-left:2px solid #a8c9b1}
+.tree li{margin:10px 0}
+.small{font-size:13px;color:#617267}
+.actions{display:flex;gap:7px}
+.actions button{font-size:13px;padding:10px}
+#status{overflow-wrap:anywhere}
 </style>
 </head>
 <body>
-
 <header>
 <h1>Swat Sayedan</h1>
 <p>Family Tree — Shajra</p>
 </header>
 
 <section class="card">
-<h2>Add Family Member</h2>
+<h2>Administrator Login</h2>
+<div id="loginBox">
+<input id="email" type="email" placeholder="Administrator email">
+<input id="password" type="password" placeholder="Password">
+<button onclick="login()">Login</button>
+</div>
+<div id="adminBox" class="hidden">
+<p>Administrator logged in</p>
+<button class="secondary" onclick="logout()">Logout</button>
+</div>
+<p id="status" class="small">Loading family tree...</p>
+</section>
 
-<form id="familyForm">
-<label for="name">Member's Name</label>
-<input id="name" placeholder="Enter member's name" required>
-
-<label for="father">Father's Name</label>
+<section class="card hidden" id="addBox">
+<h2 id="formTitle">Add Family Member</h2>
+<input id="memberName" placeholder="Member's name">
+<label>Father's name</label>
 <select id="father">
 <option value="">Father unknown / not added</option>
 </select>
-
-<label for="branch">Family Branch (optional)</label>
-<input id="branch" placeholder="Enter family branch">
-
-<button type="submit">ADD MEMBER</button>
-</form>
-
-<p class="hint">
-Select the person's father to connect them to the correct family branch.
-</p>
+<input id="branch" placeholder="Family branch (optional)">
+<button onclick="saveMember()">Save Member</button>
+<button class="secondary hidden" id="cancelEdit" onclick="cancelEditing()">Cancel Edit</button>
 </section>
 
 <section class="card">
@@ -99,179 +65,246 @@ Select the person's father to connect them to the correct family branch.
 </section>
 
 <script>
-const KEY="swatFamily";
-let people=[];
+const SUPABASE_URL = "PASTE_YOUR_PROJECT_URL_HERE";
+const SUPABASE_KEY = "PASTE_YOUR_PUBLISHABLE_KEY_HERE";
 
-try{
- people=JSON.parse(localStorage.getItem(KEY)||"[]");
-}catch(e){people=[];}
+const db = window.supabase.createClient(SUPABASE_URL,SUPABASE_KEY);
+let members=[];
+let isAdmin=false;
+let editingId=null;
 
-if(!Array.isArray(people))people=[];
-
-// Preserve existing members
-people=people.map((p,i)=>({
- id:p.id||("old-"+i),
- name:String(p.name||"").trim(),
- fatherId:p.fatherId||"",
- father:p.father||"",
- branch:p.branch||""
-})).filter(p=>p.name);
-
-// Add Peer Baba as the starting ancestor
-let root=people.find(
- p=>p.name.toLowerCase()==="peer baba"
-);
-
-if(!root){
- root={
-  id:"peer-baba-root",
-  name:"Peer Baba",
-  fatherId:"",
-  father:"",
-  branch:"Common Ancestor"
- };
- people.unshift(root);
+function status(message){
+ document.getElementById("status").textContent=message;
 }
 
-// Connect existing members by father's name if possible
-people.forEach(p=>{
- if(!p.fatherId && p.father){
-  let match=people.find(x=>
-   x.name.toLowerCase()===p.father.toLowerCase()
-   && x.id!==p.id
-  );
-  if(match)p.fatherId=match.id;
+async function loadMembers(){
+ const {data,error}=await db.from("family_members")
+ .select("*").eq("approved",true).order("name");
+
+ if(error){status("Database error: "+error.message);return;}
+ members=data||[];
+ loadFatherOptions();
+ renderTree();
+}
+
+async function checkAdmin(){
+ const {data:{session}}=await db.auth.getSession();
+ if(!session){showAdmin(false);return;}
+ const {data,error}=await db.from("family_admins")
+ .select("user_id").eq("user_id",session.user.id).maybeSingle();
+
+ if(error){status("Admin check failed: "+error.message);return;}
+ showAdmin(!!data);
+ if(data) await ensureRoot();
+}
+
+function showAdmin(value){
+ isAdmin=value;
+ document.getElementById("loginBox").classList.toggle("hidden",value);
+ document.getElementById("adminBox").classList.toggle("hidden",!value);
+ document.getElementById("addBox").classList.toggle("hidden",!value);
+}
+
+async function login(){
+ const email=document.getElementById("email").value.trim();
+ const password=document.getElementById("password").value;
+ if(!email||!password){status("Enter your email and password.");return;}
+
+ const {error}=await db.auth.signInWithPassword({email,password});
+ if(error){status("Login failed: "+error.message);return;}
+
+ await checkAdmin();
+ if(isAdmin){status("Administrator login successful.");await loadMembers();}
+ else{status("This account is not an administrator.");}
+}
+
+async function logout(){
+ await db.auth.signOut();
+ showAdmin(false);
+ cancelEditing();
+ status("Logged out.");
+ await loadMembers();
+}
+
+async function ensureRoot(){
+ const {data,error}=await db.from("family_members")
+ .select("id").eq("name","Peer Baba").limit(1);
+
+ if(error){status(error.message);return;}
+ if(!data.length){
+  const {error:insertError}=await db.from("family_members")
+  .insert({name:"Peer Baba",branch:"Common Ancestor",approved:true});
+  if(insertError){status("Could not add starting ancestor: "+insertError.message);return;}
  }
-});
-
-function save(){
- localStorage.setItem(KEY,JSON.stringify(people));
 }
 
-function loadFathers(){
+function loadFatherOptions(){
  const select=document.getElementById("father");
- select.innerHTML=
- '<option value="">Father unknown / not added</option>';
-
- people.forEach(p=>{
-  const option=document.createElement("option");
-  option.value=p.id;
-  option.textContent=p.name;
-  select.appendChild(option);
+ const previous=select.value;
+ select.innerHTML='<option value="">Father unknown / not added</option>';
+ members.forEach(m=>{
+  if(m.id===editingId)return;
+  const o=document.createElement("option");
+  o.value=m.id;
+  o.textContent=m.name;
+  select.appendChild(o);
  });
+ if([...select.options].some(o=>o.value===previous))select.value=previous;
 }
 
-function createCard(p){
- const card=document.createElement("div");
- card.className="person";
- if(p.name.toLowerCase()==="peer baba"){
-  card.classList.add("root");
- }
- const name=document.createElement("div");
- name.textContent=p.name;
- card.appendChild(name);
-
- if(p.branch){
-  const small=document.createElement("small");
-  small.textContent=p.branch;
-  card.appendChild(small);
- }
- return card;
-}
-
-function makeBranch(person,seen){
- if(seen.has(person.id))return null;
- seen.add(person.id);
+function makePerson(m,seen){
+ if(seen.has(m.id))return null;
+ seen.add(m.id);
 
  const li=document.createElement("li");
- li.appendChild(createCard(person));
+ const card=document.createElement("div");
+ card.className="person"+(m.name==="Peer Baba"?" root":"");
 
- const children=people.filter(
-  p=>p.fatherId===person.id
- );
+ const name=document.createElement("strong");
+ name.textContent=m.name;
+ card.appendChild(name);
 
+ if(m.branch){
+  const b=document.createElement("div");
+  b.className="small";
+  b.textContent=m.branch;
+  card.appendChild(b);
+ }
+ if(isAdmin){
+  const actions=document.createElement("div");
+  actions.className="actions";
+  const edit=document.createElement("button");
+  edit.textContent="Edit";
+  edit.onclick=()=>editMember(m.id);
+  actions.appendChild(edit);
+
+  const del=document.createElement("button");
+  del.textContent="Delete";
+  del.className="danger";
+  del.onclick=()=>deleteMember(m.id);
+  actions.appendChild(del);
+  card.appendChild(actions);
+ }
+ li.appendChild(card);
+
+ const children=members.filter(x=>x.father_id===m.id);
  if(children.length){
   const ul=document.createElement("ul");
   children.forEach(child=>{
-   const branch=makeBranch(child,seen);
-   if(branch)ul.appendChild(branch);
+   const node=makePerson(child,seen);
+   if(node)ul.appendChild(node);
   });
   li.appendChild(ul);
  }
  return li;
 }
 
-function showTree(){
+function renderTree(){
  const box=document.getElementById("tree");
  box.innerHTML="";
  const seen=new Set();
-
- const root=people.find(
-  p=>p.name.toLowerCase()==="peer baba"
- );
+ const root=members.find(m=>m.name==="Peer Baba");
 
  if(root){
   const ul=document.createElement("ul");
-  ul.className="root-list";
-  const branch=makeBranch(root,seen);
-  if(branch)ul.appendChild(branch);
+  const node=makePerson(root,seen);
+  if(node)ul.appendChild(node);
   box.appendChild(ul);
  }
-
- const other=people.filter(p=>!seen.has(p.id));
-
- if(other.length){
-  const note=document.createElement("p");
-  note.className="hint";
-  note.textContent=
-   "Other members not yet connected to Peer Baba:";
-  box.appendChild(note);
-
+ const unlinked=members.filter(m=>!seen.has(m.id));
+ if(unlinked.length){
+  const heading=document.createElement("p");
+  heading.textContent="Members not yet connected to Peer Baba:";
+  box.appendChild(heading);
   const ul=document.createElement("ul");
-  other.forEach(p=>{
-   const li=document.createElement("li");
-   li.appendChild(createCard(p));
-   ul.appendChild(li);
+  unlinked.forEach(m=>{
+   const node=makePerson(m,seen);
+   if(node)ul.appendChild(node);
   });
   box.appendChild(ul);
  }
+ if(!members.length)box.textContent="No family members have been added yet.";
 }
 
-document.getElementById("familyForm")
-.addEventListener("submit",function(e){
- e.preventDefault();
-
- const name=document.getElementById("name").value.trim();
- const fatherId=document.getElementById("father").value;
+async function saveMember(){
+ if(!isAdmin)return;
+ const name=document.getElementById("memberName").value.trim();
+ const fatherId=document.getElementById("father").value||null;
  const branch=document.getElementById("branch").value.trim();
 
- if(!name)return;
+ if(!name){status("Enter a member name.");return;}
+ if(name.toLowerCase()==="peer baba"&&editingId){status("The common ancestor cannot be renamed.");return;}
 
- if(people.some(p=>
-  p.name.toLowerCase()===name.toLowerCase()
- )){
-  alert("This name already exists.");
+ const duplicate=members.some(m=>
+  m.name.toLowerCase()===name.toLowerCase()&&m.id!==editingId
+ );
+ if(duplicate){status("This name already exists. Check before adding.");return;}
+
+ if(editingId){
+  const {error}=await db.from("family_members")
+  .update({name,father_id:fatherId,branch})
+  .eq("id",editingId);
+  if(error){status("Update failed: "+error.message);return;}
+  status("Member updated.");
+ }else{
+  const {error}=await db.from("family_members")
+  .insert({name,father_id:fatherId,branch,approved:true});
+  if(error){status("Add failed: "+error.message);return;}
+  status("Member added successfully.");
+ }
+ cancelEditing();
+ await loadMembers();
+}
+
+function editMember(id){
+ const m=members.find(x=>x.id===id);
+ if(!m||m.name==="Peer Baba")return;
+ editingId=id;
+ document.getElementById("memberName").value=m.name;
+ document.getElementById("branch").value=m.branch||"";
+ loadFatherOptions();
+ document.getElementById("father").value=m.father_id||"";
+ document.getElementById("formTitle").textContent="Edit Family Member";
+ document.getElementById("cancelEdit").classList.remove("hidden");
+ document.getElementById("addBox").scrollIntoView({behavior:"smooth"});
+}
+
+function cancelEditing(){
+ editingId=null;
+ document.getElementById("memberName").value="";
+ document.getElementById("branch").value="";
+ document.getElementById("father").value="";
+ document.getElementById("formTitle").textContent="Add Family Member";
+ document.getElementById("cancelEdit").classList.add("hidden");
+ loadFatherOptions();
+}
+
+async function deleteMember(id){
+ if(!isAdmin)return;
+ const m=members.find(x=>x.id===id);
+ if(!m||m.name==="Peer Baba")return;
+
+ if(members.some(x=>x.father_id===id)){
+  status("Cannot delete this person yet. They have children connected to them.");
   return;
  }
+ if(!confirm("Delete "+m.name+"? This cannot be undone."))return;
 
- people.push({
-  id:"member-"+Date.now(),
-  name:name,
-  fatherId:fatherId,
-  branch:branch
- });
+ const {error}=await db.from("family_members").delete().eq("id",id);
+ if(error){status("Delete failed: "+error.message);return;}
+ status("Member deleted.");
+ await loadMembers();
+}
 
- save();
- this.reset();
- loadFathers();
- showTree();
- alert("Member added successfully!");
-});
-
-save();
-loadFathers();
-showTree();
+async function start(){
+ if(SUPABASE_URL.includes("PASTE_")||SUPABASE_KEY.includes("PASTE_")){
+  status("Please add your Supabase Project URL and Publishable key in the code.");
+  return;
+ }
+ await checkAdmin();
+ await loadMembers();
+}
+start();
 </script>
-
 </body>
 </html>
