@@ -4,123 +4,273 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Swat Sayedan Family Tree</title>
+<title>Swat Sayedan Shajra</title>
 <style>
-body {
-  font-family: Arial, sans-serif;
-  background: #f1f6f1;
-  margin: 0;
-  padding: 15px;
+*{box-sizing:border-box}
+body{
+  font-family:Arial,sans-serif;
+  background:#f1f6f1;
+  margin:0;padding:14px;color:#183b2b
 }
-header {
-  background: #145c3b;
-  color: white;
-  padding: 20px;
-  text-align: center;
-  border-radius: 12px;
+header{
+  background:#145c3b;color:white;text-align:center;
+  padding:24px 12px;border-radius:14px
 }
-.card {
-  background: white;
-  padding: 18px;
-  margin-top: 18px;
-  border-radius: 12px;
+header h1{margin:0 0 8px}
+.card{
+  background:white;padding:17px;margin-top:16px;
+  border-radius:13px;box-shadow:0 2px 9px #0000000d
 }
-input {
-  display: block;
-  width: 100%;
-  box-sizing: border-box;
-  padding: 15px;
-  margin: 12px 0;
-  border: 1px solid #aaa;
-  border-radius: 8px;
-  font-size: 17px;
+h2{font-size:19px}
+label{display:block;font-weight:bold;margin:13px 0 6px}
+input,select{
+  display:block;width:100%;padding:14px;
+  border:1px solid #b8c8bc;border-radius:8px;
+  font-size:16px;background:white
 }
-button {
-  display: block;
-  width: 100%;
-  padding: 16px;
-  margin-top: 12px;
-  background: #145c3b;
-  color: white;
-  border: none;
-  border-radius: 8px;
-  font-size: 18px;
+button{
+  width:100%;padding:15px;margin-top:16px;
+  background:#145c3b;color:white;border:0;
+  border-radius:8px;font-size:17px;font-weight:bold
 }
-.person {
-  padding: 12px;
-  margin-top: 10px;
-  background: #e5f2e8;
-  border-radius: 8px;
+.tree ul{
+  list-style:none;margin:10px 0 0 14px;
+  padding-left:18px;border-left:2px solid #a8c9b1
 }
+.tree li{
+  position:relative;margin:13px 0;padding-left:8px
+}
+.tree li:before{
+  content:"";position:absolute;left:-18px;
+  top:19px;width:17px;border-top:2px solid #a8c9b1
+}
+.tree ul.root-list{
+  border:0;margin:0;padding:0
+}
+.person{
+  display:inline-block;background:#e7f3e9;
+  border:1px solid #c6dfcb;border-radius:9px;
+  padding:12px;max-width:100%;overflow-wrap:anywhere
+}
+.person.root{
+  background:#145c3b;color:white;
+  border-color:#145c3b;font-weight:bold
+}
+.person small{
+  display:block;margin-top:5px;
+  opacity:.8;font-weight:normal
+}
+.hint{font-size:13px;color:#617267;line-height:1.5}
 </style>
 </head>
 <body>
 
 <header>
-<h2>Swat Sayedan</h2>
+<h1>Swat Sayedan</h1>
 <p>Family Tree — Shajra</p>
 </header>
 
-<div class="card">
-<h3>Add Family Member</h3>
+<section class="card">
+<h2>Add Family Member</h2>
 
 <form id="familyForm">
-<input id="name" placeholder="Enter Member Name" required>
-<input id="father" placeholder="Enter Father's Name">
-<input id="branch" placeholder="Enter Family Branch">
+<label for="name">Member's Name</label>
+<input id="name" placeholder="Enter member's name" required>
+
+<label for="father">Father's Name</label>
+<select id="father">
+<option value="">Father unknown / not added</option>
+</select>
+
+<label for="branch">Family Branch (optional)</label>
+<input id="branch" placeholder="Enter family branch">
 
 <button type="submit">ADD MEMBER</button>
 </form>
-</div>
 
-<div class="card">
-<h3>Family Members</h3>
-<div id="members"></div>
-</div>
+<p class="hint">
+Select the person's father to connect them to the correct family branch.
+</p>
+</section>
+
+<section class="card">
+<h2>Our Family Tree</h2>
+<div id="tree" class="tree"></div>
+</section>
 
 <script>
-let people = JSON.parse(
- localStorage.getItem("swatFamily") || "[]"
+const KEY="swatFamily";
+let people=[];
+
+try{
+ people=JSON.parse(localStorage.getItem(KEY)||"[]");
+}catch(e){people=[];}
+
+if(!Array.isArray(people))people=[];
+
+// Preserve existing members
+people=people.map((p,i)=>({
+ id:p.id||("old-"+i),
+ name:String(p.name||"").trim(),
+ fatherId:p.fatherId||"",
+ father:p.father||"",
+ branch:p.branch||""
+})).filter(p=>p.name);
+
+// Add Peer Baba as the starting ancestor
+let root=people.find(
+ p=>p.name.toLowerCase()==="peer baba"
 );
 
-function displayMembers() {
- const box = document.getElementById("members");
- box.innerHTML = "";
+if(!root){
+ root={
+  id:"peer-baba-root",
+  name:"Peer Baba",
+  fatherId:"",
+  father:"",
+  branch:"Common Ancestor"
+ };
+ people.unshift(root);
+}
 
- people.forEach(function(person) {
-  const item = document.createElement("div");
-  item.className = "person";
-  item.textContent =
-   person.name + " | Father: " +
-   person.father + " | Branch: " + person.branch;
-  box.appendChild(item);
+// Connect existing members by father's name if possible
+people.forEach(p=>{
+ if(!p.fatherId && p.father){
+  let match=people.find(x=>
+   x.name.toLowerCase()===p.father.toLowerCase()
+   && x.id!==p.id
+  );
+  if(match)p.fatherId=match.id;
+ }
+});
+
+function save(){
+ localStorage.setItem(KEY,JSON.stringify(people));
+}
+
+function loadFathers(){
+ const select=document.getElementById("father");
+ select.innerHTML=
+ '<option value="">Father unknown / not added</option>';
+
+ people.forEach(p=>{
+  const option=document.createElement("option");
+  option.value=p.id;
+  option.textContent=p.name;
+  select.appendChild(option);
  });
 }
 
+function createCard(p){
+ const card=document.createElement("div");
+ card.className="person";
+ if(p.name.toLowerCase()==="peer baba"){
+  card.classList.add("root");
+ }
+ const name=document.createElement("div");
+ name.textContent=p.name;
+ card.appendChild(name);
+
+ if(p.branch){
+  const small=document.createElement("small");
+  small.textContent=p.branch;
+  card.appendChild(small);
+ }
+ return card;
+}
+
+function makeBranch(person,seen){
+ if(seen.has(person.id))return null;
+ seen.add(person.id);
+
+ const li=document.createElement("li");
+ li.appendChild(createCard(person));
+
+ const children=people.filter(
+  p=>p.fatherId===person.id
+ );
+
+ if(children.length){
+  const ul=document.createElement("ul");
+  children.forEach(child=>{
+   const branch=makeBranch(child,seen);
+   if(branch)ul.appendChild(branch);
+  });
+  li.appendChild(ul);
+ }
+ return li;
+}
+
+function showTree(){
+ const box=document.getElementById("tree");
+ box.innerHTML="";
+ const seen=new Set();
+
+ const root=people.find(
+  p=>p.name.toLowerCase()==="peer baba"
+ );
+
+ if(root){
+  const ul=document.createElement("ul");
+  ul.className="root-list";
+  const branch=makeBranch(root,seen);
+  if(branch)ul.appendChild(branch);
+  box.appendChild(ul);
+ }
+
+ const other=people.filter(p=>!seen.has(p.id));
+
+ if(other.length){
+  const note=document.createElement("p");
+  note.className="hint";
+  note.textContent=
+   "Other members not yet connected to Peer Baba:";
+  box.appendChild(note);
+
+  const ul=document.createElement("ul");
+  other.forEach(p=>{
+   const li=document.createElement("li");
+   li.appendChild(createCard(p));
+   ul.appendChild(li);
+  });
+  box.appendChild(ul);
+ }
+}
+
 document.getElementById("familyForm")
-.addEventListener("submit", function(event) {
- event.preventDefault();
+.addEventListener("submit",function(e){
+ e.preventDefault();
 
- const name = document.getElementById("name").value.trim();
- const father = document.getElementById("father").value.trim();
- const branch = document.getElementById("branch").value.trim();
+ const name=document.getElementById("name").value.trim();
+ const fatherId=document.getElementById("father").value;
+ const branch=document.getElementById("branch").value.trim();
 
- if (!name) {
-  alert("Please enter a name");
+ if(!name)return;
+
+ if(people.some(p=>
+  p.name.toLowerCase()===name.toLowerCase()
+ )){
+  alert("This name already exists.");
   return;
  }
 
- people.push({name, father, branch});
+ people.push({
+  id:"member-"+Date.now(),
+  name:name,
+  fatherId:fatherId,
+  branch:branch
+ });
 
- localStorage.setItem("swatFamily", JSON.stringify(people));
-
+ save();
  this.reset();
- displayMembers();
-
- alert("Family member added successfully!");
+ loadFathers();
+ showTree();
+ alert("Member added successfully!");
 });
 
-displayMembers();
+save();
+loadFathers();
+showTree();
 </script>
 
 </body>
