@@ -3,73 +3,125 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width,initial-scale=1">
-<title>Swat Sayedan Shajra</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Swat Sayedan Family Tree</title>
 <style>
-body{font-family:Arial;background:#f2f6f2;margin:0;color:#183b2b}
-header{background:#145c3b;color:white;text-align:center;padding:24px 10px}
-main{max-width:700px;margin:20px auto;padding:15px}
-.card{background:white;padding:18px;border-radius:12px;margin-bottom:18px;box-shadow:0 2px 10px #0001}
-input,button{width:100%;padding:13px;margin:7px 0;box-sizing:border-box;border-radius:7px;font-size:16px}
-input{border:1px solid #bbb}
-button{background:#145c3b;color:white;border:0;font-weight:bold}
-.person{padding:12px;background:#e7f2e9;margin:8px 0;border-radius:8px}
-.person button{width:auto;background:#a52b2b;padding:8px}
+body {
+  font-family: Arial, sans-serif;
+  background: #f1f6f1;
+  margin: 0;
+  padding: 15px;
+}
+header {
+  background: #145c3b;
+  color: white;
+  padding: 20px;
+  text-align: center;
+  border-radius: 12px;
+}
+.card {
+  background: white;
+  padding: 18px;
+  margin-top: 18px;
+  border-radius: 12px;
+}
+input {
+  display: block;
+  width: 100%;
+  box-sizing: border-box;
+  padding: 15px;
+  margin: 12px 0;
+  border: 1px solid #aaa;
+  border-radius: 8px;
+  font-size: 17px;
+}
+button {
+  display: block;
+  width: 100%;
+  padding: 16px;
+  margin-top: 12px;
+  background: #145c3b;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  font-size: 18px;
+}
+.person {
+  padding: 12px;
+  margin-top: 10px;
+  background: #e5f2e8;
+  border-radius: 8px;
+}
 </style>
 </head>
 <body>
+
 <header>
-<h2>Swat Sayedan Family Tree</h2>
-<p>Preserving Our Family Heritage</p>
+<h2>Swat Sayedan</h2>
+<p>Family Tree — Shajra</p>
 </header>
-<main>
+
 <div class="card">
 <h3>Add Family Member</h3>
-<form id="form">
-<input id="name" placeholder="Family member's name" required>
-<input id="father" placeholder="Father's name">
-<input id="branch" placeholder="Family branch">
-<button type="submit">Add Member</button>
+
+<form id="familyForm">
+<input id="name" placeholder="Enter Member Name" required>
+<input id="father" placeholder="Enter Father's Name">
+<input id="branch" placeholder="Enter Family Branch">
+
+<button type="submit">ADD MEMBER</button>
 </form>
 </div>
+
 <div class="card">
-<h3>Search Family Members</h3>
-<input id="search" placeholder="Search by name..." oninput="showPeople()">
-<div id="list"></div>
+<h3>Family Members</h3>
+<div id="members"></div>
 </div>
-</main>
+
 <script>
-let people=JSON.parse(localStorage.getItem("swatFamily")||"[]");
-document.getElementById("form").addEventListener("submit",function(e){
-e.preventDefault();
-people.push({
-id:Date.now(),
-name:document.getElementById("name").value.trim(),
-father:document.getElementById("father").value.trim(),
-branch:document.getElementById("branch").value.trim()
+let people = JSON.parse(
+ localStorage.getItem("swatFamily") || "[]"
+);
+
+function displayMembers() {
+ const box = document.getElementById("members");
+ box.innerHTML = "";
+
+ people.forEach(function(person) {
+  const item = document.createElement("div");
+  item.className = "person";
+  item.textContent =
+   person.name + " | Father: " +
+   person.father + " | Branch: " + person.branch;
+  box.appendChild(item);
+ });
+}
+
+document.getElementById("familyForm")
+.addEventListener("submit", function(event) {
+ event.preventDefault();
+
+ const name = document.getElementById("name").value.trim();
+ const father = document.getElementById("father").value.trim();
+ const branch = document.getElementById("branch").value.trim();
+
+ if (!name) {
+  alert("Please enter a name");
+  return;
+ }
+
+ people.push({name, father, branch});
+
+ localStorage.setItem("swatFamily", JSON.stringify(people));
+
+ this.reset();
+ displayMembers();
+
+ alert("Family member added successfully!");
 });
-localStorage.setItem("swatFamily",JSON.stringify(people));
-this.reset();
-showPeople();
-});
-function showPeople(){
-let q=document.getElementById("search").value.toLowerCase();
-let found=people.filter(p=>p.name.toLowerCase().includes(q));
-document.getElementById("list").innerHTML=found.map(p=>
-`<div class="person"><b>${safe(p.name)}</b><br>Father: ${safe(p.father||"-")}<br>Branch: ${safe(p.branch||"-")}<br><button onclick="removePerson(${p.id})">Delete</button></div>`
-).join("")||"No family members found.";
-}
-function safe(s){
-return s.replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
-}
-function removePerson(id){
-if(confirm("Delete this family member?")){
-people=people.filter(p=>p.id!==id);
-localStorage.setItem("swatFamily",JSON.stringify(people));
-showPeople();
-}
-}
-showPeople();
+
+displayMembers();
 </script>
+
 </body>
 </html>
