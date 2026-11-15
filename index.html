@@ -128,7 +128,8 @@ button.danger{background:#a52b2b}
  box-shadow:0 0 0 5px #f5d98a
 }
 
-/* CLEAR FATHER-TO-SON CONNECTORS */
+
+/* FAMILY TREE CONNECTORS */
 
 .children-row{
  display:flex;
@@ -138,49 +139,55 @@ button.danger{background:#a52b2b}
  justify-content:center;
  gap:22px;
  position:relative;
+ margin:42px auto 0;
  padding-top:42px;
- margin-left:auto;
- margin-right:auto
 }
 
-/* Continuous horizontal line connecting all sons */
-left:calc(var(--person-width)/2);
-right:calc(var(--person-width)/2);
-/* Vertical line from father to sons' line */
+/* Horizontal line joins first and last sons */
+.children-row:before{
+ content:"";
+ position:absolute;
+ top:0;
+ left:calc(var(--person-width)/2);
+ right:calc(var(--person-width)/2);
+ border-top:4px solid var(--line);
+}
+
+/* Vertical line from father to sibling line */
 .children-row:after{
  content:"";
  position:absolute;
  top:-42px;
  left:50%;
  height:42px;
- border-left:4px solid var(--line)
+ border-left:4px solid var(--line);
 }
 
-/* Vertical line from connecting line to each son */
+/* Each son's connector starts at the sibling line */
 .children-row>.family-node:before{
  content:"";
  position:absolute;
- top:0;
+ top:-42px;
  left:50%;
- height:29px;
- border-left:4px solid var(--line)
+ height:42px;
+ border-left:4px solid var(--line);
 }
 
-/* Downward arrow pointing to each son */
+/* Arrow points down and touches the son's card */
 .children-row>.family-node:after{
  content:"";
  position:absolute;
- top:24px;
+ top:-10px;
  left:calc(50% - 7px);
  border-left:7px solid transparent;
  border-right:7px solid transparent;
  border-top:10px solid var(--line);
- z-index:2
+ z-index:2;
 }
 
-/* Hide horizontal line if there is only one son */
+/* No horizontal line when there is only one son */
 .children-row:has(>.family-node:only-child):before{
- display:none
+ display:none;
 }
 
 .generation-label{
