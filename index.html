@@ -3,47 +3,73 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Swat Sayedan Family Tree</title>
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Swat Sayedan Shajra</title>
 <style>
-*{box-sizing:border-box}
-body{margin:0;font-family:Arial,sans-serif;background:#f3f7f4;color:#18352a}
-header{background:#145c3b;color:white;padding:25px 15px;text-align:center}
-header h1{margin:0;font-size:25px}
-header p{margin:8px 0 0}
-main{max-width:850px;margin:25px auto;padding:15px}
-.card{background:white;padding:20px;border-radius:14px;box-shadow:0 3px 15px #0001}
-input{width:100%;padding:13px;border:1px solid #ccc;border-radius:8px;font-size:16px;margin:12px 0}
-.person{padding:14px;margin:10px 0;background:#e9f4ed;border-left:4px solid #16834d;border-radius:8px}
-.person strong{display:block;font-size:17px}
-small{color:#567365}
-footer{text-align:center;padding:25px;color:#718278}
+body{font-family:Arial;background:#f2f6f2;margin:0;color:#183b2b}
+header{background:#145c3b;color:white;text-align:center;padding:24px 10px}
+main{max-width:700px;margin:20px auto;padding:15px}
+.card{background:white;padding:18px;border-radius:12px;margin-bottom:18px;box-shadow:0 2px 10px #0001}
+input,button{width:100%;padding:13px;margin:7px 0;box-sizing:border-box;border-radius:7px;font-size:16px}
+input{border:1px solid #bbb}
+button{background:#145c3b;color:white;border:0;font-weight:bold}
+.person{padding:12px;background:#e7f2e9;margin:8px 0;border-radius:8px}
+.person button{width:auto;background:#a52b2b;padding:8px}
 </style>
 </head>
 <body>
 <header>
-<h1>Swat Sayedan Family Tree</h1>
+<h2>Swat Sayedan Family Tree</h2>
 <p>Preserving Our Family Heritage</p>
 </header>
 <main>
 <div class="card">
-<h2>Search Family Tree</h2>
-<input id="search" placeholder="Search a family member..." oninput="searchPeople()">
-<div id="people">
-<p>No family records have been added yet.</p>
+<h3>Add Family Member</h3>
+<form id="form">
+<input id="name" placeholder="Family member's name" required>
+<input id="father" placeholder="Father's name">
+<input id="branch" placeholder="Family branch">
+<button type="submit">Add Member</button>
+</form>
 </div>
+<div class="card">
+<h3>Search Family Members</h3>
+<input id="search" placeholder="Search by name..." oninput="showPeople()">
+<div id="list"></div>
 </div>
 </main>
-<footer>Swat Sayedan Shajra Project</footer>
 <script>
-const family = [];
-function searchPeople(){
- const q=document.getElementById("search").value.toLowerCase();
- const results=family.filter(p=>p.name.toLowerCase().includes(q));
- document.getElementById("people").innerHTML=results.length
- ? results.map(p=>`<div class="person"><strong>${p.name}</strong><small>${p.relation}</small></div>`).join("")
- : "<p>No matching family member found.</p>";
+let people=JSON.parse(localStorage.getItem("swatFamily")||"[]");
+document.getElementById("form").addEventListener("submit",function(e){
+e.preventDefault();
+people.push({
+id:Date.now(),
+name:document.getElementById("name").value.trim(),
+father:document.getElementById("father").value.trim(),
+branch:document.getElementById("branch").value.trim()
+});
+localStorage.setItem("swatFamily",JSON.stringify(people));
+this.reset();
+showPeople();
+});
+function showPeople(){
+let q=document.getElementById("search").value.toLowerCase();
+let found=people.filter(p=>p.name.toLowerCase().includes(q));
+document.getElementById("list").innerHTML=found.map(p=>
+`<div class="person"><b>${safe(p.name)}</b><br>Father: ${safe(p.father||"-")}<br>Branch: ${safe(p.branch||"-")}<br><button onclick="removePerson(${p.id})">Delete</button></div>`
+).join("")||"No family members found.";
 }
+function safe(s){
+return s.replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
+}
+function removePerson(id){
+if(confirm("Delete this family member?")){
+people=people.filter(p=>p.id!==id);
+localStorage.setItem("swatFamily",JSON.stringify(people));
+showPeople();
+}
+}
+showPeople();
 </script>
 </body>
 </html>
