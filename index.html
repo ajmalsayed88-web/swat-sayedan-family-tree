@@ -270,7 +270,13 @@ button.danger{background:#a52b2b}
 <p>Administrator logged in</p>
 <button class="secondary" onclick="logout()">Logout</button>
 </div>
-
+<div id="ownerInviteBox" class="hidden">
+  <h3>Owner tools</h3>
+  <p class="small">Invite another family administrator by email.</p>
+  <input id="adminInviteEmail" type="email" placeholder="New administrator's email address" autocomplete="email">
+  <button id="inviteAdminButton" onclick="inviteAdmin()">Invite Administrator</button>
+  <p id="inviteStatus" class="small" aria-live="polite"></p>
+</div>
 <p id="status" class="small">Loading family tree...</p>
 </section>
 
@@ -322,7 +328,7 @@ Type a name to find a family member.
 <script>
 const SUPABASE_URL = "https://mkpgibnfftqihoztpnhy.supabase.co";
 const SUPABASE_KEY = "sb_publishable_t8OgRxv90fao6omiHsTmiw_1UfkbkUc";
-
+const OWNER_ID = "699210e6-0eba-4ea8-b5eb-55d89518431b";
 const db = window.supabase.createClient(SUPABASE_URL,SUPABASE_KEY);
 
 let members=[];
@@ -356,7 +362,7 @@ async function checkAdmin(){
  const {data:{session}}=await db.auth.getSession();
 
  if(!session){
-  showAdmin(false);
+  showAdmin(false,false);
   return;
  }
 
@@ -368,16 +374,17 @@ async function checkAdmin(){
   return;
  }
 
- showAdmin(!!data);
+ showAdmin(!!data,session.user.id===OWNER_ID);
 
  if(data)await ensureRoot();
 }
 
-function showAdmin(value){
- isAdmin=value;
- document.getElementById("loginBox").classList.toggle("hidden",value);
- document.getElementById("adminBox").classList.toggle("hidden",!value);
- document.getElementById("addBox").classList.toggle("hidden",!value);
+function showAdmin(value,owner=false){
+  isAdmin=value;
+  document.getElementById("loginBox").classList.toggle("hidden",value);
+  document.getElementById("adminBox").classList.toggle("hidden",!value);
+  document.getElementById("addBox").classList.toggle("hidden",!value);
+  document.getElementById("ownerInviteBox").classList.toggle("hidden",!(value&&owner));
 }
 
 async function login(){
@@ -408,12 +415,53 @@ async function login(){
 
 async function logout(){
  await db.auth.signOut();
- showAdmin(false);
+ showAdmin(false,false);
  cancelEditing();
  status("Logged out.");
  await loadMembers();
 }
+async function inviteAdmin(){
+ if(!isAdmin)return;
 
+ const inviteStatus=document.getElementById("inviteStatus");
+ const inviteButton=document.getElementById("inviteAdminButton");
+ const email=document.getElementById("adminInviteEmail").value.trim().toLowerCase();
+
+ const {data:{session}}=await db.auth.getSession();
+
+ if(!session||session.user.id!==OWNER_ID){
+  inviteStatus.textContent="Only the website owner can invite administrators.";
+  showAdmin(false,false);
+  return;
+ }
+
+ if(!email||!/^\S+@\S+\.\S+$/.test(email)){
+  inviteStatus.textContent="Please enter a valid email address.";
+  return;
+ }
+
+ inviteButton.disabled=true;
+ inviteStatus.textContent="Sending invitation...";
+
+ const {data,error}=await db.functions.invoke("manage-family-admins",{
+  body:{action:"invite",email}
+ });
+
+ inviteButton.disabled=false;
+
+ if(error){
+  inviteStatus.textContent="Invitation failed: "+error.message;
+  return;
+ }
+
+ if(data&&data.error){
+  inviteStatus.textContent="Invitation failed: "+data.error;
+  return;
+ }
+
+ inviteStatus.textContent=data?.message||"Administrator invitation sent successfully.";
+ document.getElementById("adminInviteEmail").value="";
+}
 async function ensureRoot(){
  const {data,error}=await db.from("family_members")
  .select("id").eq("name","Peer Baba").limit(1);
