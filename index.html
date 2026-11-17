@@ -453,8 +453,39 @@ button.danger{
  .hero-label{
   font-size:10px;
   letter-spacing:2px;
- }
-}
+    .tree-scroll{
+    padding:18px 4px 28px;
+  }
+
+  :root{
+    --person-width:145px;
+  }
+
+  .person{
+    padding:10px 6px;
+    min-height:60px;
+  }
+
+  .person strong{
+    font-size:14px;
+  }
+
+  .person .small{
+    font-size:12px;
+  }
+
+  .children-row{
+    gap:10px;
+    margin-top:32px;
+    padding-top:32px;
+  }
+
+  .children-row:after,
+  .children-row>.family-node:before{
+    height:32px;
+    top:-32px;
+  }
+ 
 </style>
 </head>
 
