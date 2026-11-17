@@ -760,8 +760,6 @@ function showAdmin(value,owner=false){
   document.getElementById("adminBox").classList.toggle("hidden",!value);
   document.getElementById("addBox").classList.toggle("hidden",!value);
   document.getElementById("ownerInviteBox").classList.toggle("hidden",!(value&&owner));
-
-  document.getElementById("dashboardLogin").classList.toggle("hidden",value);
   document.getElementById("dashboardAdminPanel").classList.toggle("hidden",!value);
   document.getElementById("dashboardAddMember").classList.toggle("hidden",!value);
   document.getElementById("dashboardManageAdmins").classList.toggle("hidden",!(value&&owner));
