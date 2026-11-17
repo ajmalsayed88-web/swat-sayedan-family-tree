@@ -1426,6 +1426,68 @@ async function deleteMember(id){
  await loadMembers();
 }
 
+function toggleDashboard(){
+ const panel=document.getElementById("dashboardPanel");
+ const backdrop=document.getElementById("dashboardBackdrop");
+
+ const isOpen=panel.classList.toggle("open");
+
+ backdrop.classList.toggle("hidden",!isOpen);
+
+ document.querySelector(".dashboard-toggle")
+  .setAttribute("aria-expanded",String(isOpen));
+}
+
+function closeDashboard(){
+ document.getElementById("dashboardPanel")
+  .classList.remove("open");
+
+ document.getElementById("dashboardBackdrop")
+  .classList.add("hidden");
+
+ document.querySelector(".dashboard-toggle")
+  .setAttribute("aria-expanded","false");
+}
+
+function dashboardGo(destination){
+ closeDashboard();
+
+ if(destination==="home"){
+  window.scrollTo({top:0,behavior:"smooth"});
+ }
+
+ else if(destination==="tree"){
+  document.getElementById("familyTreeSection")
+   .scrollIntoView({behavior:"smooth"});
+ }
+
+ else if(destination==="search"){
+  document.getElementById("familyTreeSection")
+   .scrollIntoView({behavior:"smooth"});
+
+  setTimeout(()=>{
+   document.getElementById("searchInput").focus();
+  },350);
+ }
+
+ else if(destination==="add"){
+  document.getElementById("addBox")
+   .scrollIntoView({behavior:"smooth"});
+ }
+
+ else if(destination==="login" ||
+         destination==="admin" ||
+         destination==="manage"){
+
+  document.getElementById("loginModal")
+   .classList.remove("hidden");
+
+  if(destination==="manage" && isAdmin){
+   loadAdministrators();
+  }
+ }
+}
+
 async function start(){
  if(SUPABASE_URL.includes("PASTE_")||SUPABASE_KEY.includes("PASTE_")){
   status("Please add your Supabase Project URL and Publishable key in the code.");
