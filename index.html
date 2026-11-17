@@ -50,7 +50,50 @@ header p{
  color:#e4eee6;
  font-size:16px;
 }
+.hero{
+ min-height:320px;
+ display:flex;
+ align-items:center;
+ justify-content:center;
+ text-align:center;
+ padding:55px 20px;
+}
 
+.hero-content{
+ max-width:750px;
+}
+
+.hero-label{
+ color:#f5d98b;
+ font-size:12px;
+ font-weight:bold;
+ letter-spacing:3px;
+ margin-bottom:18px;
+}
+
+.hero h1{
+ font-size:42px;
+ margin:0 0 16px;
+}
+
+.hero-description{
+ color:#e4eee6;
+ font-size:17px;
+ line-height:1.7;
+ max-width:620px;
+ margin:0 auto 25px;
+}
+
+.hero-button{
+ width:auto;
+ min-width:210px;
+ padding:14px 24px;
+ border:1px solid #c9a44c;
+ border-radius:30px;
+ background:#c9a44c;
+ color:#0b3828;
+ font-weight:bold;
+}
 .card{
  background:white;
  padding:22px;
@@ -319,10 +362,21 @@ button.danger{
 
 <body>
 
-<header>
-<h1>Swat Sayedan</h1>
-<p>Family Tree — Shajra</p>
+
+<header class="hero">
+ <div class="hero-content">
+  <p class="hero-label">OUR FAMILY • OUR HERITAGE • OUR LEGACY</p>
+  <h1>Swat Sayedan Family</h1>
+  <p class="hero-description">
+   Preserving our roots, honouring our ancestors,
+   and connecting generations through one family tree.
+  </p>
+  <button class="hero-button" onclick="document.getElementById('familyTreeSection').scrollIntoView({behavior:'smooth'})">
+   Explore Family Tree ↓
+  </button>
+ </div>
 </header>
+
 
 <section class="card">
 <h2>Administrator Login</h2>
@@ -373,7 +427,7 @@ button.danger{
 <button class="secondary hidden" id="cancelEdit" onclick="cancelEditing()">Cancel Edit</button>
 </section>
 
-<section class="card">
+<section class="card" id="familyTreeSection">
 <h2>Our Family Tree</h2>
 
 <div class="tree-help">
