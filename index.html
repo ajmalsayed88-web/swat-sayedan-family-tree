@@ -579,6 +579,30 @@ window.removeAdministrator=removeAdministrator;
  }
 }
 
+async function ensureRoot(){
+ const {data,error}=await db.from("family_members")
+ .select("id").eq("name","Peer Baba").limit(1);
+
+ if(error){
+  status(error.message);
+  return;
+ }
+
+ if(!data.length){
+  const {error:insertError}=await db.from("family_members")
+  .insert({
+   name:"Peer Baba",
+   branch:"Common Ancestor",
+   approved:true
+  });
+
+  if(insertError){
+   status("Could not add starting ancestor: "+insertError.message);
+   return;
+  }
+ }
+}
+
 function loadFatherOptions(){
  const select=document.getElementById("father");
  const previous=select.value;
