@@ -426,6 +426,7 @@ async function logout(){
 }
 async function inviteAdmin(){
 
+
 async function inviteAdmin(){
  if(!isAdmin)return;
 
@@ -553,32 +554,6 @@ async function removeAdministrator(userId,email){
  await loadAdministrators();
 }
 
-window.loadAdministrators=loadAdministrators;
-window.removeAdministrator=removeAdministrator;
-
- const {data,error}=await db.from("family_members")
- .select("id").eq("name","Peer Baba").limit(1);
-
- if(error){
-  status(error.message);
-  return;
- }
-
- if(!data.length){
-  const {error:insertError}=await db.from("family_members")
-  .insert({
-   name:"Peer Baba",
-   branch:"Common Ancestor",
-   approved:true
-  });
-
-  if(insertError){
-   status("Could not add starting ancestor: "+insertError.message);
-   return;
-  }
- }
-}
-
 async function ensureRoot(){
  const {data,error}=await db.from("family_members")
  .select("id").eq("name","Peer Baba").limit(1);
@@ -602,6 +577,10 @@ async function ensureRoot(){
   }
  }
 }
+
+window.loadAdministrators=loadAdministrators;
+window.removeAdministrator=removeAdministrator;
+
 
 function loadFatherOptions(){
  const select=document.getElementById("father");
