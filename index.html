@@ -9,15 +9,58 @@
 
 <style>
 *{box-sizing:border-box}
-:root{--person-width:190px;--line:#145c3b}
+
+:root{
+ --person-width:190px;
+ --line:#176344;
+ --green:#145c3b;
+ --dark-green:#0b3828;
+ --gold:#c9a44c;
+ --light-green:#edf5ef;
+ --text:#193b2c;
+}
 
 body{
  font-family:Arial,sans-serif;
- background:#f1f6f1;
- color:#183b2b;
+ background:#f3f7f3;
+ color:var(--text);
  margin:0;
- padding:12px
+ padding:18px;
 }
+
+header{
+ background:linear-gradient(135deg,#0b3828,#176344);
+ color:white;
+ text-align:center;
+ padding:42px 20px;
+ border-radius:18px;
+ border:1px solid var(--gold);
+ box-shadow:0 5px 18px #0002;
+}
+
+header h1{
+ font-size:34px;
+ margin:0 0 10px;
+ color:#f5d98b;
+ letter-spacing:1px;
+}
+
+header p{
+ margin:0;
+ color:#e4eee6;
+ font-size:16px;
+}
+
+.card{
+ background:white;
+ padding:22px;
+ margin-top:18px;
+ border-radius:16px;
+ border:1px solid #e0e9e1;
+ box-shadow:0 4px 16px #123b2810;
+}
+
+
 
 header{
  background:#145c3b;
@@ -35,29 +78,49 @@ header{
  box-shadow:0 2px 8px #0001
 }
 
+
 input,select,button{
  width:100%;
- padding:13px;
- margin:7px 0;
- border-radius:8px;
- font-size:16px
+ padding:14px;
+ margin:8px 0;
+ border-radius:10px;
+ font-size:16px;
+ font-family:Arial,sans-serif;
 }
 
 input,select{
- border:1px solid #bdcbbf;
- background:white
+ border:1px solid #c5d8ca;
+ background:#fff;
+ color:#193b2c;
+ outline:none;
+}
+
+input:focus,select:focus{
+ border-color:#176344;
+ box-shadow:0 0 0 3px #17634420;
 }
 
 button{
- background:#145c3b;
+ background:linear-gradient(135deg,#145c3b,#176344);
  color:white;
  border:0;
  font-weight:bold;
- cursor:pointer
+ cursor:pointer;
+ transition:0.2s;
 }
 
-button.secondary{background:#65766b}
-button.danger{background:#a52b2b}
+button:hover{
+ background:#0b3828;
+}
+
+button.secondary{
+ background:#65766b;
+}
+
+button.danger{
+ background:#a52b2b;
+}
+
 .hidden{display:none}
 .small{font-size:13px;color:#617267}
 #status{overflow-wrap:anywhere}
@@ -74,18 +137,24 @@ button.danger{background:#a52b2b}
  margin:0
 }
 
+
 .tree-scroll{
  width:100%;
  overflow:auto;
- padding:22px 8px 35px;
- -webkit-overflow-scrolling:touch
+ padding:28px 12px 40px;
+ background:linear-gradient(180deg,#f8fbf8,#edf5ef);
+ border:1px solid #dce9df;
+ border-radius:14px;
+ -webkit-overflow-scrolling:touch;
 }
 
 .tree-canvas{
  display:inline-block;
  min-width:100%;
- text-align:center
+ text-align:center;
+ padding:10px 5px;
 }
+
 
 .family-node{
  display:flex;
@@ -95,38 +164,53 @@ button.danger{background:#a52b2b}
  position:relative
 }
 
+
 .person{
  width:var(--person-width);
- background:#e7f3e9;
+ background:linear-gradient(145deg,#ffffff,#edf5ef);
  border:1px solid #b8d5bf;
- border-radius:11px;
- padding:12px 10px;
- min-height:58px;
+ border-radius:14px;
+ padding:14px 10px;
+ min-height:65px;
  text-align:center;
- box-shadow:0 2px 6px #0000000d;
+ box-shadow:0 4px 12px #123b2815;
  overflow-wrap:anywhere;
  position:relative;
- z-index:1
+ z-index:1;
+ transition:transform .2s,box-shadow .2s;
 }
 
-.person strong{font-size:15px}
+.person strong{
+ font-size:15px;
+ color:#145c3b;
+}
 
 .person.root{
- background:#145c3b;
+ background:linear-gradient(135deg,#0b3828,#176344);
  color:white;
- border-color:#145c3b
+ border:2px solid #c9a44c;
+ box-shadow:0 5px 16px #0b382840;
 }
 
-.person .small{margin-top:5px}
-.person.root .small{color:#e1f1e5}
+.person.root strong{
+ color:#f5d98b;
+}
+
+.person .small{
+ margin-top:5px;
+}
+
+.person.root .small{
+ color:#e1f1e5;
+}
 
 .person.has-children{
  cursor:pointer;
- border:2px solid #145c3b
+ border:2px solid #176344;
 }
 
 .person.has-children:active{
- transform:scale(.98)
+ transform:scale(.98);
 }
 
 .expand-hint{
@@ -134,16 +218,18 @@ button.danger{background:#a52b2b}
  margin-top:7px;
  font-size:12px;
  color:#386a45;
- font-weight:bold
+ font-weight:bold;
 }
 
-.person.root .expand-hint{color:#e1f1e5}
+.person.root .expand-hint{
+ color:#f5d98b;
+}
 
 .person.search-match{
  background:#fff0a8!important;
  color:#183b2b!important;
  border:3px solid #d18b00;
- box-shadow:0 0 0 5px #f5d98a
+ box-shadow:0 0 0 5px #f5d98a;
 }
 
 /* FAMILY TREE CONNECTORS */
