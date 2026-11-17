@@ -269,6 +269,11 @@ button.danger{background:#a52b2b}
 <div id="adminBox" class="hidden">
 <p>Administrator logged in</p>
 <button class="secondary" onclick="logout()">Logout</button>
+ <div id="adminManagementBox">
+  <h3>Manage Administrators</h3>
+  <button class="secondary" onclick="loadAdministrators()">Refresh Administrator List</button>
+  <div id="adminList" class="small" aria-live="polite"></div>
+</div>
 </div>
 <div id="ownerInviteBox" class="hidden">
   <h3>Owner tools</h3>
@@ -434,6 +439,90 @@ async function inviteAdmin(){
   showAdmin(false,false);
   return;
  }
+
+async function loadAdministrators(){
+ const list=document.getElementById("adminList");
+ list.textContent="Loading administrators...";
+
+ const {data:{session}}=await db.auth.getSession();
+
+ if(!session || session.user.id!==OWNER_ID){
+  list.textContent="Only the website owner can view administrators.";
+  return;
+ }
+
+ const {data,error}=await db.functions.invoke("manage-family-admins",{
+  body:{action:"list"}
+ });
+
+ if(error){
+  list.textContent="Could not load administrators: "+error.message;
+  return;
+ }
+
+ if(data?.error){
+  list.textContent="Could not load administrators: "+data.error;
+  return;
+ }
+
+ const admins=data?.admins||[];
+ list.innerHTML="";
+
+ if(!admins.length){
+  list.textContent="No administrators found.";
+  return;
+ }
+
+ admins.forEach(admin=>{
+  const row=document.createElement("div");
+  row.style.cssText="padding:10px 0;border-bottom:1px solid #ddd";
+
+  const label=document.createElement("div");
+  label.textContent=(admin.email||"Unknown email")+
+   (admin.is_owner?" (Website Owner)":"");
+
+  row.appendChild(label);
+
+  if(!admin.is_owner){
+   const btn=document.createElement("button");
+   btn.className="danger";
+   btn.textContent="Remove Access";
+   btn.onclick=()=>removeAdministrator(admin.user_id,admin.email);
+   row.appendChild(btn);
+  }
+
+  list.appendChild(row);
+ });
+}
+
+async function removeAdministrator(userId,email){
+ if(!confirm("Remove administrator access for "+email+
+  "? Their login account and family-tree data will remain."))return;
+
+ const {data:{session}}=await db.auth.getSession();
+
+ if(!session || session.user.id!==OWNER_ID){
+  alert("Only the website owner can remove administrators.");
+  return;
+ }
+
+ const {data,error}=await db.functions.invoke("manage-family-admins",{
+  body:{action:"remove",user_id:userId}
+ });
+
+ if(error){
+  alert("Removal failed: "+error.message);
+  return;
+ }
+
+ if(data?.error){
+  alert("Removal failed: "+data.error);
+  return;
+ }
+
+ alert(data?.message||"Administrator access removed.");
+ await loadAdministrators();
+}
 
  if(!email||!/^\S+@\S+\.\S+$/.test(email)){
   inviteStatus.textContent="Please enter a valid email address.";
