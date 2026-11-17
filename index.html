@@ -265,7 +265,7 @@ button.danger{background:#a52b2b}
 <input id="password" type="password" placeholder="Password">
 <button onclick="login()">Login</button>
 </div>
-
+<button class="secondary" onclick="forgotPassword()">Forgot Password?</button>
 <div id="adminBox" class="hidden">
 <p>Administrator logged in</p>
 <button class="secondary" onclick="logout()">Logout</button>
@@ -416,7 +416,27 @@ async function login(){
   status("This account is not an administrator.");
  }
 }
+async function forgotPassword(){
+ const email=document.getElementById("email").value.trim();
 
+ if(!email){
+  status("Please enter your email address first.");
+  return;
+ }
+
+ status("Sending password reset email...");
+
+ const {error}=await db.auth.resetPasswordForEmail(email,{
+  redirectTo:window.location.origin+window.location.pathname
+ });
+
+ if(error){
+  status("Password reset failed: "+error.message);
+  return;
+ }
+
+ status("Password reset link sent. Please check your email inbox.");
+}
 async function logout(){
  await db.auth.signOut();
  showAdmin(false,false);
