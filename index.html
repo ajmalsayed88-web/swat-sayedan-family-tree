@@ -425,6 +425,8 @@ async function logout(){
  await loadMembers();
 }
 async function inviteAdmin(){
+
+async function inviteAdmin(){
  if(!isAdmin)return;
 
  const inviteStatus=document.getElementById("inviteStatus");
@@ -439,13 +441,41 @@ async function inviteAdmin(){
   return;
  }
 
+ if(!email||!/^\S+@\S+\.\S+$/.test(email)){
+  inviteStatus.textContent="Please enter a valid email address.";
+  return;
+ }
+
+ inviteButton.disabled=true;
+ inviteStatus.textContent="Sending invitation...";
+
+ const {data,error}=await db.functions.invoke("manage-family-admins",{
+  body:{action:"invite",email}
+ });
+
+ inviteButton.disabled=false;
+
+ if(error){
+  inviteStatus.textContent="Invitation failed: "+error.message;
+  return;
+ }
+
+ if(data&&data.error){
+  inviteStatus.textContent="Invitation failed: "+data.error;
+  return;
+ }
+
+ inviteStatus.textContent=data?.message||"Administrator invitation sent successfully.";
+ document.getElementById("adminInviteEmail").value="";
+}
+
 async function loadAdministrators(){
  const list=document.getElementById("adminList");
  list.textContent="Loading administrators...";
 
  const {data:{session}}=await db.auth.getSession();
 
- if(!session || session.user.id!==OWNER_ID){
+ if(!session||session.user.id!==OWNER_ID){
   list.textContent="Only the website owner can view administrators.";
   return;
  }
@@ -500,13 +530,10 @@ async function removeAdministrator(userId,email){
 
  const {data:{session}}=await db.auth.getSession();
 
- if(!session || session.user.id!==OWNER_ID){
+ if(!session||session.user.id!==OWNER_ID){
   alert("Only the website owner can remove administrators.");
   return;
  }
-
-window.loadAdministrators = loadAdministrators;
-window.removeAdministrator = removeAdministrator;
 
  const {data,error}=await db.functions.invoke("manage-family-admins",{
   body:{action:"remove",user_id:userId}
@@ -526,34 +553,9 @@ window.removeAdministrator = removeAdministrator;
  await loadAdministrators();
 }
 
- if(!email||!/^\S+@\S+\.\S+$/.test(email)){
-  inviteStatus.textContent="Please enter a valid email address.";
-  return;
- }
+window.loadAdministrators=loadAdministrators;
+window.removeAdministrator=removeAdministrator;
 
- inviteButton.disabled=true;
- inviteStatus.textContent="Sending invitation...";
-
- const {data,error}=await db.functions.invoke("manage-family-admins",{
-  body:{action:"invite",email}
- });
-
- inviteButton.disabled=false;
-
- if(error){
-  inviteStatus.textContent="Invitation failed: "+error.message;
-  return;
- }
-
- if(data&&data.error){
-  inviteStatus.textContent="Invitation failed: "+data.error;
-  return;
- }
-
- inviteStatus.textContent=data?.message||"Administrator invitation sent successfully.";
- document.getElementById("adminInviteEmail").value="";
-}
-async function ensureRoot(){
  const {data,error}=await db.from("family_members")
  .select("id").eq("name","Peer Baba").limit(1);
 
