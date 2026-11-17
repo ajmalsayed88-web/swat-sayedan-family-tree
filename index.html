@@ -264,8 +264,14 @@ button.danger{background:#a52b2b}
 <input id="email" type="email" placeholder="Administrator email">
 <input id="password" type="password" placeholder="Password">
 <button onclick="login()">Login</button>
-</div>
 <button class="secondary" onclick="forgotPassword()">Forgot Password?</button>
+</div>
+ <div id="resetPasswordBox" class="hidden">
+  <h3>Set a New Password</h3>
+  <input id="newPassword" type="password" placeholder="New password">
+  <input id="confirmNewPassword" type="password" placeholder="Confirm new password">
+  <button onclick="saveNewPassword()">Update Password</button>
+</div>
 <div id="adminBox" class="hidden">
 <p>Administrator logged in</p>
 <button class="secondary" onclick="logout()">Logout</button>
@@ -436,6 +442,43 @@ async function forgotPassword(){
  }
 
  status("Password reset link sent. Please check your email inbox.");
+}
+ async function saveNewPassword(){
+ const newPassword=document.getElementById("newPassword").value;
+ const confirmPassword=document.getElementById("confirmNewPassword").value;
+
+ if(!newPassword||!confirmPassword){
+  status("Please enter and confirm your new password.");
+  return;
+ }
+
+ if(newPassword.length<8){
+  status("Password must be at least 8 characters.");
+  return;
+ }
+
+ if(newPassword!==confirmPassword){
+  status("Passwords do not match.");
+  return;
+ }
+
+ status("Updating password...");
+
+ const {error}=await db.auth.updateUser({password:newPassword});
+
+ if(error){
+  status("Password update failed: "+error.message);
+  return;
+ }
+
+ await db.auth.signOut();
+
+ document.getElementById("resetPasswordBox").classList.add("hidden");
+ document.getElementById("loginBox").classList.remove("hidden");
+ document.getElementById("newPassword").value="";
+ document.getElementById("confirmNewPassword").value="";
+
+ status("Password updated successfully. You can now log in.");
 }
 async function logout(){
  await db.auth.signOut();
