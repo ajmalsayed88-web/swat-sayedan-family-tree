@@ -571,6 +571,48 @@ button.danger{
  Admin Login
 </button>
 </header>
+ 
+<div id="dashboardBackdrop" class="dashboard-backdrop hidden"
+ onclick="closeDashboard()"></div>
+
+<nav id="dashboardPanel" class="dashboard-panel"
+ aria-label="Website dashboard">
+
+ <div class="dashboard-heading">
+  <strong>Swat Sayedan</strong>
+  <button type="button" class="dashboard-close"
+   onclick="closeDashboard()">×</button>
+ </div>
+
+ <p class="dashboard-caption">Family Heritage Dashboard</p>
+
+ <button class="dashboard-item"
+  onclick="dashboardGo('home')">⌂ Home</button>
+
+ <button class="dashboard-item"
+  onclick="dashboardGo('tree')">♧ Family Tree</button>
+
+ <button class="dashboard-item"
+  onclick="dashboardGo('search')">⌕ Search Family Members</button>
+
+ <div class="dashboard-divider"></div>
+
+ <p class="dashboard-section-title">Administration</p>
+
+ <button id="dashboardLogin" class="dashboard-item"
+  onclick="dashboardGo('login')">Admin Login</button>
+
+ <button id="dashboardAdminPanel" class="dashboard-item hidden"
+  onclick="dashboardGo('admin')">Administrator Panel</button>
+
+ <button id="dashboardAddMember" class="dashboard-item hidden"
+  onclick="dashboardGo('add')">Add Family Member</button>
+
+ <button id="dashboardManageAdmins" class="dashboard-item hidden"
+  onclick="dashboardGo('manage')">Manage Administrators</button>
+
+</nav>
+
 
 
 <div id="loginModal" class="login-modal hidden">
