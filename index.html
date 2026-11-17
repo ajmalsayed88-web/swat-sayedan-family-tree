@@ -505,6 +505,9 @@ async function removeAdministrator(userId,email){
   return;
  }
 
+window.loadAdministrators = loadAdministrators;
+window.removeAdministrator = removeAdministrator;
+
  const {data,error}=await db.functions.invoke("manage-family-admins",{
   body:{action:"remove",user_id:userId}
  });
