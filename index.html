@@ -440,6 +440,107 @@ button.danger{
  font-size:13px
 }
 
+/* DASHBOARD MENU */
+.dashboard-toggle{
+ position:absolute;
+ top:18px;
+ left:22px;
+ width:auto;
+ min-width:130px;
+ padding:11px 18px;
+ background:rgba(255,255,255,.15);
+ color:white;
+ border:1px solid rgba(255,255,255,.6);
+ border-radius:9px;
+ cursor:pointer;
+ font-weight:600;
+ z-index:10;
+}
+
+.dashboard-backdrop{
+ position:fixed;
+ inset:0;
+ background:rgba(0,0,0,.45);
+ z-index:9990;
+}
+
+.dashboard-panel{
+ position:fixed;
+ top:0;
+ left:0;
+ bottom:0;
+ width:300px;
+ max-width:85vw;
+ background:#fff;
+ padding:22px;
+ z-index:9991;
+ box-shadow:4px 0 20px rgba(0,0,0,.2);
+ overflow-y:auto;
+ transform:translateX(-110%);
+ transition:transform .3s ease;
+}
+
+.dashboard-panel.open{
+ transform:translateX(0);
+}
+
+.dashboard-heading{
+ display:flex;
+ justify-content:space-between;
+ align-items:center;
+ color:#145c3b;
+ font-size:20px;
+}
+
+.dashboard-close{
+ width:35px;
+ height:35px;
+ padding:0;
+ background:#eee;
+ color:#333;
+ border:0;
+ border-radius:7px;
+ font-size:24px;
+ cursor:pointer;
+}
+
+.dashboard-caption{
+ color:#777;
+ font-size:13px;
+ margin:8px 0 22px;
+}
+
+.dashboard-item{
+ display:block;
+ width:100%;
+ padding:12px;
+ margin:6px 0;
+ text-align:left;
+ background:transparent;
+ color:#145c3b;
+ border:0;
+ border-radius:8px;
+ cursor:pointer;
+ font-size:15px;
+}
+
+.dashboard-item:hover{
+ background:#eaf4ee;
+}
+
+.dashboard-divider{
+ height:1px;
+ background:#ddd;
+ margin:18px 0;
+}
+
+.dashboard-section-title{
+ color:#888;
+ font-size:12px;
+ text-transform:uppercase;
+ letter-spacing:1px;
+}
+
 @media(max-width:600px){
  
 </style>
