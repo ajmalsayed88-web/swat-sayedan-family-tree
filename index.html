@@ -985,6 +985,35 @@ header.hero {
     }
 }
 
+/* INDEPENDENT UPPER SECTION */
+.upper-section {
+    height: 540px;
+    max-height: 70vh;
+    min-height: 400px;
+    overflow-y: auto;
+    overflow-x: hidden;
+    overscroll-behavior: contain;
+    scrollbar-width: thin;
+    scrollbar-color: #b89545 #e8eee8;
+    border-radius: 22px;
+}
+
+.upper-section .hero {
+    min-height: 540px;
+    height: auto;
+}
+
+@media (max-width: 600px) {
+    .upper-section {
+        height: 480px;
+        min-height: 350px;
+    }
+
+    .upper-section .hero {
+        min-height: 480px;
+    }
+}
+
 </style>
 </head>
 
