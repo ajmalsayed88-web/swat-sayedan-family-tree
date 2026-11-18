@@ -1675,6 +1675,31 @@ function collapseAll(){
 // FAMILY TREE GESTURE ZOOM AND DRAG
 const treeViewport = document.getElementById("treeScroll");
 const treeCanvas = document.getElementById("tree");
+const horizontalBar = document.getElementById("treeHorizontalScroll");
+const horizontalSpacer = document.getElementById("treeHorizontalSpacer");
+
+function updateHorizontalBar(){
+ horizontalSpacer.style.width = treeViewport.scrollWidth + "px";
+ horizontalBar.scrollLeft = treeViewport.scrollLeft;
+}
+
+horizontalBar.addEventListener("scroll",()=>{
+ treeViewport.scrollLeft = horizontalBar.scrollLeft;
+});
+
+treeViewport.addEventListener("scroll",()=>{
+ horizontalBar.scrollLeft = treeViewport.scrollLeft;
+});
+
+new ResizeObserver(updateHorizontalBar).observe(treeCanvas);
+new MutationObserver(updateHorizontalBar).observe(treeCanvas,{
+ childList:true,
+ subtree:true
+});
+
+window.addEventListener("resize",updateHorizontalBar);
+updateHorizontalBar();
+
 let treeZoom = 1;
 const activePointers = new Map();
 let panStart = null;
