@@ -1582,7 +1582,17 @@ function expandAll(){
    expandedIds.add(String(m.id));
   }
  });
+let treeZoom = 1;
 
+function changeTreeZoom(amount){
+ treeZoom = Math.min(2, Math.max(0.4, treeZoom + amount));
+ document.getElementById("tree").style.zoom = treeZoom;
+}
+
+function resetTreeZoom(){
+ treeZoom = 1;
+ document.getElementById("tree").style.zoom = 1;
+}
  renderTree();
 
  const tree = document.getElementById("tree");
