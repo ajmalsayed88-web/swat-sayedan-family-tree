@@ -1410,17 +1410,23 @@ Tap a person's card to open their children. Tap again to close their family bran
  id="searchInput"
  type="search"
  placeholder="Search family member by name"
- oninput="searchFamily()"
->
+ 
+<div class="tree-controls">
+    <button class="secondary" onclick="expandAll()">Expand</button>
+
+    <input
+        id="searchInput"
+        type="search"
+        placeholder="Search name..."
+        oninput="searchFamily()"
+    >
+
+    <button class="secondary" onclick="collapseAll()">Collapse</button>
+</div>
 
 <p id="searchStatus" class="small">
-Type a name to find a family member.
+    Type a name to find a family member.
 </p>
-
-<div class="tree-controls">
-<button class="secondary" onclick="expandAll()">Expand all</button>
-<button class="secondary" onclick="collapseAll()">Collapse all</button>
-</div>
 
 <div class="tree-scroll" id="treeScroll">
 <div id="tree" class="tree-canvas"></div>
