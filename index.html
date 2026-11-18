@@ -1219,6 +1219,36 @@ header.hero {
     background: linear-gradient(90deg, #176344, #c9a44c);
 }
 
+/* MOBILE FAMILY TREE OPTIMIZATION */
+@media (max-width: 600px) {
+    #familyTreeSection {
+        padding: 12px;
+        border-radius: 14px;
+    }
+
+    #familyTreeSection .tree-scroll {
+        -webkit-overflow-scrolling: touch;
+        touch-action: pan-x pan-y;
+    }
+
+    #tree .children-row {
+        gap: 18px;
+    }
+
+    #tree .person {
+        font-size: 14px;
+    }
+
+    #tree .person.root {
+        min-width: 210px;
+    }
+
+    #searchInput {
+        width: 100%;
+        box-sizing: border-box;
+    }
+}
+
 </style>
 </head>
 
