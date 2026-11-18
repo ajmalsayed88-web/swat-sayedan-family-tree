@@ -1588,12 +1588,14 @@ function expandAll(){
  const container = document.querySelector(".tree-scroll");
 
  requestAnimationFrame(()=>{
+ requestAnimationFrame(()=>{
   container.scrollLeft =
-   (tree.scrollWidth - container.clientWidth) / 2;
+   Math.max(0,(container.scrollWidth-container.clientWidth)/2);
 
   container.scrollTop =
-   (tree.scrollHeight - container.clientHeight) / 2;
+   Math.max(0,(container.scrollHeight-container.clientHeight)/2);
  });
+});
 
  status("All family branches expanded and centred.");
 }
