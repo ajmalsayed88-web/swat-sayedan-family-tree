@@ -1063,6 +1063,58 @@ header.hero {
     color: #f5d98b;
 }
 
+/* CLEARER FAMILY MEMBER CARDS */
+#tree {
+    --person-width: 210px;
+}
+
+#tree .person {
+    width: var(--person-width);
+    min-height: 85px;
+    padding: 18px 14px;
+    border: 1.5px solid #b8d2bf;
+    border-radius: 16px;
+    background: linear-gradient(145deg, #ffffff, #edf6ef);
+    line-height: 1.45;
+}
+
+#tree .person strong {
+    display: block;
+    font-size: 16px;
+    line-height: 1.4;
+    font-weight: 700;
+    overflow-wrap: anywhere;
+}
+
+#tree .person .small {
+    margin-top: 7px;
+    font-size: 13px;
+    line-height: 1.4;
+    color: #456b52;
+    overflow-wrap: anywhere;
+}
+
+#tree .person .expand-hint {
+    margin-top: 10px;
+    font-size: 12px;
+    font-weight: 700;
+}
+
+#tree .person:focus-visible {
+    outline: 3px solid #c9a44c;
+    outline-offset: 4px;
+}
+
+@media (max-width: 600px) {
+    #tree {
+        --person-width: 185px;
+    }
+
+    #tree .person strong {
+        font-size: 15px;
+    }
+}
+
 </style>
 </head>
 
