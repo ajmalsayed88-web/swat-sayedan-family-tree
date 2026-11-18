@@ -1580,9 +1580,20 @@ function expandAll(){
  });
 
  renderTree();
- status("All family branches expanded.");
-}
 
+ const tree = document.getElementById("tree");
+ const container = document.querySelector(".tree-scroll");
+
+ requestAnimationFrame(()=>{
+  container.scrollLeft =
+   (tree.scrollWidth - container.clientWidth) / 2;
+
+  container.scrollTop =
+   (tree.scrollHeight - container.clientHeight) / 2;
+ });
+
+ status("All family branches expanded and centred.");
+}
 function collapseAll(){
  expandedIds.clear();
  renderTree();
