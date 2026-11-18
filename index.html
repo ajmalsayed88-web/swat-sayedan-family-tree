@@ -955,6 +955,36 @@ header.hero {
     display: none;
 }
 
+/* INDEPENDENT FAMILY TREE SCROLLING */
+#familyTreeSection {
+    display: flex;
+    flex-direction: column;
+    min-height: 0;
+}
+
+#familyTreeSection .tree-scroll {
+    height: 65vh;
+    min-height: 450px;
+    max-height: 750px;
+    overflow-x: auto;
+    overflow-y: auto;
+    overscroll-behavior: contain;
+    scrollbar-width: thin;
+    scrollbar-color: #b89545 #e8eee8;
+}
+
+#familyTreeSection .tree-canvas {
+    min-width: max-content;
+    min-height: 100%;
+}
+
+@media (max-width: 600px) {
+    #familyTreeSection .tree-scroll {
+        height: 65vh;
+        min-height: 350px;
+    }
+}
+
 </style>
 </head>
 
