@@ -907,6 +907,54 @@ html {
  padding-left:0 !important;
  padding-right:0 !important;
 }
+    
+/* MANG LOR SAYEDAN HEADER DESIGN */
+header.hero {
+    min-height: 540px;
+    width: 100%;
+    padding: 75px 25px;
+    border-radius: 22px;
+}
+
+.hero-logo {
+    width: 175px;
+    height: 175px;
+    margin-bottom: 28px;
+}
+
+.hero h1 {
+    font-size: clamp(38px, 5vw, 54px);
+    letter-spacing: 2px;
+    margin-bottom: 22px;
+}
+
+.hero-description {
+    max-width: 720px;
+    font-size: 18px;
+    line-height: 1.8;
+}
+
+@media (max-width: 600px) {
+    header.hero {
+        min-height: 480px;
+        padding: 55px 15px;
+    }
+
+    .hero-logo {
+        width: 145px;
+        height: 145px;
+    }
+
+    .hero h1 {
+        font-size: 35px;
+    }
+}
+
+/* REMOVE MIDDLE HEADING */
+#familyTreeSection > h2 {
+    display: none;
+}
+
 </style>
 </head>
 
