@@ -1167,6 +1167,38 @@ header.hero {
     color: #819487;
 }
 
+/* FAMILY TREE CONTROL BUTTONS */
+.tree-controls {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 12px;
+    margin: 16px 0;
+}
+
+.tree-controls button {
+    min-height: 42px;
+    padding: 10px 20px;
+    border-radius: 10px;
+    font-size: 14px;
+    font-weight: 700;
+    background: linear-gradient(135deg, #145c3b, #176344);
+    border: 1px solid #c9a44c;
+    transition: transform 0.2s, box-shadow 0.2s;
+}
+
+.tree-controls button:hover {
+    background: #0b3828;
+    box-shadow: 0 5px 14px rgba(20, 92, 59, 0.2);
+    transform: translateY(-2px);
+}
+
+@media (max-width: 600px) {
+    .tree-controls button {
+        flex: 1;
+        padding: 10px;
+    }
+}
+
 </style>
 </head>
 
