@@ -739,6 +739,97 @@ header.hero,
  margin-right:0 !important;
 }
 }
+    
+/* ===== ROYAL HERITAGE DESIGN UPGRADE ===== */
+
+:root {
+  --green: #103d32;
+  --dark-green: #082c23;
+  --gold: #c9a34e;
+  --light-green: #edf4ef;
+  --text: #193b2c;
+}
+
+/* Homepage hero */
+header.hero {
+  background:
+    radial-gradient(circle at top, #28674e 0%, transparent 55%),
+    linear-gradient(135deg, #082c23, #145c3b, #103d32);
+  border: 2px solid var(--gold);
+  border-radius: 20px;
+  box-shadow: 0 12px 35px rgba(8, 44, 35, 0.20);
+  overflow: hidden;
+}
+
+.hero h1 {
+  color: #f4d58a;
+  font-size: clamp(30px, 5vw, 46px);
+  letter-spacing: 1.5px;
+  text-shadow: 0 3px 12px #0005;
+}
+
+.hero-description {
+  color: #f0f4ef;
+  max-width: 680px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.hero-logo {
+  border: 3px solid var(--gold);
+  box-shadow: 0 8px 25px #0005;
+}
+
+/* Premium buttons */
+.hero-button {
+  background: linear-gradient(135deg, #f5dc9c, #c9a34e);
+  color: #103d32;
+  border: 1px solid #f8e6b7;
+  border-radius: 30px;
+  font-weight: 800;
+  box-shadow: 0 6px 18px #0003;
+}
+
+.hero-button:hover {
+  transform: translateY(-3px);
+  filter: brightness(1.05);
+}
+
+/* Dashboard */
+.dashboard-panel {
+  background: #fbfaf5;
+  border-right: 3px solid var(--gold);
+  box-shadow: 8px 0 30px #0002;
+}
+
+.dashboard-heading {
+  color: var(--green);
+  padding-bottom: 14px;
+  border-bottom: 2px solid #e6d5aa;
+}
+
+.dashboard-item {
+  color: var(--green);
+  transition: background .2s ease, padding .2s ease;
+}
+
+.dashboard-item:hover {
+  background: #e8f1e9;
+  padding-left: 18px;
+}
+
+/* Content cards */
+.card {
+  border: 1px solid #e4d8b9;
+  border-radius: 16px;
+  box-shadow: 0 6px 22px rgba(16, 61, 50, .08);
+}
+
+/* Smooth page movement */
+html {
+  scroll-behavior: smooth;
+}
+
 </style>
 </head>
 
