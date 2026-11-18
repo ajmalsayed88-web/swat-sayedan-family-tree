@@ -543,8 +543,8 @@ width:calc(100% - 36px);
  content:"";
  position:absolute;
  top:0;
- left:calc(var(--person-width)/2);
- right:calc(var(--person-width)/2);
+ left:var(--connector-left, calc(var(--person-width)/2));
+ right:var(--connector-right, calc(var(--person-width)/2));
  border-top:4px solid var(--line);
 }
 
