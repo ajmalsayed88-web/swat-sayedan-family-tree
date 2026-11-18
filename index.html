@@ -1531,7 +1531,24 @@ function getConnectedIds(root){
 
  return connected;
 }
+function updateConnectorLines(){
+ const scale=parseFloat(document.getElementById("tree").style.zoom)||1;
 
+ document.querySelectorAll("#tree .children-row").forEach(row=>{
+  const cards=row.querySelectorAll(":scope > .family-node > .person");
+  if(!cards.length)return;
+
+  const rowRect=row.getBoundingClientRect();
+  const first=cards[0].getBoundingClientRect();
+  const last=cards[cards.length-1].getBoundingClientRect();
+
+  const left=(first.left+first.width/2-rowRect.left)/scale;
+  const right=(rowRect.right-last.left-last.width/2)/scale;
+
+  row.style.setProperty("--connector-left",Math.max(0,left)+"px");
+  row.style.setProperty("--connector-right",Math.max(0,right)+"px");
+ });
+}
 function renderTree(){
  const box=document.getElementById("tree");
  box.innerHTML="";
