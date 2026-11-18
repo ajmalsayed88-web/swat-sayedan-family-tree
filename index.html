@@ -1358,7 +1358,10 @@ html, body {
 .upper-section.tree-view-active {
     display: none !important;
 }
-
+/* HIDE PAGE VERTICAL SCROLLBAR ON HOME */
+body:has(.upper-section:not(.tree-view-active)) {
+    overflow-y: hidden !important;
+}
 </style>
 </head>
 
