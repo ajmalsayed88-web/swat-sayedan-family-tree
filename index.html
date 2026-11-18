@@ -983,7 +983,11 @@ Type a name to find a family member.
 <button class="secondary" onclick="expandAll()">Expand all</button>
 <button class="secondary" onclick="collapseAll()">Collapse all</button>
 </div>
-
+<div class="tree-zoom-controls">
+ <button type="button" onclick="changeTreeZoom(0.1)">+</button>
+ <button type="button" onclick="changeTreeZoom(-0.1)">−</button>
+ <button type="button" onclick="resetTreeZoom()">Reset View</button>
+</div>
 <div class="tree-scroll" id="treeScroll">
 <div id="tree" class="tree-canvas"></div>
 </div>
