@@ -1322,9 +1322,9 @@ class="hero-logo">
   <p class="hero-description">
   Discover our roots, honour our ancestors, and preserve the proud heritage of Manglor Sayedan for future generations.
   </p>
-  <button class="hero-button" onclick="document.getElementById('familyTreeSection').scrollIntoView({behavior:'smooth'})">
-   Explore Family Tree ↓
-  </button>
+  <button class="hero-button" onclick="showFamilyTree()">
+    Explore Family Tree →
+</button>
  </div>
 
 </header>
@@ -1429,7 +1429,7 @@ class="hero-logo">
 <button class="secondary hidden" id="cancelEdit" onclick="cancelEditing()">Cancel Edit</button>
 </section>
 
-<section class="card" id="familyTreeSection">
+<section class="card hidden" id="familyTreeSection">
  <p class="section-intro">Explore the roots, generations, and connections of Manglor Sayedan.</p>
 <h2>Family Heritage & Ancestral Tree</h2>
 
