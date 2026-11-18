@@ -1676,7 +1676,15 @@ const treeViewport = document.getElementById("treeScroll");
 const treeCanvas = document.getElementById("tree");
 const horizontalBar = document.getElementById("treeHorizontalScroll");
 const horizontalSpacer = document.getElementById("treeHorizontalSpacer");
+const treeSection = document.getElementById("familyTreeSection");
 
+const treeObserver = new IntersectionObserver(entries=>{
+ entries.forEach(entry=>{
+  horizontalBar.classList.toggle("is-visible",entry.isIntersecting);
+ });
+},{threshold:0.05});
+
+treeObserver.observe(treeSection);
 function updateHorizontalBar(){
  horizontalSpacer.style.width = treeViewport.scrollWidth + "px";
  horizontalBar.scrollLeft = treeViewport.scrollLeft;
