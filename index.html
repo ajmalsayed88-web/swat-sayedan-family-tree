@@ -1014,6 +1014,31 @@ header.hero {
     }
 }
 
+/* FAMILY TREE SPACING IMPROVEMENT */
+#tree .children-row {
+    gap: 24px;
+    margin-top: 50px;
+    padding-top: 42px;
+}
+
+#tree .children-row:before,
+#tree .children-row:after,
+#tree .children-row > .family-node:before {
+    border-width: 2px;
+}
+
+#tree .person {
+    border-radius: 14px;
+    padding: 17px 12px;
+    box-shadow: 0 5px 16px rgba(20, 92, 59, 0.12);
+}
+
+@media (max-width: 600px) {
+    #tree .children-row {
+        gap: 18px;
+    }
+}
+
 </style>
 </head>
 
