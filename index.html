@@ -380,7 +380,26 @@ button.danger{
  touch-action:pan-x;
 overflow-x: scroll;
 overflow-y: hidden;
+}
 
+.tree-scroll::-webkit-scrollbar{
+ height:14px;
+}
+
+.tree-scroll::-webkit-scrollbar-track{
+ background:#dce9df;
+ border-radius:10px;
+}
+
+.tree-scroll::-webkit-scrollbar-thumb{
+ background:#176344;
+ border:2px solid #dce9df;
+ border-radius:10px;
+}
+
+.tree-scroll{
+ scrollbar-width:auto;
+ scrollbar-color:#176344 #dce9df;
 }
 
 
