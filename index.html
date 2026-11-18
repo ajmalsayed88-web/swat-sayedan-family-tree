@@ -985,22 +985,19 @@ header.hero {
     }
 }
 
-/* INDEPENDENT UPPER SECTION */
+
+/* UPPER SECTION - NO INTERNAL SCROLLING */
 .upper-section {
-    height: 540px;
-    max-height: 70vh;
-    min-height: 400px;
-    overflow-y: auto;
-    overflow-x: hidden;
-    overscroll-behavior: contain;
-    scrollbar-width: thin;
-    scrollbar-color: #b89545 #e8eee8;
+    height: auto !important;
+    max-height: none !important;
+    min-height: 0 !important;
+    overflow: visible !important;
     border-radius: 22px;
 }
 
 .upper-section .hero {
-    min-height: 540px;
-    height: auto;
+    height: auto !important;
+    min-height: 0 !important;
 }
 
 @media (max-width: 600px) {
