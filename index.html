@@ -1633,7 +1633,7 @@ function pointerDistance(a,b){
 treeViewport.addEventListener("pointerdown",event=>{
  if(event.pointerType==="mouse" && event.button!==0)return;
 
- treeViewport.setPointerCapture(event.pointerId);
+ event.target.setPointerCapture(event.pointerId);
  activePointers.set(event.pointerId,{x:event.clientX,y:event.clientY});
 
  if(activePointers.size===1){
