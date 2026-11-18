@@ -1115,6 +1115,21 @@ header.hero {
     }
 }
 
+/* FAMILY CARD HOVER EFFECT */
+#tree .person {
+    transition: transform 0.2s ease,
+                box-shadow 0.2s ease,
+                border-color 0.2s ease;
+}
+
+@media (hover: hover) {
+    #tree .person:hover {
+        transform: translateY(-5px);
+        border-color: #c9a44c;
+        box-shadow: 0 10px 24px rgba(20, 92, 59, 0.18);
+    }
+}
+
 </style>
 </head>
 
