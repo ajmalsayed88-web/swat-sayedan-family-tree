@@ -1299,6 +1299,11 @@ header.hero {
     box-sizing: border-box !important;
 }
 
+/* SWITCH BETWEEN HOME AND FAMILY TREE */
+.upper-section.tree-view-active {
+    display: none !important;
+}
+
 </style>
 </head>
 
@@ -2407,44 +2412,44 @@ function showHome() {
     window.scrollTo({top:0, behavior:"smooth"});
 }
 
+
 function dashboardGo(destination){
- closeDashboard();
+    closeDashboard();
 
- if(destination==="home"){
-  window.scrollTo({top:0,behavior:"smooth"});
- }
+    if(destination === "home"){
+        showHome();
+    }
 
- else if(destination==="tree"){
-  document.getElementById("familyTreeSection")
-   .scrollIntoView({behavior:"smooth"});
- }
+    else if(destination === "tree"){
+        showFamilyTree();
+    }
 
- else if(destination==="search"){
-  document.getElementById("familyTreeSection")
-   .scrollIntoView({behavior:"smooth"});
+    else if(destination === "search"){
+        showFamilyTree();
 
-  setTimeout(()=>{
-   document.getElementById("searchInput").focus();
-  },350);
- }
+        setTimeout(()=>{
+            document.getElementById("searchInput").focus();
+        },400);
+    }
 
- else if(destination==="add"){
-  document.getElementById("addBox")
-   .scrollIntoView({behavior:"smooth"});
- }
+    else if(destination === "add"){
+        document.getElementById("addBox")
+            .scrollIntoView({behavior:"smooth"});
+    }
 
- else if(destination==="login" ||
-         destination==="admin" ||
-         destination==="manage"){
+    else if(destination === "login" ||
+            destination === "admin" ||
+            destination === "manage"){
 
-  document.getElementById("loginModal")
-   .classList.remove("hidden");
+        document.getElementById("loginModal")
+            .classList.remove("hidden");
 
-  if(destination==="manage" && isAdmin){
-   loadAdministrators();
-  }
- }
+        if(destination === "manage" && isAdmin){
+            loadAdministrators();
+        }
+    }
 }
+
 
 async function start(){
  if(SUPABASE_URL.includes("PASTE_")||SUPABASE_KEY.includes("PASTE_")){
