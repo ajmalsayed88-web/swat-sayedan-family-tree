@@ -2162,6 +2162,58 @@ function updateHomeStats(){
   list.appendChild(item);
  });
 }
+    function showFamilyBranch(branch){
+ const matches=members.filter(m=>
+  String(m.branch||"").trim()===branch
+ );
+
+ if(!matches.length)return;
+
+ closeDashboard();
+
+ const map=new Map(members.map(m=>[String(m.id),m]));
+
+ matches.forEach(member=>{
+  let current=member;
+  const visited=new Set();
+
+  while(current && current.father_id){
+   const key=String(current.id);
+   if(visited.has(key))break;
+   visited.add(key);
+
+   expandedIds.add(String(current.father_id));
+   current=map.get(String(current.father_id));
+  }
+ });
+
+ showFamilyTree();
+ renderTree();
+
+ document.getElementById("searchInput").value="";
+ document.getElementById("searchStatus").textContent=
+  matches.length+" member(s) in branch: "+branch;
+
+ requestAnimationFrame(()=>{
+  const ids=new Set(matches.map(m=>String(m.id)));
+  const visible=[];
+
+  document.querySelectorAll(".person").forEach(card=>{
+   if(ids.has(card.dataset.memberId)){
+    card.classList.add("search-match");
+    visible.push(card);
+   }
+  });
+
+  if(visible.length){
+   visible[0].scrollIntoView({
+    behavior:"smooth",
+    block:"center",
+    inline:"center"
+   });
+  }
+ });
+}
     function renderFamilyBranches(){
  const list=document.getElementById("familyBranchesList");
  if(!list)return;
