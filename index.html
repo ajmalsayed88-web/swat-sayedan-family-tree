@@ -2140,30 +2140,74 @@ function getConnectedIds(root){
 
  return connected;
 }
-    function updateTreeBranchLayout(){
- const nodes=Array.from(
-  document.querySelectorAll("#tree .family-node")
+    
+function updateTreeBranchLayout(){
+ const rows=Array.from(
+  document.querySelectorAll("#tree .children-row")
  ).reverse();
 
- nodes.forEach(node=>{
-  const card=node.querySelector(":scope > .person");
-  const row=node.querySelector(":scope > .children-row");
+ rows.forEach(parentRow=>{
+  const siblings=Array.from(
+   parentRow.querySelectorAll(":scope > .family-node")
+  );
 
-  node.style.paddingBottom="0px";
+  const placed=[];
 
-  if(!card||!row)return;
+  siblings.forEach(node=>{
+   const card=node.querySelector(":scope > .person");
+   const childRow=node.querySelector(":scope > .children-row");
 
-  const cardHeight=card.offsetHeight;
-  const rowTop=cardHeight+48;
+   node.style.paddingBottom="0px";
 
-  row.style.top=rowTop+"px";
+   if(!card||!childRow)return;
 
-  const totalHeight=rowTop+row.offsetHeight;
+   const cardHeight=card.offsetHeight;
+   const baseTop=cardHeight+48;
 
-  node.style.paddingBottom=
-   Math.max(0,totalHeight-cardHeight)+"px";
+   childRow.style.top=baseTop+"px";
+   childRow.style.setProperty("--branch-lane","0px");
+
+   const initialRect=childRow.getBoundingClientRect();
+   let targetTop=initialRect.top;
+
+   placed.forEach(previous=>{
+    const overlaps=
+     initialRect.left < previous.right+16 &&
+     initialRect.right > previous.left-16;
+
+    if(overlaps){
+     targetTop=Math.max(
+      targetTop,
+      previous.bottom+36
+     );
+    }
+   });
+
+   const extraSpace=targetTop-initialRect.top;
+
+   childRow.style.top=(baseTop+extraSpace)+"px";
+   childRow.style.setProperty(
+    "--branch-lane",
+    extraSpace+"px"
+   );
+
+   const finalRect=childRow.getBoundingClientRect();
+
+   placed.push({
+    left:finalRect.left,
+    right:finalRect.right,
+    bottom:finalRect.bottom
+   });
+
+   node.style.paddingBottom=
+    Math.max(
+     0,
+     baseTop+extraSpace+childRow.offsetHeight-cardHeight
+    )+"px";
+  });
  });
 }
+
 function updateConnectorLines(){
  const scale=parseFloat(document.getElementById("tree").style.zoom)||1;
 
