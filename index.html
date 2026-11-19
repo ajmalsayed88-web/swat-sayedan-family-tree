@@ -2543,12 +2543,6 @@ async function loadAdministrators(){
   const row=document.createElement("div");
   row.style.cssText="padding:10px 0;border-bottom:1px solid #ddd";
 
-  const label=document.createElement("div");
-  label.textContent=(admin.email||"Unknown email")+
-   (admin.is_owner?" (Website Owner)":"");
-
-  row.appendChild(label);
-
   if(!admin.is_owner){
    const btn=document.createElement("button");
    btn.className="danger";
