@@ -2193,12 +2193,39 @@ function searchFamily(){
  }
 }
 
+
 function expandAll(){
  members.forEach(m=>{
   if(getChildren(m.id).length){
    expandedIds.add(String(m.id));
   }
  });
+
+ renderTree();
+
+ requestAnimationFrame(()=>{
+  requestAnimationFrame(()=>{
+   treeCanvas.style.zoom = 1;
+   treeZoom = 1;
+
+   fitTreeToViewport();
+   treeHasAutoFit = true;
+
+   requestAnimationFrame(()=>{
+    treeViewport.scrollLeft = Math.max(
+     0,
+     (treeViewport.scrollWidth - treeViewport.clientWidth) / 2
+    );
+
+    updateHorizontalBar();
+    updateConnectorLines();
+   });
+  });
+ });
+
+ status("Family branches expanded and screen fit adjusted.");
+}
+
 
  renderTree();
 
