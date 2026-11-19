@@ -2231,7 +2231,13 @@ function updateHomeStats(){
  closeDashboard();
 
  expandedIds.add(String(root.id));
+ showFamilyTree();
+ renderTree(root);
 
+ document.getElementById("searchInput").value="";
+ document.getElementById("searchStatus").textContent=
+  "Family branch: "+branch.name;
+}
     async function renderFamilyBranches(){
  const list=document.getElementById("familyBranchesList");
  if(!list)return;
