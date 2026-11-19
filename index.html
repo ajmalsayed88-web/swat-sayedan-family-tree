@@ -2616,40 +2616,53 @@ function loadFatherOptions(){
 }
 
 function toggleBranch(id){
- if(expandedIds.has(String(id))){
-  expandedIds.delete(String(id));
+ const viewport=document.getElementById("treeScroll");
+ const memberId=String(id);
+ const pageX=window.scrollX;
+ const pageY=window.scrollY;
+
+ let oldPosition=null;
+
+ document.querySelectorAll(".person").forEach(card=>{
+  if(card.dataset.memberId===memberId){
+   const rect=card.getBoundingClientRect();
+   oldPosition={left:rect.left,top:rect.top};
+  }
+ });
+
+ if(expandedIds.has(memberId)){
+  expandedIds.delete(memberId);
  }else{
-  expandedIds.add(String(id));
+  expandedIds.add(memberId);
  }
 
  renderTree();
-}
 
-function makePersonCard(m){
- const node=document.createElement("div");
- node.className="family-node";
+ requestAnimationFrame(()=>{
+  let updatedCard=null;
 
- const card=document.createElement("div");
- card.className="person"+(m.name==="Peer Baba"?" root":"");
- card.dataset.memberId=m.id;
-
- const children=getChildren(m.id);
- const hasChildren=children.length>0;
-
- if(hasChildren){
-  card.classList.add("has-children");
-  card.setAttribute("role","button");
-  card.setAttribute("tabindex","0");
-  card.setAttribute("aria-expanded",expandedIds.has(String(m.id))?"true":"false");
-
-  card.onclick=()=>toggleBranch(m.id);
-  card.onkeydown=(event)=>{
-   if(event.key==="Enter"||event.key===" "){
-    event.preventDefault();
-    toggleBranch(m.id);
+  document.querySelectorAll(".person").forEach(card=>{
+   if(card.dataset.memberId===memberId){
+    updatedCard=card;
    }
-  };
- }
+  });
+
+  if(updatedCard && oldPosition){
+   const newPosition=updatedCard.getBoundingClientRect();
+   const zoom=Math.max(treeZoom||1,0.2);
+
+   viewport.scrollLeft+=
+    (newPosition.left-oldPosition.left)/zoom;
+
+   viewport.scrollTop+=
+    (newPosition.top-oldPosition.top)/zoom;
+  }
+
+  window.scrollTo(pageX,pageY);
+  updateHorizontalBar();
+  updateConnectorLines();
+ });
+}
 
  const name=document.createElement("strong");
  name.textContent=m.name;
