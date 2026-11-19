@@ -2282,6 +2282,37 @@ function setTreeZoom(value, focalX, focalY){
  treeViewport.scrollTop = contentY * newZoom - y;
 }
 
+/* AUTOMATIC FAMILY TREE SCREEN FIT */
+let treeHasAutoFit = false;
+
+function fitTreeToViewport() {
+    if (!treeViewport || !treeCanvas || !treeCanvas.children.length) {
+        return false;
+    }
+
+    const availableWidth = Math.max(200, treeViewport.clientWidth - 36);
+    const naturalWidth = treeCanvas.scrollWidth;
+
+    if (!naturalWidth) return false;
+
+    const fitScale = Math.min(1, availableWidth / naturalWidth);
+
+    treeZoom = Math.max(0.35, fitScale);
+    treeCanvas.style.zoom = treeZoom;
+
+    requestAnimationFrame(() => {
+        treeViewport.scrollLeft = Math.max(
+            0,
+            (treeViewport.scrollWidth - treeViewport.clientWidth) / 2
+        );
+
+        updateHorizontalBar();
+        updateConnectorLines();
+    });
+
+    return true;
+}
+
 function showFamilyTree() {
     document.querySelector(".upper-section").classList.add("tree-view-active");
 
