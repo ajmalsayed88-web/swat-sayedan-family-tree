@@ -2177,15 +2177,66 @@ function updateHomeStats(){
   let current=member;
   const visited=new Set();
 
-  while(current && current.father_id){
+  while(current){
    const key=String(current.id);
    if(visited.has(key))break;
    visited.add(key);
 
-   expandedIds.add(String(current.father_id));
-   current=map.get(String(current.father_id));
+   if(current.father_id){
+    expandedIds.add(String(current.father_id));
+    current=map.get(String(current.father_id));
+   }else{
+    break;
+   }
   }
  });
+
+ showFamilyTree();
+ renderTree();
+
+ document.getElementById("searchInput").value="";
+ document.getElementById("searchStatus").textContent=
+  matches.length+" member(s) in branch: "+branch;
+
+ requestAnimationFrame(()=>{
+  requestAnimationFrame(()=>{
+   requestAnimationFrame(()=>{
+    const ids=new Set(matches.map(m=>String(m.id)));
+    let first=null;
+
+    document.querySelectorAll(".person").forEach(card=>{
+     if(ids.has(card.dataset.memberId)){
+      card.classList.add("search-match");
+      if(!first)first=card;
+     }
+    });
+
+    if(!first)return;
+
+    const viewport=document.getElementById("treeScroll");
+    const cardRect=first.getBoundingClientRect();
+    const viewRect=viewport.getBoundingClientRect();
+
+    const left=viewport.scrollLeft+
+     cardRect.left-viewRect.left+
+     cardRect.width/2-viewport.clientWidth/2;
+
+    const top=viewport.scrollTop+
+     cardRect.top-viewRect.top+
+     cardRect.height/2-viewport.clientHeight/2;
+
+    viewport.scrollTo({
+     left:Math.max(0,left),
+     top:Math.max(0,top),
+     behavior:"smooth"
+    });
+
+    updateHorizontalBar();
+    updateConnectorLines();
+   });
+  });
+ });
+}
 
  showFamilyTree();
  renderTree();
