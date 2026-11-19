@@ -2264,6 +2264,108 @@ expandedIds.add(String(root.id));
  document.getElementById("searchStatus").textContent=
   "Family branch: "+branch.name;
 }
+    
+function populateBranchFormOptions(branches=[]){
+ const ancestorSelect=document.getElementById("newBranchAncestor");
+ const parentSelect=document.getElementById("newBranchParent");
+
+ if(!ancestorSelect||!parentSelect)return;
+
+ ancestorSelect.innerHTML=
+  '<option value="">Select top ancestor</option>';
+
+ members
+  .slice()
+  .sort((a,b)=>a.name.localeCompare(b.name))
+  .forEach(member=>{
+   const option=document.createElement("option");
+   option.value=member.id;
+   option.textContent=member.name;
+   ancestorSelect.appendChild(option);
+  });
+
+ parentSelect.innerHTML=
+  '<option value="">No parent — Main Branch</option>';
+
+ branches.forEach(branch=>{
+  const option=document.createElement("option");
+  option.value=branch.id;
+  option.textContent=branch.name;
+  parentSelect.appendChild(option);
+ });
+}
+
+async function createFamilyBranch(){
+ if(!isAdmin){
+  status("Administrator login required.");
+  return;
+ }
+
+ const name=document.getElementById("newBranchName").value.trim();
+ const topMemberId=document.getElementById("newBranchAncestor").value;
+ const parentBranchId=document.getElementById("newBranchParent").value;
+ const message=document.getElementById("branchCreateStatus");
+
+ if(!name||!topMemberId){
+  message.textContent="Enter a branch name and select its top ancestor.";
+  return;
+ }
+
+ let slug=name.toLowerCase()
+  .normalize("NFD")
+  .replace(/[\u0300-\u036f]/g,"")
+  .replace(/[^a-z0-9]+/g,"-")
+  .replace(/^-|-$/g,"");
+
+ if(!slug){
+  message.textContent="Please enter a valid branch name.";
+  return;
+ }
+
+ const {data:existing,error:checkError}=await db
+  .from("family_branches")
+  .select("slug")
+  .like("slug",slug+"%");
+
+ if(checkError){
+  message.textContent="Could not check branch name.";
+  return;
+ }
+
+ const used=new Set((existing||[]).map(b=>b.slug));
+ let baseSlug=slug;
+ let number=2;
+
+ while(used.has(slug)){
+  slug=baseSlug+"-"+number;
+  number++;
+ }
+
+ message.textContent="Creating branch...";
+
+ const {error}=await db
+  .from("family_branches")
+  .insert({
+   name:name,
+   slug:slug,
+   top_member_id:topMemberId,
+   parent_branch_id:parentBranchId||null
+  });
+
+ if(error){
+  message.textContent="Could not create branch: "+error.message;
+  return;
+ }
+
+ document.getElementById("newBranchName").value="";
+ document.getElementById("newBranchAncestor").value="";
+ document.getElementById("newBranchParent").value="";
+
+ message.textContent="Branch created successfully!";
+
+ await renderFamilyBranches();
+}
+
     async function renderFamilyBranches(){
  const list=document.getElementById("familyBranchesList");
  if(!list)return;
