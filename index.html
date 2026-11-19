@@ -2293,19 +2293,30 @@ function setTreeZoom(value, focalX, focalY){
 /* AUTOMATIC FAMILY TREE SCREEN FIT */
 let treeHasAutoFit = false;
 
+
 function fitTreeToViewport() {
     if (!treeViewport || !treeCanvas || !treeCanvas.children.length) {
         return false;
     }
 
-    const availableWidth = Math.max(200, treeViewport.clientWidth - 36);
+    treeCanvas.style.zoom = 1;
+    treeZoom = 1;
+
+    const availableWidth = treeViewport.clientWidth - 40;
+    const availableHeight = treeViewport.clientHeight - 60;
+
     const naturalWidth = treeCanvas.scrollWidth;
+    const naturalHeight = treeCanvas.scrollHeight;
 
-    if (!naturalWidth) return false;
+    if (!naturalWidth || !naturalHeight) return false;
 
-    const fitScale = Math.min(1, availableWidth / naturalWidth);
+    const fitScale = Math.min(
+        1,
+        availableWidth / naturalWidth,
+        availableHeight / naturalHeight
+    );
 
-    treeZoom = Math.max(0.35, fitScale);
+    treeZoom = Math.max(0.20, fitScale);
     treeCanvas.style.zoom = treeZoom;
 
     requestAnimationFrame(() => {
@@ -2314,12 +2325,15 @@ function fitTreeToViewport() {
             (treeViewport.scrollWidth - treeViewport.clientWidth) / 2
         );
 
+        treeViewport.scrollTop = 0;
+
         updateHorizontalBar();
         updateConnectorLines();
     });
 
     return true;
 }
+
 
 function showFamilyTree() {
     document.querySelector(".upper-section").classList.add("tree-view-active");
