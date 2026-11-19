@@ -3633,7 +3633,18 @@ function dashboardGo(destination){
             document.getElementById("searchInput").focus();
         },400);
     }
+else if(destination === "branches"){
+    if(!isAdmin){
+        document.getElementById("loginModal").classList.remove("hidden");
+        return;
+    }
 
+    document.getElementById("branchManagementSection")
+        .classList.remove("hidden");
+
+    document.getElementById("branchManagementSection")
+        .scrollIntoView({behavior:"smooth"});
+}
     else if(destination === "add"){
         document.getElementById("addBox")
             .scrollIntoView({behavior:"smooth"});
