@@ -1513,6 +1513,52 @@ body {
     height: calc(48px + var(--branch-lane, 0px));
 }
 
+/* SHARED GENERATION ROW LAYOUT */
+#tree {
+    position: relative;
+}
+
+#tree .generation-connectors {
+    position: absolute;
+    top: 0;
+    left: 0;
+    z-index: 0;
+    overflow: visible;
+    pointer-events: none;
+}
+
+#tree .generation-row {
+    display: flex;
+    flex-direction: row;
+    align-items: flex-start;
+    justify-content: center;
+    gap: 22px;
+    width: max-content;
+    min-width: 100%;
+    position: relative;
+    margin: 65px auto 0;
+    padding: 8px 20px;
+    z-index: 1;
+}
+
+#tree .generation-row .family-node {
+    position: relative;
+    flex: 0 0 auto;
+}
+
+#tree .unlinked-area .generation-row {
+    margin-top: 45px;
+}
+
+@media (max-width: 600px) {
+    #tree .generation-row {
+        gap: 14px;
+        margin-top: 55px;
+        padding-left: 12px;
+        padding-right: 12px;
+    }
+}
+
 </style>
 </head>
 
