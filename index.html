@@ -2225,26 +2225,7 @@ function expandAll(){
 
  status("Family branches expanded and screen fit adjusted.");
 }
-
-
- renderTree();
-
- const tree = document.getElementById("tree");
- const container = document.querySelector(".tree-scroll");
-
- requestAnimationFrame(()=>{
- requestAnimationFrame(()=>{
-  container.scrollLeft =
-   Math.max(0,(container.scrollWidth-container.clientWidth)/2);
-
-  container.scrollTop =
-   Math.max(0,(container.scrollHeight-container.clientHeight)/2);
- });
-});
-
- status("All family branches expanded and centred.");
-}
-   
+  
 function collapseAll(){
  expandedIds.clear();
  renderTree();
