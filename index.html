@@ -1493,6 +1493,20 @@ body {
     }
 }
 
+/* KEEP SIBLINGS CLOSE WHEN ONE BRANCH OPENS */
+#tree .children-row > .family-node {
+    width: var(--person-width);
+    min-width: var(--person-width);
+    flex: 0 0 var(--person-width);
+}
+
+/* Allow descendants to extend below without widening the parent */
+#tree .family-node > .children-row {
+    width: max-content;
+    max-width: none;
+    align-self: center;
+}
+
 </style>
 </head>
 
