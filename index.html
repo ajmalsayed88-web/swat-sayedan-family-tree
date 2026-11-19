@@ -2384,7 +2384,7 @@ async function createFamilyBranch(){
  }
 
  list.innerHTML="";
-
+populateBranchFormOptions(data);
  if(!data||!data.length){
   list.innerHTML="<p>No family branches created yet.</p>";
   return;
