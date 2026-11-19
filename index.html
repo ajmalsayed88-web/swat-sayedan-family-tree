@@ -2657,23 +2657,60 @@ function toggleBranch(id){
  renderTree();
 
  requestAnimationFrame(()=>{
-  const updatedCard=document.querySelector(
+  const selected=document.querySelector(
    `.person[data-member-id="${memberId}"]`
   );
 
-  if(updatedCard){
+  if(selected){
+   const visibleCards=[selected];
+
+   function collectDescendants(parentId){
+    if(!expandedIds.has(String(parentId)))return;
+
+    getChildren(parentId).forEach(child=>{
+     const childCard=document.querySelector(
+      `.person[data-member-id="${String(child.id)}"]`
+     );
+
+     if(childCard){
+      visibleCards.push(childCard);
+      collectDescendants(child.id);
+     }
+    });
+   }
+
+   collectDescendants(id);
+
+   const rects=visibleCards.map(card=>
+    card.getBoundingClientRect()
+   );
+
    const viewportRect=viewport.getBoundingClientRect();
-   const cardRect=updatedCard.getBoundingClientRect();
    const zoom=Math.max(treeZoom||1,0.2);
 
-   // Keep the selected person near the top of the screen
-   viewport.scrollTop+=
-    (cardRect.top-viewportRect.top-24)/zoom;
+   const branchTop=Math.min(...rects.map(r=>r.top));
+   const branchBottom=Math.max(...rects.map(r=>r.bottom));
+   const branchLeft=Math.min(...rects.map(r=>r.left));
+   const branchRight=Math.max(...rects.map(r=>r.right));
 
-   // Keep the selected person horizontally centered
+   const branchHeight=branchBottom-branchTop;
+   const availableHeight=viewport.clientHeight-40;
+
+   let targetTop=viewportRect.top+24;
+
+   if(branchHeight<=availableHeight){
+    targetTop=viewportRect.top+
+     (availableHeight-branchHeight)/2;
+   }
+
+   viewport.scrollTop+=
+    (branchTop-targetTop)/zoom;
+
+   const branchCenter=(branchLeft+branchRight)/2;
+
    viewport.scrollLeft+=
     (
-     cardRect.left+cardRect.width/2-
+     branchCenter-
      (viewportRect.left+viewportRect.width/2)
     )/zoom;
   }
@@ -2683,7 +2720,6 @@ function toggleBranch(id){
   updateConnectorLines();
  });
 }
-
 function makePersonCard(m){
  const node=document.createElement("div");
  node.className="family-node";
