@@ -2663,7 +2663,33 @@ function toggleBranch(id){
   updateConnectorLines();
  });
 }
+function makePersonCard(m){
+ const node=document.createElement("div");
+ node.className="family-node";
 
+ const card=document.createElement("div");
+ card.className="person"+(m.name==="Peer Baba"?" root":"");
+ card.dataset.memberId=m.id;
+
+ const children=getChildren(m.id);
+ const hasChildren=children.length>0;
+
+ if(hasChildren){
+  card.classList.add("has-children");
+  card.setAttribute("role","button");
+  card.setAttribute("tabindex","0");
+  card.setAttribute("aria-expanded",
+   expandedIds.has(String(m.id))?"true":"false");
+
+  card.onclick=()=>toggleBranch(m.id);
+
+  card.onkeydown=(event)=>{
+   if(event.key==="Enter"||event.key===" "){
+    event.preventDefault();
+    toggleBranch(m.id);
+   }
+  };
+ }
  const name=document.createElement("strong");
  name.textContent=m.name;
  card.appendChild(name);
