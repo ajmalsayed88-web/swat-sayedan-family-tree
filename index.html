@@ -3238,33 +3238,7 @@ function fitTreeToViewport() {
     const naturalWidth = treeCanvas.scrollWidth;
     const naturalHeight = treeCanvas.scrollHeight;
 
-    if (!naturalWidth || !naturalHeight) return false;
-
-    const fitScale = Math.min(
-    1,
-    availableWidth / naturalWidth
-);
-
-    treeZoom = Math.max(0.20, fitScale);
-    treeCanvas.style.zoom = treeZoom;
-
-    requestAnimationFrame(() => {
-        treeViewport.scrollLeft = Math.max(
-    0,
-    (treeViewport.scrollWidth - treeViewport.clientWidth) / 2
-);
-
-treeViewport.scrollTop = Math.max(
-    0,
-    (treeViewport.scrollHeight - treeViewport.clientHeight) / 2
-);
-
-        updateHorizontalBar();
-        updateConnectorLines();
-    });
-
-    return true;
-}
+   const fitScale = Math.min(1, availableWidth / naturalWidth);
 
 
 
