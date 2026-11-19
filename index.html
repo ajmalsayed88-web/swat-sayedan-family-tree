@@ -2103,32 +2103,8 @@ function makePersonCard(m){
  return node;
 }
 
-function makeBranch(m,seen){
- const key=String(m.id);
 
- if(seen.has(key))return null;
- seen.add(key);
-
- const node=makePersonCard(m);
-
- if(expandedIds.has(key)){
-  const children=getChildren(m.id);
-
-  if(children.length){
-   const row=document.createElement("div");
-   row.className="children-row";
-
-   children.forEach(child=>{
-    const branch=makeBranch(child,seen);
-    if(branch)row.appendChild(branch);
-   });
-
-   if(row.children.length)node.appendChild(row);
-  }
- }
-
- return node;
-}
+let generationEdges = [];
 
 function getConnectedIds(root){
  const connected=new Set();
@@ -2146,95 +2122,131 @@ function getConnectedIds(root){
 
  return connected;
 }
-    
-function updateTreeBranchLayout(){
- const rows=Array.from(
-  document.querySelectorAll("#tree .children-row")
- ).reverse();
 
- rows.forEach(parentRow=>{
-  const siblings=Array.from(
-   parentRow.querySelectorAll(":scope > .family-node")
-  );
+function renderGenerationGroup(roots,host,seen){
+ let current=roots;
 
-  const placed=[];
+ while(current.length){
+  const row=document.createElement("div");
+  row.className="generation-row";
 
-  siblings.forEach(node=>{
-   const card=node.querySelector(":scope > .person");
-   const childRow=node.querySelector(":scope > .children-row");
+  current.forEach(member=>{
+   const key=String(member.id);
+   if(seen.has(key))return;
 
-   node.style.paddingBottom="0px";
+   seen.add(key);
+   row.appendChild(makePersonCard(member));
+  });
 
-   if(!card||!childRow)return;
+  if(!row.children.length)break;
+  host.appendChild(row);
 
-   const cardHeight=card.offsetHeight;
-   const baseTop=cardHeight+48;
+  const next=[];
 
-   childRow.style.top=baseTop+"px";
-   childRow.style.setProperty("--branch-lane","0px");
+  current.forEach(parent=>{
+   const parentKey=String(parent.id);
 
-   const initialRect=childRow.getBoundingClientRect();
-   let targetTop=initialRect.top;
+   if(!expandedIds.has(parentKey))return;
 
-   placed.forEach(previous=>{
-    const overlaps=
-     initialRect.left < previous.right+16 &&
-     initialRect.right > previous.left-16;
-
-    if(overlaps){
-     targetTop=Math.max(
-      targetTop,
-      previous.bottom+36
-     );
-    }
-   });
-
-   const extraSpace=targetTop-initialRect.top;
-
-   childRow.style.top=(baseTop+extraSpace)+"px";
-   childRow.style.setProperty(
-    "--branch-lane",
-    extraSpace+"px"
+   const children=getChildren(parent.id).filter(child=>
+    !seen.has(String(child.id))
    );
 
-   const finalRect=childRow.getBoundingClientRect();
+   if(!children.length)return;
 
-   placed.push({
-    left:finalRect.left,
-    right:finalRect.right,
-    bottom:finalRect.bottom
+   generationEdges.push({
+    parentId:parentKey,
+    childIds:children.map(child=>String(child.id))
    });
 
-   node.style.paddingBottom=
-    Math.max(
-     0,
-     baseTop+extraSpace+childRow.offsetHeight-cardHeight
-    )+"px";
+   children.forEach(child=>next.push(child));
   });
- });
+
+  current=next;
+ }
 }
 
 function updateConnectorLines(){
- const scale=parseFloat(document.getElementById("tree").style.zoom)||1;
+ const box=document.getElementById("tree");
+ const svg=box.querySelector(".generation-connectors");
 
- document.querySelectorAll("#tree .children-row").forEach(row=>{
-  const cards=row.querySelectorAll(":scope > .family-node > .person");
-  if(!cards.length)return;
+ if(!svg)return;
 
-  const rowRect=row.getBoundingClientRect();
-  const first=cards[0].getBoundingClientRect();
-  const last=cards[cards.length-1].getBoundingClientRect();
+ const scale=parseFloat(box.style.zoom)||1;
+ const boxRect=box.getBoundingClientRect();
 
-  const left=(first.left+first.width/2-rowRect.left)/scale;
-  const right=(rowRect.right-last.left-last.width/2)/scale;
+ const width=Math.max(box.scrollWidth,1);
+ const height=Math.max(box.scrollHeight,1);
 
-  row.style.setProperty("--connector-left",Math.max(0,left)+"px");
-  row.style.setProperty("--connector-right",Math.max(0,right)+"px");
+ svg.setAttribute("width",width);
+ svg.setAttribute("height",height);
+ svg.setAttribute("viewBox",`0 0 ${width} ${height}`);
+ svg.innerHTML="";
+
+ const cards=new Map();
+
+ box.querySelectorAll(".person[data-member-id]").forEach(card=>{
+  cards.set(String(card.dataset.memberId),card);
+ });
+
+ generationEdges.forEach(edge=>{
+  const parent=cards.get(edge.parentId);
+  if(!parent)return;
+
+  const parentRect=parent.getBoundingClientRect();
+  const startX=(parentRect.left+parentRect.width/2-boxRect.left)/scale;
+  const startY=(parentRect.bottom-boxRect.top)/scale;
+
+  const children=edge.childIds
+   .map(id=>cards.get(id))
+   .filter(Boolean);
+
+  if(!children.length)return;
+
+  const childRects=children.map(card=>card.getBoundingClientRect());
+
+  const childXs=childRects.map(rect=>
+   (rect.left+rect.width/2-boxRect.left)/scale
+  );
+
+  const endY=(Math.min(...childRects.map(rect=>rect.top))-boxRect.top)/scale;
+  const middleY=(startY+endY)/2;
+
+  const path=document.createElementNS(
+   "http://www.w3.org/2000/svg","path"
+  );
+
+  let d=`M ${startX} ${startY} V ${middleY}`;
+
+  if(childXs.length===1){
+   d+=` V ${endY}`;
+  }else{
+   d+=` H ${Math.min(...childXs)} M ${Math.min(...childXs)} ${middleY} H ${Math.max(...childXs)}`;
+   childXs.forEach(x=>{
+    d+=` M ${x} ${middleY} V ${endY}`;
+   });
+  }
+
+  path.setAttribute("d",d);
+  path.setAttribute("fill","none");
+  path.setAttribute("stroke","var(--line)");
+  path.setAttribute("stroke-width","3");
+  path.setAttribute("stroke-linecap","round");
+
+  svg.appendChild(path);
  });
 }
+
 function renderTree(){
  const box=document.getElementById("tree");
  box.innerHTML="";
+ generationEdges=[];
+
+ const svg=document.createElementNS(
+  "http://www.w3.org/2000/svg","svg"
+ );
+ svg.classList.add("generation-connectors");
+ box.appendChild(svg);
 
  const root=members.find(m=>m.name==="Peer Baba");
  const seen=new Set();
@@ -2245,13 +2257,14 @@ function renderTree(){
   label.textContent="COMMON ANCESTOR";
   box.appendChild(label);
 
-  const branch=makeBranch(root,seen);
-  if(branch)box.appendChild(branch);
+  renderGenerationGroup([root],box,seen);
  }
 
  const connected=root?getConnectedIds(root):new Set();
 
- const unlinked=members.filter(m=>!connected.has(String(m.id)));
+ const unlinked=members.filter(m=>
+  !connected.has(String(m.id))
+ );
 
  if(unlinked.length){
   const area=document.createElement("div");
@@ -2265,30 +2278,22 @@ function renderTree(){
 
   let roots=unlinked.filter(m=>
    !m.father_id||
-   !map.has(String(m.father_id))||
-   connected.has(String(m.father_id))
+   !map.has(String(m.father_id))
   );
 
   if(!roots.length)roots=[unlinked[0]];
 
-  const row=document.createElement("div");
-  row.className="children-row";
-
-  roots.forEach(m=>{
-   const branch=makeBranch(m,seen);
-   if(branch)row.appendChild(branch);
-  });
-
-  area.appendChild(row);
+  renderGenerationGroup(roots,area,seen);
   box.appendChild(area);
  }
 
  if(!members.length){
   box.textContent="No family members have been added yet.";
  }
-updateTreeBranchLayout();
-updateConnectorLines();
+
+ updateConnectorLines();
 }
+
 
 function searchFamily(){
  const input=document.getElementById("searchInput");
