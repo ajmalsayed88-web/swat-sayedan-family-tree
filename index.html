@@ -2282,6 +2282,25 @@ function setTreeZoom(value, focalX, focalY){
  treeViewport.scrollTop = contentY * newZoom - y;
 }
 
+function showFamilyTree() {
+    document.querySelector(".upper-section").classList.add("tree-view-active");
+
+    document.getElementById("familyTreeSection").classList.remove("hidden");
+
+    document.getElementById("familyTreeSection").scrollIntoView({
+        behavior: "smooth"
+    });
+
+    if (!treeHasAutoFit) {
+        requestAnimationFrame(() => {
+            requestAnimationFrame(() => {
+                fitTreeToViewport();
+                treeHasAutoFit = true;
+            });
+        });
+    }
+}
+
 function pointerDistance(a,b){
  return Math.hypot(a.x-b.x,a.y-b.y);
 }
