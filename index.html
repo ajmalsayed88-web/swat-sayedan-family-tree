@@ -3475,11 +3475,6 @@ function closeDashboard(){
   .setAttribute("aria-expanded","false");
 }
 
-function showFamilyTree() {
-    document.querySelector(".upper-section").classList.add("tree-view-active");
-    document.getElementById("familyTreeSection").classList.remove("hidden");
-    document.getElementById("familyTreeSection").scrollIntoView({behavior:"smooth"});
-}
     function toggleContactDropdown(){
  const dropdown=document.getElementById("contactDropdown");
  dropdown.classList.toggle("hidden");
