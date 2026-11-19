@@ -1507,6 +1507,12 @@ body {
     max-width: none;
 }
 
+/* EXTEND CONNECTORS WHEN BRANCHES MOVE DOWN */
+#tree .children-row::after {
+    top: calc(-48px - var(--branch-lane, 0px));
+    height: calc(48px + var(--branch-lane, 0px));
+}
+
 </style>
 </head>
 
