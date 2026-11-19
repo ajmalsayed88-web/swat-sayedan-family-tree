@@ -1370,6 +1370,57 @@ body {
     margin: 0 !important;
     min-height: 0 !important;
 }
+    
+/* FAMILY TREE CARD ALIGNMENT AND READABILITY */
+#tree .person {
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  white-space: normal;
+  overflow-wrap: anywhere;
+  min-height: 96px;
+  padding: 16px 14px;
+}
+
+#tree .person strong,
+#tree .person .small {
+  width: 100%;
+  max-width: 100%;
+  text-align: center;
+  overflow-wrap: anywhere;
+}
+
+#tree .person strong {
+  line-height: 1.35;
+}
+
+#tree .person .small {
+  margin-top: 6px;
+}
+
+#tree .person.root {
+  align-items: center;
+  justify-content: center;
+}
+
+@media (max-width: 600px) {
+  #tree .person {
+    min-height: 88px;
+    padding: 14px 11px;
+  }
+
+  #tree .person strong {
+    font-size: 15px;
+  }
+
+  #tree .person .small {
+    font-size: 12px;
+  }
+}
+
 </style>
 </head>
 
