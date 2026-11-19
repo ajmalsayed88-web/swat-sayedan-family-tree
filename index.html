@@ -2106,7 +2106,34 @@ class="hero-logo">
 <p id="status" class="small">Loading family tree...</p>
 </section>
  </div>
+<section class="card hidden" id="branchManagementSection">
+  <h2>🌳 Manage Family Branches</h2>
+  <p>Create a new family branch and select its top ancestor.</p>
 
+  <div id="createBranchBox">
+    <input
+      id="newBranchName"
+      type="text"
+      placeholder="Enter branch name"
+    >
+
+    <label for="newBranchAncestor">Top Family Ancestor</label>
+    <select id="newBranchAncestor">
+      <option value="">Select top ancestor</option>
+    </select>
+
+    <label for="newBranchParent">Parent Branch (optional)</label>
+    <select id="newBranchParent">
+      <option value="">No parent — Main Branch</option>
+    </select>
+
+    <button type="button" onclick="createFamilyBranch()">
+      Create Branch
+    </button>
+
+    <p id="branchCreateStatus" class="small"></p>
+  </div>
+</section>
 <section class="card hidden" id="addBox">
 <h2 id="formTitle">Add Family Member</h2>
 
