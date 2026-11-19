@@ -2082,11 +2082,12 @@ class="hero-logo">
 <p id="status" class="small">Loading family tree...</p>
 </section>
  </div>
-<section class="card hidden" id="branchManagementSection">
+<section class="card hidden" id="branchManagementSection" style="position:relative;">
   <h2>🌳 Manage Family Branches</h2>
-    <button type="button" class="secondary"
- onclick="document.getElementById('branchManagementSection').classList.add('hidden')">
-  ✕ Close
+    <button type="button"
+ onclick="document.getElementById('branchManagementSection').classList.add('hidden')"
+ style="position:absolute;top:10px;right:10px;padding:4px 9px;font-size:14px;min-width:auto;">
+ ✕
 </button>
   <p>Create a new family branch and select its top ancestor.</p>
 
