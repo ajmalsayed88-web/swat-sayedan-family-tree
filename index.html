@@ -2150,7 +2150,12 @@ function makePersonCard(m){
 }
 
 
+
 let generationEdges = [];
+
+const TREE_CARD_WIDTH = 190;
+const TREE_SIBLING_GAP = 30;
+const TREE_FAMILY_GAP = 55;
 
 function getConnectedIds(root){
  const connected=new Set();
@@ -2169,63 +2174,127 @@ function getConnectedIds(root){
  return connected;
 }
 
-
 function renderGenerationGroup(roots,host,seen){
- let currentGroups=[{members:roots}];
+ const rows=[];
+ const widthCache=new Map();
 
- while(currentGroups.length){
+ function getBranchWidth(member,visiting=new Set()){
+  const key=String(member.id);
+
+  if(widthCache.has(key))return widthCache.get(key);
+  if(visiting.has(key))return TREE_CARD_WIDTH;
+
+  const nextVisiting=new Set(visiting);
+  nextVisiting.add(key);
+
+  let children=[];
+
+  if(expandedIds.has(key)){
+   children=getChildren(member.id);
+  }
+
+  let width=TREE_CARD_WIDTH;
+
+  if(children.length){
+   const childrenWidth=children.reduce((sum,child)=>
+    sum+getBranchWidth(child,nextVisiting),0
+   )+(children.length-1)*TREE_SIBLING_GAP;
+
+   width=Math.max(TREE_CARD_WIDTH,childrenWidth);
+  }
+
+  widthCache.set(key,width);
+  return width;
+ }
+
+ function placeMember(member,left,depth){
+  const key=String(member.id);
+
+  if(seen.has(key))return;
+  seen.add(key);
+
+  if(!rows[depth])rows[depth]=[];
+
+  const branchWidth=getBranchWidth(member);
+  const center=left+branchWidth/2;
+
+  rows[depth].push({
+   member,
+   center
+  });
+
+  if(!expandedIds.has(key))return;
+
+  const children=getChildren(member.id)
+   .filter(child=>!seen.has(String(child.id)));
+
+  if(!children.length)return;
+
+  generationEdges.push({
+   parentId:key,
+   childIds:children.map(child=>String(child.id))
+  });
+
+  const childrenWidth=children.reduce((sum,child)=>
+   sum+getBranchWidth(child),0
+  )+(children.length-1)*TREE_SIBLING_GAP;
+
+  let childLeft=left+(branchWidth-childrenWidth)/2;
+
+  children.forEach(child=>{
+   const childWidth=getBranchWidth(child);
+   placeMember(child,childLeft,depth+1);
+   childLeft+=childWidth+TREE_SIBLING_GAP;
+  });
+ }
+
+ const rootWidths=roots.map(root=>getBranchWidth(root));
+
+ const totalWidth=rootWidths.reduce((sum,width)=>sum+width,0)
+  +Math.max(0,roots.length-1)*TREE_FAMILY_GAP;
+
+ let rootLeft=0;
+
+ roots.forEach((root,index)=>{
+  placeMember(root,rootLeft,0);
+  rootLeft+=rootWidths[index]+TREE_FAMILY_GAP;
+ });
+
+ rows.forEach((items,depth)=>{
   const row=document.createElement("div");
   row.className="generation-row";
 
-  const nextGroups=[];
+  row.style.display="block";
+  row.style.position="relative";
+  row.style.width=totalWidth+"px";
+  row.style.minWidth="0";
+  row.style.height="auto";
+  row.style.margin="65px auto 0";
+  row.style.padding="0";
+  row.style.zIndex="1";
 
-  currentGroups.forEach(group=>{
-   const familyGroup=document.createElement("div");
-   familyGroup.className="generation-family-group";
-   familyGroup.style.display="flex";
-   familyGroup.style.flex="0 0 auto";
-   familyGroup.style.gap="22px";
-   familyGroup.style.marginRight="300px";
+  items.forEach(item=>{
+   const node=makePersonCard(item.member);
 
-   group.members.forEach(member=>{
-    const key=String(member.id);
-    if(seen.has(key))return;
+   node.style.position="absolute";
+   node.style.left=(item.center-TREE_CARD_WIDTH/2)+"px";
+   node.style.top="0";
+   node.style.margin="0";
 
-    seen.add(key);
-    familyGroup.appendChild(makePersonCard(member));
-   });
-
-   if(!familyGroup.children.length)return;
-
-   row.appendChild(familyGroup);
-
-   group.members.forEach(parent=>{
-    const parentKey=String(parent.id);
-
-    if(!expandedIds.has(parentKey))return;
-
-    const children=getChildren(parent.id).filter(child=>
-     !seen.has(String(child.id))
-    );
-
-    if(!children.length)return;
-
-    generationEdges.push({
-     parentId:parentKey,
-     childIds:children.map(child=>String(child.id))
-    });
-
-    nextGroups.push({members:children});
-   });
+   row.appendChild(node);
   });
 
-  if(!row.children.length)break;
-
   host.appendChild(row);
-  currentGroups=nextGroups;
- }
-}
 
+  let rowHeight=0;
+
+  Array.from(row.children).forEach(node=>{
+   rowHeight=Math.max(rowHeight,node.offsetHeight);
+  });
+
+  row.style.height=rowHeight+"px";
+ });
+}
 
 function updateConnectorLines(){
  const box=document.getElementById("tree");
@@ -2250,20 +2319,20 @@ function updateConnectorLines(){
   cards.set(String(card.dataset.memberId),card);
  });
 
- generationEdges.forEach((edge,edgeIndex)=>{
+ generationEdges.forEach(edge=>{
   const parent=cards.get(edge.parentId);
   if(!parent)return;
-
-  const parentRect=parent.getBoundingClientRect();
-
-  const startX=(parentRect.left+parentRect.width/2-boxRect.left)/scale;
-  const startY=(parentRect.bottom-boxRect.top)/scale;
 
   const children=edge.childIds
    .map(id=>cards.get(id))
    .filter(Boolean);
 
   if(!children.length)return;
+
+  const parentRect=parent.getBoundingClientRect();
+
+  const startX=(parentRect.left+parentRect.width/2-boxRect.left)/scale;
+  const startY=(parentRect.bottom-boxRect.top)/scale;
 
   const childRects=children.map(card=>card.getBoundingClientRect());
 
@@ -2284,9 +2353,9 @@ function updateConnectorLines(){
   let d=`M ${startX} ${startY} V ${middleY}`;
 
   if(childXs.length===1){
-   d+=` H ${childXs[0]} V ${endY}`;
+   d+=` V ${endY}`;
   }else{
-   d+=` H ${minX} M ${minX} ${middleY} H ${maxX}`;
+   d+=` H ${maxX} M ${minX} ${middleY} H ${maxX}`;
 
    childXs.forEach(x=>{
     d+=` M ${x} ${middleY} V ${endY}`;
@@ -2312,6 +2381,7 @@ function renderTree(){
  const svg=document.createElementNS(
   "http://www.w3.org/2000/svg","svg"
  );
+
  svg.classList.add("generation-connectors");
  box.appendChild(svg);
 
@@ -2358,7 +2428,7 @@ function renderTree(){
   box.textContent="No family members have been added yet.";
  }
 
- updateConnectorLines();
+ requestAnimationFrame(()=>updateConnectorLines());
 }
 
 
