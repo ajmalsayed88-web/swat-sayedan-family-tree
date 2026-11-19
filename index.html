@@ -2212,13 +2212,14 @@ function renderGenerationGroup(roots,host,seen){
  }
 }
 
+
 function updateConnectorLines(){
  const box=document.getElementById("tree");
  const svg=box.querySelector(".generation-connectors");
 
  if(!svg)return;
 
- const scale=parseFloat(box.style.zoom)||1;
+ const scale=treeZoom||1;
  const boxRect=box.getBoundingClientRect();
 
  const width=Math.max(box.scrollWidth,1);
@@ -2240,6 +2241,7 @@ function updateConnectorLines(){
   if(!parent)return;
 
   const parentRect=parent.getBoundingClientRect();
+
   const startX=(parentRect.left+parentRect.width/2-boxRect.left)/scale;
   const startY=(parentRect.bottom-boxRect.top)/scale;
 
@@ -2258,6 +2260,9 @@ function updateConnectorLines(){
   const endY=(Math.min(...childRects.map(rect=>rect.top))-boxRect.top)/scale;
   const middleY=(startY+endY)/2;
 
+  const minX=Math.min(...childXs);
+  const maxX=Math.max(...childXs);
+
   const path=document.createElementNS(
    "http://www.w3.org/2000/svg","path"
   );
@@ -2265,9 +2270,10 @@ function updateConnectorLines(){
   let d=`M ${startX} ${startY} V ${middleY}`;
 
   if(childXs.length===1){
-   d+=` V ${endY}`;
+   d+=` H ${childXs[0]} V ${endY}`;
   }else{
-   d+=` H ${Math.min(...childXs)} M ${Math.min(...childXs)} ${middleY} H ${Math.max(...childXs)}`;
+   d+=` H ${minX} M ${minX} ${middleY} H ${maxX}`;
+
    childXs.forEach(x=>{
     d+=` M ${x} ${middleY} V ${endY}`;
    });
@@ -2275,9 +2281,10 @@ function updateConnectorLines(){
 
   path.setAttribute("d",d);
   path.setAttribute("fill","none");
-  path.setAttribute("stroke","var(--line)");
+  path.setAttribute("stroke","#176344");
   path.setAttribute("stroke-width","3");
   path.setAttribute("stroke-linecap","round");
+  path.setAttribute("stroke-linejoin","round");
 
   svg.appendChild(path);
  });
