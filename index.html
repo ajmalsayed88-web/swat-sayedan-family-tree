@@ -3240,11 +3240,10 @@ function fitTreeToViewport() {
 
     if (!naturalWidth || !naturalHeight) return false;
 
-    const fitScale = Math.min(
-        1,
-        availableWidth / naturalWidth,
-        availableHeight / naturalHeight
-    );
+    cconst fitScale = Math.min(
+    1,
+    availableWidth / naturalWidth
+);
 
     treeZoom = Math.max(0.20, fitScale);
     treeCanvas.style.zoom = treeZoom;
