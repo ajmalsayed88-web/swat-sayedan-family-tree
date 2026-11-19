@@ -2272,7 +2272,7 @@ function updateConnectorLines(){
   );
 
   const endY=(Math.min(...childRects.map(rect=>rect.top))-boxRect.top)/scale;
-  const middleY=(startY+endY)/2 + (edgeIndex*14);
+  const middleY=(startY+endY)/2;
 
   const minX=Math.min(...childXs);
   const maxX=Math.max(...childXs);
