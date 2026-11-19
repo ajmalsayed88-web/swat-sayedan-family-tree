@@ -2140,6 +2140,30 @@ function getConnectedIds(root){
 
  return connected;
 }
+    function updateTreeBranchLayout(){
+ const nodes=Array.from(
+  document.querySelectorAll("#tree .family-node")
+ ).reverse();
+
+ nodes.forEach(node=>{
+  const card=node.querySelector(":scope > .person");
+  const row=node.querySelector(":scope > .children-row");
+
+  node.style.paddingBottom="0px";
+
+  if(!card||!row)return;
+
+  const cardHeight=card.offsetHeight;
+  const rowTop=cardHeight+48;
+
+  row.style.top=rowTop+"px";
+
+  const totalHeight=rowTop+row.offsetHeight;
+
+  node.style.paddingBottom=
+   Math.max(0,totalHeight-cardHeight)+"px";
+ });
+}
 function updateConnectorLines(){
  const scale=parseFloat(document.getElementById("tree").style.zoom)||1;
 
