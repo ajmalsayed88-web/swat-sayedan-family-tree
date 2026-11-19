@@ -2711,9 +2711,16 @@ function makePersonCard(m){
    }
   };
  }
- const name=document.createElement("strong");
- name.textContent=m.name;
- card.appendChild(name);
+ if(m.name==="Peer Baba"){
+ const label=document.createElement("div");
+ label.className="generation-label";
+ label.textContent="COMMON ANCESTOR";
+ card.appendChild(label);
+}
+
+const name=document.createElement("strong");
+name.textContent=m.name;
+card.appendChild(name);
 
  if(m.branch){
   const b=document.createElement("div");
@@ -3001,13 +3008,8 @@ function renderTree(){
  const seen=new Set();
 
  if(root){
-  const label=document.createElement("div");
-  label.className="generation-label";
-  label.textContent="COMMON ANCESTOR";
-  box.appendChild(label);
-
-  renderGenerationGroup([root],box,seen);
- }
+   renderGenerationGroup([root],box,seen);
+}
 
  const connected=root?getConnectedIds(root):new Set();
 
