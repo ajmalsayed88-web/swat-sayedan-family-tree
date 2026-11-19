@@ -2064,6 +2064,31 @@ class="hero-logo">
 </div>
 <div id="adminBox" class="hidden">
 <p>Administrator logged in</p>
+    <div id="createBranchBox">
+ <h3>Create New Family Branch</h3>
+
+ <input
+  id="newBranchName"
+  type="text"
+  placeholder="Enter branch name"
+ >
+
+ <label for="newBranchAncestor">Top Family Ancestor</label>
+ <select id="newBranchAncestor">
+  <option value="">Select top ancestor</option>
+ </select>
+
+ <label for="newBranchParent">Parent Branch (optional)</label>
+ <select id="newBranchParent">
+  <option value="">No parent — Main Branch</option>
+ </select>
+
+ <button type="button" onclick="createFamilyBranch()">
+  Create Branch
+ </button>
+
+ <p id="branchCreateStatus" class="small"></p>
+</div>
 <button class="secondary" onclick="logout()">Logout</button>
  <div id="adminManagementBox">
   <h3>Manage Administrators</h3>
