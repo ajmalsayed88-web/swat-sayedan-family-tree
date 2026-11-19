@@ -2322,11 +2322,14 @@ function fitTreeToViewport() {
 
     requestAnimationFrame(() => {
         treeViewport.scrollLeft = Math.max(
-            0,
-            (treeViewport.scrollWidth - treeViewport.clientWidth) / 2
-        );
+    0,
+    (treeViewport.scrollWidth - treeViewport.clientWidth) / 2
+);
 
-        treeViewport.scrollTop = 0;
+treeViewport.scrollTop = Math.max(
+    0,
+    (treeViewport.scrollHeight - treeViewport.clientHeight) / 2
+);
 
         updateHorizontalBar();
         updateConnectorLines();
