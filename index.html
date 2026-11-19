@@ -2162,6 +2162,41 @@ function updateHomeStats(){
   list.appendChild(item);
  });
 }
+    function renderFamilyBranches(){
+ const list=document.getElementById("familyBranchesList");
+ if(!list)return;
+
+ list.innerHTML="";
+
+ const branches=[...new Set(
+  members
+   .map(m=>String(m.branch||"").trim())
+   .filter(Boolean)
+ )].sort((a,b)=>a.localeCompare(b));
+
+ if(!branches.length){
+  const message=document.createElement("p");
+  message.textContent="No family branch names added yet.";
+  list.appendChild(message);
+  return;
+ }
+
+ branches.forEach(branch=>{
+  const count=members.filter(m=>
+   String(m.branch||"").trim()===branch
+  ).length;
+
+  const button=document.createElement("button");
+  button.type="button";
+  button.className="family-branch-item";
+  button.textContent=branch+" ("+count+")";
+  button.addEventListener("click",()=>{
+   showFamilyBranch(branch);
+  });
+
+  list.appendChild(button);
+ });
+}
 async function loadMembers(){
  const {data,error}=await db.from("family_members")
  .select("*").eq("approved",true).order("name");
