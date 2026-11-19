@@ -2230,7 +2230,8 @@ function updateHomeStats(){
 
  closeDashboard();
 
- expandedIds.add(String(root.id));
+ expandedIds.clear();
+expandedIds.add(String(root.id));
  showFamilyTree();
  renderTree(root);
 
