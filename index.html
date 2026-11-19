@@ -1816,7 +1816,47 @@ function status(message){
 function getChildren(id){
  return members.filter(m=>String(m.father_id)===String(id));
 }
+function updateHomeStats(){
+ const total=document.getElementById("totalMembers");
+ const generations=document.getElementById("totalGenerations");
+ const connectedCount=document.getElementById("connectedMembers");
 
+ if(!total||!generations||!connectedCount)return;
+
+ total.textContent=members.length;
+
+ const root=members.find(m=>
+  String(m.name).trim().toLowerCase()==="peer baba"
+ );
+
+ if(!root){
+  generations.textContent="0";
+  connectedCount.textContent="0";
+  return;
+ }
+
+ const connected=getConnectedIds(root);
+ connectedCount.textContent=connected.size;
+
+ let maxDepth=0;
+
+ function countDepth(member,depth,path){
+  maxDepth=Math.max(maxDepth,depth);
+
+  const key=String(member.id);
+  if(path.has(key))return;
+
+  const nextPath=new Set(path);
+  nextPath.add(key);
+
+  getChildren(member.id).forEach(child=>{
+   countDepth(child,depth+1,nextPath);
+  });
+ }
+
+ countDepth(root,1,new Set());
+ generations.textContent=maxDepth;
+}
 async function loadMembers(){
  const {data,error}=await db.from("family_members")
  .select("*").eq("approved",true).order("name");
