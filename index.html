@@ -3222,6 +3222,10 @@ function showFamilyTree() {
     document.getElementById("familyTreeSection").classList.remove("hidden");
     document.getElementById("familyTreeSection").scrollIntoView({behavior:"smooth"});
 }
+    function toggleContactDropdown(){
+ const dropdown=document.getElementById("contactDropdown");
+ dropdown.classList.toggle("hidden");
+}
 function openInfoModal(type){
  const modal=document.getElementById("infoModal");
  const title=document.getElementById("infoModalTitle");
