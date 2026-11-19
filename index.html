@@ -1493,6 +1493,20 @@ body {
     }
 }
 
+/* KEEP SIBLING CARDS CLOSE WHILE CHILDREN SPREAD BELOW */
+#tree .family-node {
+    position: relative;
+}
+
+#tree .family-node > .children-row {
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
+    margin: 0;
+    width: max-content;
+    max-width: none;
+}
+
 </style>
 </head>
 
