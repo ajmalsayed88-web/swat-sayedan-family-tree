@@ -2644,20 +2644,12 @@ function loadFatherOptions(){
  }
 }
 
+
 function toggleBranch(id){
  const viewport=document.getElementById("treeScroll");
  const memberId=String(id);
  const pageX=window.scrollX;
  const pageY=window.scrollY;
-
- let oldPosition=null;
-
- document.querySelectorAll(".person").forEach(card=>{
-  if(card.dataset.memberId===memberId){
-   const rect=card.getBoundingClientRect();
-   oldPosition={left:rect.left,top:rect.top};
-  }
- });
 
  if(expandedIds.has(memberId)){
   expandedIds.delete(memberId);
@@ -2668,23 +2660,25 @@ function toggleBranch(id){
  renderTree();
 
  requestAnimationFrame(()=>{
-  let updatedCard=null;
+  const updatedCard=document.querySelector(
+   `.person[data-member-id="${memberId}"]`
+  );
 
-  document.querySelectorAll(".person").forEach(card=>{
-   if(card.dataset.memberId===memberId){
-    updatedCard=card;
-   }
-  });
-
-  if(updatedCard && oldPosition){
-   const newPosition=updatedCard.getBoundingClientRect();
+  if(updatedCard){
+   const viewportRect=viewport.getBoundingClientRect();
+   const cardRect=updatedCard.getBoundingClientRect();
    const zoom=Math.max(treeZoom||1,0.2);
 
-   viewport.scrollLeft+=
-    (newPosition.left-oldPosition.left)/zoom;
-
+   // Keep the selected person near the top of the screen
    viewport.scrollTop+=
-    (newPosition.top-oldPosition.top)/zoom;
+    (cardRect.top-viewportRect.top-24)/zoom;
+
+   // Keep the selected person horizontally centered
+   viewport.scrollLeft+=
+    (
+     cardRect.left+cardRect.width/2-
+     (viewportRect.left+viewportRect.width/2)
+    )/zoom;
   }
 
   window.scrollTo(pageX,pageY);
@@ -2692,6 +2686,7 @@ function toggleBranch(id){
   updateConnectorLines();
  });
 }
+
 function makePersonCard(m){
  const node=document.createElement("div");
  node.className="family-node";
