@@ -1753,9 +1753,18 @@ height:22px;
  <button class="top-nav-icon" onclick="openInfoModal('about')" title="About">
   <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M12 11v5m0-8h.01"/></svg>
  </button>
- <button class="top-nav-icon" onclick="openInfoModal('contact')" title="Contact">
+ <div class="contact-dropdown-wrap">
+ <button class="top-nav-icon" onclick="toggleContactDropdown()" title="Contact">
   <svg viewBox="0 0 24 24"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="m3 7 9 6 9-6"/></svg>
  </button>
+
+ <div id="contactDropdown" class="contact-dropdown hidden">
+  <strong>Contact Us</strong>
+  <a href="tel:+923435646768">📞 +92 343 5646768</a>
+  <a href="mailto:mr.ajmalsayed@gmail.com">✉️ Email Us</a>
+  <a href="https://wa.me/923435646768" target="_blank" rel="noopener">WhatsApp Message</a>
+ </div>
+</div>
 </div>
  <div class="hero-content">
   <img
