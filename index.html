@@ -1471,6 +1471,28 @@ body {
     }
 }
 
+/* AUTOMATIC COMPACT SPACING FOR COLLAPSED BRANCHES */
+
+/* Keep names closer when no child branch is expanded */
+#tree .children-row:not(:has(> .family-node > .children-row)) {
+    gap: 8px;
+}
+
+/* Restore comfortable spacing when a child branch is expanded */
+#tree .children-row:has(> .family-node > .children-row) {
+    gap: 20px;
+}
+
+@media (max-width: 600px) {
+    #tree .children-row:not(:has(> .family-node > .children-row)) {
+        gap: 6px;
+    }
+
+    #tree .children-row:has(> .family-node > .children-row) {
+        gap: 18px;
+    }
+}
+
 </style>
 </head>
 
