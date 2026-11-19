@@ -3028,7 +3028,7 @@ function updateConnectorLines(){
  });
 }
 
-function renderTree(){
+function renderTree(rootOverride=null){
  const box=document.getElementById("tree");
  box.innerHTML="";
  generationEdges=[];
@@ -3040,7 +3040,7 @@ function renderTree(){
  svg.classList.add("generation-connectors");
  box.appendChild(svg);
 
- const root=members.find(m=>m.name==="Peer Baba");
+ const root=rootOverride||members.find(m=>m.name==="Peer Baba");
  const seen=new Set();
 
  if(root){
@@ -3049,8 +3049,9 @@ function renderTree(){
 
  const connected=root?getConnectedIds(root):new Set();
 
- const unlinked=members.filter(m=>
-  !connected.has(String(m.id))
+ const unlinked=rootOverride?[]:members.filter(m=>
+   !connected.has(String(m.id))
+);
  );
 
  if(unlinked.length){
