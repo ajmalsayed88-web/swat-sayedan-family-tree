@@ -2169,46 +2169,60 @@ function getConnectedIds(root){
  return connected;
 }
 
-function renderGenerationGroup(roots,host,seen){
- let current=roots;
 
- while(current.length){
+function renderGenerationGroup(roots,host,seen){
+ let currentGroups=[{members:roots}];
+
+ while(currentGroups.length){
   const row=document.createElement("div");
   row.className="generation-row";
 
-  current.forEach(member=>{
-   const key=String(member.id);
-   if(seen.has(key))return;
+  const nextGroups=[];
 
-   seen.add(key);
-   row.appendChild(makePersonCard(member));
+  currentGroups.forEach(group=>{
+   const familyGroup=document.createElement("div");
+   familyGroup.className="generation-family-group";
+   familyGroup.style.display="flex";
+   familyGroup.style.flex="0 0 auto";
+   familyGroup.style.gap="22px";
+   familyGroup.style.marginRight="60px";
+
+   group.members.forEach(member=>{
+    const key=String(member.id);
+    if(seen.has(key))return;
+
+    seen.add(key);
+    familyGroup.appendChild(makePersonCard(member));
+   });
+
+   if(!familyGroup.children.length)return;
+
+   row.appendChild(familyGroup);
+
+   group.members.forEach(parent=>{
+    const parentKey=String(parent.id);
+
+    if(!expandedIds.has(parentKey))return;
+
+    const children=getChildren(parent.id).filter(child=>
+     !seen.has(String(child.id))
+    );
+
+    if(!children.length)return;
+
+    generationEdges.push({
+     parentId:parentKey,
+     childIds:children.map(child=>String(child.id))
+    });
+
+    nextGroups.push({members:children});
+   });
   });
 
   if(!row.children.length)break;
+
   host.appendChild(row);
-
-  const next=[];
-
-  current.forEach(parent=>{
-   const parentKey=String(parent.id);
-
-   if(!expandedIds.has(parentKey))return;
-
-   const children=getChildren(parent.id).filter(child=>
-    !seen.has(String(child.id))
-   );
-
-   if(!children.length)return;
-
-   generationEdges.push({
-    parentId:parentKey,
-    childIds:children.map(child=>String(child.id))
-   });
-
-   children.forEach(child=>next.push(child));
-  });
-
-  current=next;
+  currentGroups=nextGroups;
  }
 }
 
