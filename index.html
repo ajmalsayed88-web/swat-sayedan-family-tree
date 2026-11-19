@@ -1421,6 +1421,31 @@ body {
   }
 }
 
+/* CENTER THE FAMILY TREE CONTENT */
+#tree.tree-canvas {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: max-content;
+    min-width: 100%;
+    box-sizing: border-box;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+#tree.tree-canvas > .family-node {
+    align-self: center;
+}
+
+#tree.tree-canvas > .generation-label {
+    align-self: center;
+    text-align: center;
+}
+
+#tree.tree-canvas > .unlinked-area {
+    align-self: center;
+}
+
 </style>
 </head>
 
