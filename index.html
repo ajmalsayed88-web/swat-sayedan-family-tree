@@ -2219,33 +2219,26 @@ function updateHomeStats(){
  });
 }
     function showFamilyBranch(branch){
- const matches=members.filter(m=>
-  String(m.branch||"").trim()===branch
+ const root=members.find(m=>
+  String(m.id)===String(branch.top_member_id)
  );
 
- if(!matches.length)return;
+ if(!root){
+  status("Branch ancestor not found: "+branch.name);
+  return;
+ }
 
  closeDashboard();
 
- const map=new Map(members.map(m=>[String(m.id),m]));
+ expandedIds.add(String(root.id));
 
- matches.forEach(member=>{
-  let current=member;
-  const visited=new Set();
+ showFamilyTree();
+ renderTree(root);
 
-  while(current){
-   const key=String(current.id);
-   if(visited.has(key))break;
-   visited.add(key);
-
-   if(current.father_id){
-    expandedIds.add(String(current.father_id));
-    current=map.get(String(current.father_id));
-   }else{
-    break;
-   }
-  }
- });
+ document.getElementById("searchInput").value="";
+ document.getElementById("searchStatus").textContent=
+  "Family branch: "+branch.name;
+}
 
  showFamilyTree();
  renderTree();
@@ -2295,34 +2288,36 @@ function updateHomeStats(){
 }
 
  
-    function renderFamilyBranches(){
+    async function renderFamilyBranches(){
  const list=document.getElementById("familyBranchesList");
  if(!list)return;
 
- list.innerHTML="";
+ list.innerHTML="<p>Loading family branches...</p>";
 
- const branches=[...new Set(
-  members
-   .map(m=>String(m.branch||"").trim())
-   .filter(Boolean)
- )].sort((a,b)=>a.localeCompare(b));
+ const {data,error}=await db
+  .from("family_branches")
+  .select("id,name,slug,top_member_id,parent_branch_id")
+  .order("name");
 
- if(!branches.length){
-  const message=document.createElement("p");
-  message.textContent="No family branch names added yet.";
-  list.appendChild(message);
+ if(error){
+  list.innerHTML="<p>Could not load family branches.</p>";
+  console.error("Family branches error:",error);
   return;
  }
 
- branches.forEach(branch=>{
-  const count=members.filter(m=>
-   String(m.branch||"").trim()===branch
-  ).length;
+ list.innerHTML="";
 
+ if(!data||!data.length){
+  list.innerHTML="<p>No family branches created yet.</p>";
+  return;
+ }
+
+ data.forEach(branch=>{
   const button=document.createElement("button");
   button.type="button";
   button.className="family-branch-item";
-  button.textContent=branch+" ("+count+")";
+  button.textContent="🌳 "+branch.name;
+
   button.addEventListener("click",()=>{
    showFamilyBranch(branch);
   });
