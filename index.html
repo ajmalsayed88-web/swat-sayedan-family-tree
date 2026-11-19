@@ -2232,62 +2232,6 @@ function updateHomeStats(){
 
  expandedIds.add(String(root.id));
 
- showFamilyTree();
- renderTree(root);
-
- document.getElementById("searchInput").value="";
- document.getElementById("searchStatus").textContent=
-  "Family branch: "+branch.name;
-}
-
- showFamilyTree();
- renderTree();
-
- document.getElementById("searchInput").value="";
- document.getElementById("searchStatus").textContent=
-  matches.length+" member(s) in branch: "+branch;
-
- requestAnimationFrame(()=>{
-  requestAnimationFrame(()=>{
-   requestAnimationFrame(()=>{
-    const ids=new Set(matches.map(m=>String(m.id)));
-    let first=null;
-
-    document.querySelectorAll(".person").forEach(card=>{
-     if(ids.has(card.dataset.memberId)){
-      card.classList.add("search-match");
-      if(!first)first=card;
-     }
-    });
-
-    if(!first)return;
-
-    const viewport=document.getElementById("treeScroll");
-    const cardRect=first.getBoundingClientRect();
-    const viewRect=viewport.getBoundingClientRect();
-
-    const left=viewport.scrollLeft+
-     cardRect.left-viewRect.left+
-     cardRect.width/2-viewport.clientWidth/2;
-
-    const top=viewport.scrollTop+
-     cardRect.top-viewRect.top+
-     cardRect.height/2-viewport.clientHeight/2;
-
-    viewport.scrollTo({
-     left:Math.max(0,left),
-     top:Math.max(0,top),
-     behavior:"smooth"
-    });
-
-    updateHorizontalBar();
-    updateConnectorLines();
-   });
-  });
- });
-}
-
- 
     async function renderFamilyBranches(){
  const list=document.getElementById("familyBranchesList");
  if(!list)return;
