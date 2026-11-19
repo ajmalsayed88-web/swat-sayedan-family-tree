@@ -2250,7 +2250,7 @@ function updateConnectorLines(){
   cards.set(String(card.dataset.memberId),card);
  });
 
- generationEdges.forEach(edge=>{
+ generationEdges.forEach((edge,edgeIndex)=>{
   const parent=cards.get(edge.parentId);
   if(!parent)return;
 
@@ -2272,7 +2272,7 @@ function updateConnectorLines(){
   );
 
   const endY=(Math.min(...childRects.map(rect=>rect.top))-boxRect.top)/scale;
-  const middleY=(startY+endY)/2;
+  const middleY=(startY+endY)/2 + (edgeIndex*14);
 
   const minX=Math.min(...childXs);
   const maxX=Math.max(...childXs);
