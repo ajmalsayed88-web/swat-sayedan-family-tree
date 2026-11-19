@@ -1733,6 +1733,46 @@ height:22px;
   height:27px;
  }
 }
+    .contact-dropdown-wrap{
+ position:relative;
+}
+
+.contact-dropdown{
+ position:absolute;
+ top:calc(100% + 10px);
+ right:0;
+ width:230px;
+ padding:14px;
+ display:flex;
+ flex-direction:column;
+ gap:12px;
+ background:#fff;
+ border:1px solid #c9a44c;
+ border-radius:10px;
+ box-shadow:0 6px 20px #0003;
+ text-align:left;
+ z-index:100;
+}
+
+.contact-dropdown.hidden{
+ display:none;
+}
+
+.contact-dropdown strong{
+ color:#145c3b;
+ font-size:15px;
+}
+
+.contact-dropdown a{
+ color:#193b2c;
+ text-decoration:none;
+ font-size:13px;
+ overflow-wrap:anywhere;
+}
+
+.contact-dropdown a:hover{
+ color:#b08a35;
+}
 </style>
 </head>
 
