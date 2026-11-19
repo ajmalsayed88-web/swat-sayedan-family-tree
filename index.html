@@ -2097,6 +2097,33 @@ function updateHomeStats(){
  countDepth(root,1,new Set());
  generations.textContent=maxDepth;
 }
+    function renderRecentlyAddedMembers(){
+ const list=document.getElementById("recentMembersList");
+ if(!list)return;
+
+ list.innerHTML="";
+
+ const recent=members
+  .filter(m=>m.created_at && !isNaN(Date.parse(m.created_at)))
+  .sort((a,b)=>Date.parse(b.created_at)-Date.parse(a.created_at))
+  .slice(0,5);
+
+ if(!recent.length){
+  const message=document.createElement("p");
+  message.textContent="No recently added members yet.";
+  list.appendChild(message);
+  return;
+ }
+
+ recent.forEach(member=>{
+  const item=document.createElement("div");
+  item.className="recent-member-item";
+  item.textContent=member.name+" · "+
+   new Date(member.created_at).toLocaleDateString();
+
+  list.appendChild(item);
+ });
+}
 async function loadMembers(){
  const {data,error}=await db.from("family_members")
  .select("*").eq("approved",true).order("name");
