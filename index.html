@@ -3173,7 +3173,28 @@ function showFamilyTree() {
     document.getElementById("familyTreeSection").classList.remove("hidden");
     document.getElementById("familyTreeSection").scrollIntoView({behavior:"smooth"});
 }
+function openInfoModal(type){
+ const modal=document.getElementById("infoModal");
+ const title=document.getElementById("infoModalTitle");
+ const content=document.getElementById("infoModalText");
 
+ if(type==="about"){
+  title.textContent="About Manglor Sayedan";
+  content.textContent="This website preserves the family history, ancestry, relationships and heritage of Manglor Sayedan for future generations.";
+ }
+
+ if(type==="contact"){
+  title.textContent="Contact Us";
+  content.textContent="Welcome to Manglor Sayedan Family Heritage. Contact details will be added here.";
+ }
+
+ modal.classList.remove("hidden");
+}
+
+function closeInfoModal(event){
+ if(event && event.target!==event.currentTarget)return;
+ document.getElementById("infoModal").classList.add("hidden");
+}
 function showHome() {
     document.getElementById("familyTreeSection").classList.add("hidden");
     document.querySelector(".upper-section").classList.remove("tree-view-active");
