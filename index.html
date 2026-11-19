@@ -3052,7 +3052,6 @@ function renderTree(rootOverride=null){
  const unlinked=rootOverride?[]:members.filter(m=>
    !connected.has(String(m.id))
 );
- );
 
  if(unlinked.length){
   const area=document.createElement("div");
