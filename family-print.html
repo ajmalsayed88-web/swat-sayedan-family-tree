@@ -601,7 +601,7 @@ childBox.innerHTML = `
       ${children.map(child => `
         <div class="child-branch">
           <div class="child-card">
-            ${escapeHTML(child.name)}
+            ${memberNameHTML(child)}
             <small>${escapeHTML(child.branch || "Family member")}</small>
           </div>
         </div>
