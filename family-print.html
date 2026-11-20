@@ -407,7 +407,9 @@ function transliterateNameToUrdu(name) {
 
 function memberNameHTML(member) {
   const english = String(member.name || "");
-  const urdu = String(member.urdu_name || "").trim();
+  const urdu = String(member.urdu_name || "").trim()
+  || verifiedUrduNames[String(member.name || "").trim().toLowerCase()]
+  || transliterateNameToUrdu(member.name || "");
 
   return `
     <span class="urdu-name" dir="rtl" lang="ur">${escapeHTML(urdu)}</span>
