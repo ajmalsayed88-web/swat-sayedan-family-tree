@@ -387,15 +387,96 @@ function escapeHTML(value){
   "ashiq baba": "عاشق بابا",
 "mian shaudin": "میاں شاودین"
 };
+
 function transliterateNameToUrdu(name) {
-  const known = {
-    syed:"سید", sayed:"سید", muhammad:"محمد",
-    mohammad:"محمد", ahmad:"احمد", ahmed:"احمد",
-    abdul:"عبدال", wahab:"وہاب", masood:"مسعود",
-    masud:"مسعود", mian:"میاں", baba:"بابا",
-    ashiq:"عاشق", khan:"خان", ali:"علی",
-    hussain:"حسین", shah:"شاہ"
-  };
+    if (!name) return "";
+
+    const wordOverrides = {
+        "syed": "سید",
+        "sayed": "سید",
+        "sayyid": "سید",
+        "muhammad": "محمد",
+        "mohammad": "محمد",
+        "mohammed": "محمد",
+        "ahmad": "احمد",
+        "ahmed": "احمد",
+        "abdul": "عبدال",
+        "wahab": "وہاب",
+        "masood": "مسعود",
+        "masud": "مسعود",
+        "mian": "میاں",
+        "baba": "بابا",
+        "ashiq": "عاشق",
+        "khan": "خان",
+        "shah": "شاہ",
+        "ali": "علی",
+        "hussain": "حسین",
+        "husain": "حسین",
+        "ullah": "اللہ",
+        "rahman": "رحمان",
+        "rehman": "رحمان",
+        "noor": "نور",
+        "uddin": "الدین"
+    };
+
+    const rules = [
+        ["aa", "آ"], ["ee", "ی"], ["oo", "و"],
+        ["kh", "خ"], ["gh", "غ"], ["sh", "ش"],
+        ["ch", "چ"], ["zh", "ژ"], ["th", "تھ"],
+        ["dh", "دھ"], ["ph", "ف"], ["bh", "بھ"],
+        ["ai", "ے"], ["ay", "ے"], ["ou", "و"]
+    ];
+
+    const letters = {
+        a: "ا", b: "ب", c: "ک", d: "د",
+        e: "ی", f: "ف", g: "گ", h: "ہ",
+        i: "ی", j: "ج", k: "ک", l: "ل",
+        m: "م", n: "ن", o: "و", p: "پ",
+        q: "ق", r: "ر", s: "س", t: "ت",
+        u: "و", v: "و", w: "و", x: "کس",
+        y: "ی", z: "ز"
+    };
+
+    return name.replace(/[A-Za-z]+/g, word => {
+        const lower = word.toLowerCase();
+
+        if (wordOverrides[lower]) {
+            return wordOverrides[lower];
+        }
+
+        let result = "";
+        let i = 0;
+
+        while (i < lower.length) {
+            let matched = false;
+
+            for (const [pattern, urdu] of rules) {
+                if (lower.startsWith(pattern, i)) {
+                    result += urdu;
+                    i += pattern.length;
+                    matched = true;
+                    break;
+                }
+            }
+
+            if (matched) continue;
+
+            const letter = lower[i];
+
+            if (letter === "c") {
+                result += /[eiy]/.test(lower[i + 1] || "")
+                    ? "س" : "ک";
+            } else {
+                result += letters[letter] || letter;
+            }
+
+            i++;
+        }
+
+        return result;
+    });
+}
+
 
   const letters = {
     a:"ا", b:"ب", c:"ک", d:"د", e:"ی",
