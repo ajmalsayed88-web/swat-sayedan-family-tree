@@ -3321,7 +3321,13 @@ card.appendChild(name);
    editMember(m.id);
   };
   actions.appendChild(edit);
-
+   const addSon=document.createElement("button");
+   addSon.textContent="Add Son";
+   addSon.onclick=(event)=>{
+    event.stopPropagation();
+    addSonToFather(m.id);
+   };
+   actions.appendChild(addSon);
   const del=document.createElement("button");
   del.textContent="Delete";
   del.className="danger";
