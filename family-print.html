@@ -148,6 +148,9 @@ footer{text-align:center;color:#718078;margin:22px 0}
 }
 @media print{
   @page{size:A4 landscape;margin:10mm}
+@page portrait{size:A4 portrait;margin:10mm}
+body.print-portrait{page:portrait}
+body.print-landscape{page:auto}
   body{background:white;padding:0}
   .container{max-width:none}
   header{
@@ -198,7 +201,8 @@ footer{text-align:center;color:#718078;margin:22px 0}
     <div class="children-row" id="children"></div>
   </div>
   <div class="actions">
-    <button onclick="window.print()">Print / Save as PDF</button>
+    <button onclick="printFamily('portrait')">Print Portrait</button>
+<button onclick="printFamily('landscape')">Print Landscape</button>
     <button class="secondary" onclick="window.location.reload()">New Search</button>
   </div>
 </section>
@@ -434,6 +438,23 @@ function renderFamily(ancestors,selected,children){
     behavior:"smooth",
     block:"start"
   });
+}
+  function printFamily(orientation){
+  document.body.classList.remove(
+    "print-portrait",
+    "print-landscape"
+  );
+
+  document.body.classList.add("print-" + orientation);
+
+  window.addEventListener("afterprint", function(){
+    document.body.classList.remove(
+      "print-portrait",
+      "print-landscape"
+    );
+  }, {once:true});
+
+  window.print();
 }
 </script>
 </body>
