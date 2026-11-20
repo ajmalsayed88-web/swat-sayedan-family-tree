@@ -3495,8 +3495,10 @@ card.appendChild(name);
   hint.className="expand-hint";
 
   hint.textContent=expandedIds.has(String(m.id))
-   ?"▼ Hide family"
-   :"＋ Show "+children.length+" family member(s)";
+    ? (currentLanguage==="ur" ? "▼ خاندان چھپائیں" : "▼ Hide family")
+    : (currentLanguage==="ur"
+        ? "＋ خاندان کے "+children.length+" افراد دکھائیں"
+        : "＋ Show "+children.length+" family member(s)");
 
   card.appendChild(hint);
  }
