@@ -1667,16 +1667,11 @@ body {
 }
 
 #tree .generation-row {
-    display: flex;
-    flex-direction: row;
+    display: block;
+    position: relative;
     align-items: flex-start;
-    justify-content: center;
-    gap: 22px;
     width: max-content;
     min-width: 100%;
-    position: relative;
-    margin: 65px auto 0;
-    padding: 8px 20px;
     z-index: 1;
 }
 
@@ -1691,10 +1686,7 @@ body {
 
 @media (max-width: 600px) {
     #tree .generation-row {
-        gap: 14px;
-        margin-top: 55px;
-        padding-left: 12px;
-        padding-right: 12px;
+        min-width: 100%;
     }
 }
 /* COMPACT HOMEPAGE */
