@@ -2463,6 +2463,24 @@ async function convertNameToUrdu(name) {
 
     return name;
 }
+  function convertVisibleTreeNamesToUrdu() {
+    if (currentLanguage !== "ur") return;
+
+    document.querySelectorAll(".person strong").forEach(async element => {
+        if (element.dataset.hasUrdu === "true") return;
+
+        const original = element.dataset.originalName;
+        if (!original) return;
+
+        const urdu = await convertNameToUrdu(original);
+
+        if (currentLanguage === "ur" && element.isConnected) {
+            element.textContent = urdu;
+            element.dir = "rtl";
+            element.style.fontFamily = "'Noto Nastaliq Urdu', serif";
+        }
+    });
+}
     function toggleLanguage(){
     currentLanguage = currentLanguage === "en" ? "ur" : "en";
     localStorage.setItem("manglorLanguage", currentLanguage);
