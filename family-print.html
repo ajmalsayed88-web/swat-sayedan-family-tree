@@ -356,7 +356,46 @@ function escapeHTML(value){
     "&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"
   }[ch]));
 }
+function transliterateNameToUrdu(name) {
+  const known = {
+    syed:"سید", sayed:"سید", muhammad:"محمد",
+    mohammad:"محمد", ahmad:"احمد", ahmed:"احمد",
+    abdul:"عبدال", wahab:"وہاب", masood:"مسعود",
+    masud:"مسعود", mian:"میاں", baba:"بابا",
+    ashiq:"عاشق", khan:"خان", ali:"علی",
+    hussain:"حسین", shah:"شاہ"
+  };
 
+  const letters = {
+    a:"ا", b:"ب", c:"ک", d:"د", e:"ی",
+    f:"ف", g:"گ", h:"ہ", i:"ی", j:"ج",
+    k:"ک", l:"ل", m:"م", n:"ن", o:"و",
+    p:"پ", q:"ق", r:"ر", s:"س", t:"ت",
+    u:"و", v:"و", w:"و", x:"کس", y:"ی", z:"ز"
+  };
+
+  return String(name || "").replace(/[A-Za-z]+/g, word => {
+    const lower = word.toLowerCase();
+    if (known[lower]) return known[lower];
+
+    let result = "";
+    for (let i = 0; i < lower.length; i++) {
+      result += letters[lower[i]] || lower[i];
+    }
+    return result;
+  });
+}
+
+function memberNameHTML(member) {
+  const english = String(member.name || "");
+  const urdu = String(member.urdu_name || "").trim()
+    || transliterateNameToUrdu(english);
+
+  return `
+    <span class="urdu-name" dir="rtl" lang="ur">${escapeHTML(urdu)}</span>
+    <span class="english-name" dir="ltr" lang="en">${escapeHTML(english)}</span>
+  `;
+}
 async function searchFamily(){
   const person = clean(document.getElementById("personName").value);
   const father = clean(document.getElementById("fatherName").value);
@@ -376,7 +415,7 @@ async function searchFamily(){
     // Search father names on the server, with a bounded result set.
     const {data:fathers,error:fatherError}=await db
       .from("family_members")
-      .select("id,name")
+      .select("id,name,urdu_name")
       .eq("approved",true)
       .ilike("name","%"+father+"%")
       .order("name")
@@ -394,7 +433,7 @@ async function searchFamily(){
     // Search people whose father is one of the matching father records.
     const {data:people,error:peopleError}=await db
       .from("family_members")
-      .select("id,name,father_id,branch")
+      .select("id,name,urdu_name,father_id,branch")
       .eq("approved",true)
       .in("father_id",fatherIds)
       .ilike("name","%"+person+"%")
@@ -500,7 +539,7 @@ async function loadFamily(id){
     // Fetch all direct children of the selected person.
     const {data:children,error:childrenError}=await db
       .from("family_members")
-      .select("id,name,branch")
+      .select("id,name,urdu_name,branch")
       .eq("approved",true)
       .eq("father_id",selected.id)
       .order("name")
