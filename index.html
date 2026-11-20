@@ -4072,7 +4072,30 @@ async function saveMember(){
  cancelEditing();
  await loadMembers();
 }
+function addSonToFather(fatherId){
+ if(!isAdmin)return;
 
+ const father=members.find(m=>String(m.id)===String(fatherId));
+ if(!father)return;
+
+ editingId=null;
+
+ document.getElementById("memberName").value="";
+ document.getElementById("memberUrduName").value="";
+ document.getElementById("branch").value="";
+
+ loadFatherOptions();
+ document.getElementById("father").value=fatherId;
+
+ document.getElementById("formTitle").textContent=
+  "Add Son of "+father.name;
+
+ document.getElementById("cancelEdit").textContent="Cancel";
+ document.getElementById("cancelEdit").classList.remove("hidden");
+
+ document.getElementById("addBox").classList.remove("hidden");
+ document.getElementById("addBox").scrollIntoView({behavior:"smooth"});
+}
 function editMember(id){
  const m=members.find(x=>String(x.id)===String(id));
 
