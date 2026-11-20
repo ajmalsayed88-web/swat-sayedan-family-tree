@@ -1038,14 +1038,19 @@ html {
   border-radius:8px;
  }
 }
- /* Make family tree full width */
-#familyTreeSection{
- width:calc(100% + 36px);
- max-width:none;
- margin-left:-18px;
- margin-right:-18px;
- padding-left:0 !important;
- padding-right:0 !important;
+ /* PROFESSIONAL FAMILY TREE SECTION WIDTH */
+#familyTreeSection {
+    width: 100%;
+    max-width: 100%;
+    margin: 18px auto 0;
+    padding: 22px !important;
+    box-sizing: border-box;
+}
+
+@media (max-width: 600px) {
+    #familyTreeSection {
+        padding: 12px !important;
+    }
 }
     
 /* HOME PAGE - CLEAN RESPONSIVE LAYOUT */
@@ -1863,11 +1868,11 @@ height:22px;
     /* FIXED VERTICAL SCROLLBAR FOR FAMILY TREE */
 #familyTreeSection .tree-scroll {
     display: block !important;
-    flex: 0 0 65vh !important;
+    flex: 0 0 76vh !important;
     width: 100% !important;
     height: 65vh !important;
-    min-height: 350px !important;
-    max-height: 750px !important;
+    min-height: 420px !important;
+    max-height: 850px !important;
     box-sizing: border-box !important;
     overflow-y: scroll !important;
     overflow-x: auto !important;
