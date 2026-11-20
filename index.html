@@ -3914,17 +3914,24 @@ function searchFamily(){
     );
 
     let current = selectedMember;
-    const visited = new Set();
+let branchRoot = selectedMember;
+const visited = new Set();
 
-    while(current && current.father_id){
-        if(visited.has(String(current.id))) break;
+while(current && current.father_id){
+    if(visited.has(String(current.id))) break;
 
-        visited.add(String(current.id));
-        expandedIds.add(String(current.father_id));
-        current = memberMap.get(String(current.father_id));
-    }
+    visited.add(String(current.id));
 
-    renderTree();
+    const parent = memberMap.get(String(current.father_id));
+
+    if(!parent) break;
+
+    expandedIds.add(String(parent.id));
+    branchRoot = parent;
+    current = parent;
+}
+
+renderTree(branchRoot);
 
     requestAnimationFrame(() => {
         const target = document.querySelector(
