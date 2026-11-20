@@ -3472,7 +3472,9 @@ function makePersonCard(m){
  if(m.name==="Peer Baba"){
  const label=document.createElement("div");
  label.className="generation-label";
- label.textContent="COMMON ANCESTOR";
+ label.textContent=currentLanguage==="ur"
+    ? "مشترکہ جدِ امجد"
+    : "COMMON ANCESTOR";
  card.appendChild(label);
 }
 
