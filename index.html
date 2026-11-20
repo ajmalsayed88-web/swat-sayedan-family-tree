@@ -4049,7 +4049,15 @@ treeViewport.addEventListener("wheel",event=>{
   event.clientY
  );
 },{passive:false});
-  
+  treeViewport.addEventListener("dblclick",event=>{
+ event.preventDefault();
+
+ setTreeZoom(
+  treeZoom*1.25,
+  event.clientX,
+  event.clientY
+ );
+});
 function renderUrduNameManager() {
     const list = document.getElementById("urduNameManagerList");
     if (!list) return;
