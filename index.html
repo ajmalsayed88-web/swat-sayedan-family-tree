@@ -2435,6 +2435,34 @@ function displayMemberName(member) {
     }
     return member.name;
 }
+  const urduNameCache = new Map();
+
+async function convertNameToUrdu(name) {
+    if (urduNameCache.has(name)) {
+        return urduNameCache.get(name);
+    }
+
+    try {
+        const url = "https://inputtools.google.com/request?text=" +
+            encodeURIComponent(name) +
+            "&itc=ur-t-i0-und&num=1&cp=0&cs=1&ie=utf-8&oe=utf-8&app=test";
+
+        const response = await fetch(url);
+        if (!response.ok) throw new Error("Conversion unavailable");
+
+        const result = await response.json();
+        const converted = result?.[1]?.[0]?.[1]?.[0];
+
+        if (result?.[0] === "SUCCESS" && converted) {
+            urduNameCache.set(name, converted);
+            return converted;
+        }
+    } catch (error) {
+        console.warn("Urdu conversion failed:", error);
+    }
+
+    return name;
+}
     function toggleLanguage(){
     currentLanguage = currentLanguage === "en" ? "ur" : "en";
     localStorage.setItem("manglorLanguage", currentLanguage);
