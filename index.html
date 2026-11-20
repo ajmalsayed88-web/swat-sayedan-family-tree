@@ -1900,6 +1900,130 @@ height:22px;
     margin: 0 !important;
     box-shadow: 0 3px 12px rgba(0,0,0,0.25);
 }
+  
+/* PROFESSIONAL URDU PAGE LAYOUT */
+html[lang="ur"] body {
+    font-family: 'Noto Nastaliq Urdu', serif;
+    line-height: 2.1;
+    text-align: right;
+}
+
+html[lang="ur"] .hero {
+    padding: 55px 22px;
+    text-align: center;
+}
+
+html[lang="ur"] .hero h1 {
+    font-size: clamp(36px, 5vw, 52px);
+    line-height: 1.9;
+    letter-spacing: 0;
+    margin-bottom: 12px;
+}
+
+html[lang="ur"] .hero-label {
+    font-size: 17px;
+    letter-spacing: 0;
+    line-height: 2;
+}
+
+html[lang="ur"] .hero-description {
+    font-size: 19px;
+    line-height: 2.2;
+    max-width: 720px;
+}
+
+html[lang="ur"] .hero-button {
+    font-family: inherit;
+    font-size: 17px;
+    line-height: 2;
+    margin: 7px;
+    letter-spacing: 0;
+}
+
+html[lang="ur"] .top-nav-icons {
+    right: auto;
+    left: 18px;
+    flex-direction: row-reverse;
+}
+
+html[lang="ur"] .dashboard-toggle {
+    left: auto;
+    right: 22px;
+    font-family: inherit;
+}
+
+html[lang="ur"] .dashboard-panel {
+    left: auto;
+    right: 0;
+    transform: translateX(110%);
+    text-align: right;
+    direction: rtl;
+}
+
+html[lang="ur"] .dashboard-panel.open {
+    transform: translateX(0);
+}
+
+html[lang="ur"] .dashboard-heading,
+html[lang="ur"] .dashboard-recent,
+html[lang="ur"] .dashboard-branches {
+    text-align: right;
+    direction: rtl;
+}
+
+html[lang="ur"] .card,
+html[lang="ur"] .card h2,
+html[lang="ur"] .card h3,
+html[lang="ur"] label {
+    text-align: right;
+    direction: rtl;
+}
+
+html[lang="ur"] input,
+html[lang="ur"] select,
+html[lang="ur"] textarea {
+    font-family: inherit;
+    text-align: right;
+    direction: rtl;
+    line-height: 2;
+}
+
+html[lang="ur"] .home-stats {
+    direction: rtl;
+}
+
+html[lang="ur"] .stat-card {
+    text-align: center;
+    line-height: 2;
+}
+
+@media (max-width: 600px) {
+    html[lang="ur"] .hero {
+        padding: 45px 14px;
+    }
+
+    html[lang="ur"] .hero-description {
+        font-size: 16px;
+    }
+
+    html[lang="ur"] .hero-button {
+        width: 100%;
+        max-width: 300px;
+        margin: 6px auto;
+    }
+
+    html[lang="ur"] .dashboard-toggle {
+        right: 10px;
+        left: auto;
+        min-width: 110px;
+    }
+
+    html[lang="ur"] .top-nav-icons {
+        left: 10px;
+        right: auto;
+    }
+}
+
 </style>
 </head>
 
