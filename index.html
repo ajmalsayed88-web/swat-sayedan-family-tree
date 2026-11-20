@@ -2258,7 +2258,7 @@ function updateHomeStats(){
  recent.forEach(member=>{
   const item=document.createElement("div");
   item.className="recent-member-item";
-  item.textContent=member.name+" · "+
+  item.textContent=displayMemberName(member)+" · "+
    new Date(member.created_at).toLocaleDateString();
 
   list.appendChild(item);
@@ -2750,7 +2750,7 @@ function loadFatherOptions(){
 
   const o=document.createElement("option");
   o.value=m.id;
-  o.textContent=m.name;
+  o.textContent=displayMemberName(m);
   select.appendChild(o);
  });
 
