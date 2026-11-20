@@ -2906,6 +2906,8 @@ function makePersonCard(m){
 const name=document.createElement("strong");
 name.textContent=displayMemberName(m);
 name.dir=currentLanguage==="ur"?"rtl":"ltr";
+name.dataset.originalName=m.name;
+name.dataset.hasUrdu=m.urdu_name?"true":"false";
 card.appendChild(name);
 
  if(m.branch){
