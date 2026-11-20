@@ -191,8 +191,29 @@ button.secondary{background:#777}
   flex-wrap:nowrap;
   gap:15px;
   width:max-content;
-  min-width:100%;
+  min-width:0;
+  margin:0 auto;
   padding-top:25px;
+}
+
+.children-row::before{
+  content:"";
+  position:absolute;
+  top:0;
+  left:0;
+  right:0;
+  border-top:2px solid #c9a44c;
+}
+
+.children-row::after{
+  content:"";
+  position:absolute;
+  top:-6px;
+  left:0;
+  width:7px;
+  height:7px;
+  border-left:2px solid #c9a44c;
+  border-top:2px solid #c9a44c;
 }
 
 .child-branch{
