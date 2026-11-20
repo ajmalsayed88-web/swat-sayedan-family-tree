@@ -1540,6 +1540,13 @@ html:has(.upper-section:not(.tree-view-active)),
 body:has(.upper-section:not(.tree-view-active)) {
     overflow-y: hidden !important;
     height: 100% !important;
+  /* RESTORE MAIN PAGE SCROLLBAR IN FAMILY TREE VIEW */
+html:has(.upper-section.tree-view-active),
+body:has(.upper-section.tree-view-active) {
+    height: auto !important;
+    min-height: 100vh !important;
+    overflow-y: auto !important;
+}
 }
     /* FINAL HOME PAGE SCROLLBAR FIX */
 body {
