@@ -2432,6 +2432,21 @@ function displayMemberName(member) {
     }
     return member.name;
 }
+    function toggleLanguage(){
+    currentLanguage = currentLanguage === "en" ? "ur" : "en";
+    localStorage.setItem("manglorLanguage", currentLanguage);
+
+    document.documentElement.lang = currentLanguage;
+    document.documentElement.dir = currentLanguage === "ur" ? "rtl" : "ltr";
+
+    renderTree();
+    loadFatherOptions();
+    renderRecentlyAddedMembers();
+    renderFamilyBranches();
+
+    document.getElementById("languageToggle").textContent =
+        currentLanguage === "en" ? "اردو" : "English";
+}
 async function loadMembers(){
  const {data,error}=await db.from("family_members")
  .select("*").eq("approved",true).order("name");
