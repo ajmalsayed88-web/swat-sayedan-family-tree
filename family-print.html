@@ -121,6 +121,68 @@ button.secondary{background:#777}
   width:max-content;
   min-width:100%;
 }
+  .children-tree{
+  text-align:center;
+  padding:15px 0;
+}
+
+.family-parent{
+  display:flex;
+  justify-content:center;
+}
+
+.family-connector{
+  width:2px;
+  height:30px;
+  background:#c9a44c;
+  margin:auto;
+  position:relative;
+}
+
+.family-connector::after{
+  content:"";
+  position:absolute;
+  bottom:0;
+  left:-5px;
+  border-left:6px solid transparent;
+  border-right:6px solid transparent;
+  border-top:9px solid #c9a44c;
+}
+
+.children-row{
+  position:relative;
+  display:flex;
+  justify-content:center;
+  flex-wrap:nowrap;
+  gap:15px;
+  width:max-content;
+  min-width:100%;
+  padding-top:25px;
+}
+
+.child-branch{
+  position:relative;
+  padding-top:20px;
+}
+
+.child-branch::before{
+  content:"";
+  position:absolute;
+  top:0;
+  left:50%;
+  height:20px;
+  border-left:2px solid #c9a44c;
+}
+
+.child-branch::after{
+  content:"";
+  position:absolute;
+  top:0;
+  left:calc(50% - 5px);
+  border-left:6px solid transparent;
+  border-right:6px solid transparent;
+  border-top:9px solid #c9a44c;
+}
 .child-card{
   min-width:145px;
   max-width:210px;
