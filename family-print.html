@@ -375,6 +375,17 @@ function escapeHTML(value){
     "&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"
   }[ch]));
 }
+  const verifiedUrduNames = {
+  "lakhkar mian": "لخکر میاں",
+  "lashkar mian": "لشکر میاں",
+  "amir khitab": "امیر خطاب",
+  "mustafa": "مصطفیٰ",
+  "syed masood": "سید مسعود",
+  "syed masud": "سید مسعود",
+  "abdul wahab": "عبد الوہاب",
+  "mian abdul wahab": "میاں عبد الوہاب",
+  "ashiq baba": "عاشق بابا"
+};
 function transliterateNameToUrdu(name) {
   const known = {
     syed:"سید", sayed:"سید", muhammad:"محمد",
