@@ -489,12 +489,7 @@ function renderFamily(ancestors,selected,children){
   childBox.className = "children-tree";
 
 childBox.innerHTML = `
-  <div class="family-parent">
-    <div class="person-card selected-card">
-      ${escapeHTML(selected.name)}
-      <small>Father</small>
-    </div>
-  </div>
+  
   <div class="family-connector"></div>
 
   ${children.length ? `
