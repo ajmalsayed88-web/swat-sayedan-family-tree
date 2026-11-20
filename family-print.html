@@ -482,11 +482,18 @@ function transliterateNameToUrdu(name) {
 
 
   
+const currentLanguage = localStorage.getItem("manglorLanguage") || "en";
+
 function memberNameHTML(member) {
   const english = String(member.name || "");
+
   const urdu = String(member.urdu_name || "").trim()
-  || verifiedUrduNames[String(member.name || "").trim().toLowerCase()]
-  || transliterateNameToUrdu(member.name || "");
+    || verifiedUrduNames[String(member.name || "").trim().toLowerCase()]
+    || transliterateNameToUrdu(member.name || "");
+
+  if (currentLanguage === "en") {
+    return `<span class="english-name" dir="ltr" lang="en">${escapeHTML(english)}</span>`;
+  }
 
   return `
     <span class="urdu-name" dir="rtl" lang="ur">${escapeHTML(urdu)}</span>
