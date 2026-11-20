@@ -3452,6 +3452,7 @@ async function saveMember(){
  if(!isAdmin)return;
 
  const name=document.getElementById("memberName").value.trim();
+ const urduName=document.getElementById("memberUrduName").value.trim();
  const fatherId=document.getElementById("father").value||null;
  const branch=document.getElementById("branch").value.trim();
 
@@ -3489,7 +3490,7 @@ async function saveMember(){
 
  if(editingId){
   const {error}=await db.from("family_members")
-  .update({name,father_id:fatherId,branch})
+  .update({name,urdu_name:urduName||null,father_id:fatherId,branch})
   .eq("id",editingId);
 
   if(error){
@@ -3502,6 +3503,7 @@ async function saveMember(){
   const {error}=await db.from("family_members")
   .insert({
    name,
+   urdu_name:urduName||null,
    father_id:fatherId,
    branch,
    approved:true
