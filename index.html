@@ -2802,8 +2802,9 @@ async function login(){
  await checkAdmin();
 
  if(isAdmin){
-  status("Administrator login successful.");
-  await loadMembers();
+   document.getElementById("loginModal").classList.add("hidden");
+   status("Administrator login successful.");
+   await loadMembers();
  }else{
   status("This account is not an administrator.");
  }
