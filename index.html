@@ -2427,9 +2427,10 @@ populateBranchFormOptions(data);
   list.appendChild(button);
  });
 }
-    let currentLanguage = localStorage.getItem("manglorLanguage") || "en";
+    
+let currentLanguage = localStorage.getItem("manglorLanguage") || "en";
 
-// Only use verified Urdu spellings. Never guess a spelling automatically.
+// Only verified Urdu spellings are used for family names.
 const verifiedUrduNames = {
     "syed masood": "سید مسعود",
     "syed masud": "سید مسعود",
@@ -2437,6 +2438,137 @@ const verifiedUrduNames = {
     "mian abdul wahab": "میاں عبد الوہاب",
     "ashiq baba": "عاشق بابا"
 };
+
+// English-to-Urdu website translations.
+const websiteTranslations = {
+    "☰ Dashboard": "☰ ڈیش بورڈ",
+    "OUR FAMILY • OUR HERITAGE • OUR LEGACY": "ہمارا خاندان • ہمارا ورثہ • ہماری میراث",
+    "Discover our roots, honour our ancestors, and preserve the proud heritage of Manglor Sayedan for future generations.": "اپنی جڑوں کو جانیں، اپنے آباؤ اجداد کو خراجِ عقیدت پیش کریں، اور منگلور سادات کے ورثے کو آنے والی نسلوں کے لیے محفوظ رکھیں۔",
+    "Explore Family Tree →": "شجرۂ نسب دیکھیں ←",
+    "Family Search & Print →": "خاندان تلاش کریں اور پرنٹ کریں ←",
+    "Total Members": "کل افراد",
+    "Generations": "نسلیں",
+    "Family Roots": "خاندانی شجرے",
+    "Contact Us": "رابطہ کریں",
+    "Email Us": "ای میل کریں",
+    "WhatsApp Message": "واٹس ایپ پیغام",
+    "Family Heritage Dashboard": "خاندانی ورثے کا ڈیش بورڈ",
+    "Recently Added Family Members": "حال ہی میں شامل کیے گئے افراد",
+    "Loading family members...": "خاندان کے افراد لوڈ ہو رہے ہیں...",
+    "Family Branches": "خاندانی شاخیں",
+    "Loading family branches...": "خاندانی شاخیں لوڈ ہو رہی ہیں...",
+    "Home": "ہوم",
+    "Family Tree": "شجرۂ نسب",
+    "Search Family Members": "خاندان کے افراد تلاش کریں",
+    "Administration": "انتظامیہ",
+    "Admin Login": "ایڈمن لاگ اِن",
+    "Administrator Panel": "ایڈمن پینل",
+    "Manage Family Branches": "خاندانی شاخوں کا انتظام",
+    "Add Family Member": "خاندان کا فرد شامل کریں",
+    "Manage Administrators": "ایڈمنز کا انتظام",
+    "Administrator Login": "ایڈمن لاگ اِن",
+    "Administrator email": "ایڈمن کی ای میل",
+    "Password": "پاس ورڈ",
+    "Login": "لاگ اِن",
+    "Forgot Password?": "پاس ورڈ بھول گئے؟",
+    "Set a New Password": "نیا پاس ورڈ مقرر کریں",
+    "New password": "نیا پاس ورڈ",
+    "Confirm new password": "نئے پاس ورڈ کی تصدیق کریں",
+    "Update Password": "پاس ورڈ اپ ڈیٹ کریں",
+    "Administrator logged in": "ایڈمن لاگ اِن ہے",
+    "Logout": "لاگ آؤٹ",
+    "Refresh Administrator List": "ایڈمنز کی فہرست تازہ کریں",
+    "Owner tools": "مالک کے ٹولز",
+    "Invite another family administrator by email": "ای میل کے ذریعے خاندان کے ایک اور ایڈمن کو دعوت دیں",
+    "New administrator's email address": "نئے ایڈمن کی ای میل",
+    "Invite Administrator": "ایڈمن کو دعوت دیں",
+    "Create a new family branch and select its top ancestor.": "خاندان کی نئی شاخ بنائیں اور اس کے سب سے بڑے جدِ امجد کا انتخاب کریں۔",
+    "Enter branch name": "شاخ کا نام درج کریں",
+    "Top Family Ancestor": "خاندان کے سب سے بڑے جدِ امجد",
+    "Select top ancestor": "سب سے بڑے جدِ امجد کا انتخاب کریں",
+    "Parent Branch (optional)": "والد شاخ (اختیاری)",
+    "No parent — Main Branch": "کوئی والد شاخ نہیں — مرکزی شاخ",
+    "Create Branch": "شاخ بنائیں",
+    "Member's name (English)": "فرد کا نام (انگریزی)",
+    "Member's name (Urdu)": "فرد کا نام (اردو)",
+    "Member's name": "فرد کا نام",
+    "Father's name": "والد کا نام",
+    "Father unknown / not added": "والد نامعلوم / شامل نہیں",
+    "Family branch (optional)": "خاندانی شاخ (اختیاری)",
+    "Save Member": "فرد محفوظ کریں",
+    "Cancel Edit": "ترمیم منسوخ کریں",
+    "Back to Home": "ہوم پر واپس جائیں",
+    "Family Heritage & Ancestral Tree": "خاندانی ورثہ اور شجرۂ نسب",
+    "How to explore the family:": "خاندان کو کیسے دیکھیں:",
+    "Expand": "کھولیں",
+    "Search name...": "نام تلاش کریں...",
+    "Collapse": "بند کریں",
+    "About": "تعارف",
+    "Contact": "رابطہ",
+    "Edit": "ترمیم",
+    "Delete": "حذف کریں",
+    "COMMON ANCESTOR": "مشترکہ جدِ امجد"
+};
+
+function translatePage() {
+    const isUrdu = currentLanguage === "ur";
+
+    document.documentElement.lang = currentLanguage;
+    document.documentElement.dir = isUrdu ? "rtl" : "ltr";
+    document.body.dir = isUrdu ? "rtl" : "ltr";
+
+    if (!isUrdu) return;
+
+    // Translate visible website text without changing family data.
+    const walker = document.createTreeWalker(
+        document.body,
+        NodeFilter.SHOW_TEXT
+    );
+
+    let node;
+    while ((node = walker.nextNode())) {
+        const original = node.nodeValue;
+        const trimmed = original.trim();
+
+        if (websiteTranslations[trimmed]) {
+            node.nodeValue = original.replace(
+                trimmed,
+                websiteTranslations[trimmed]
+            );
+        }
+    }
+
+    // Translate common input placeholders and tooltips.
+    const placeholders = {
+        "Administrator email": "ایڈمن کی ای میل",
+        "Password": "پاس ورڈ",
+        "New password": "نیا پاس ورڈ",
+        "Confirm new password": "نئے پاس ورڈ کی تصدیق کریں",
+        "New administrator's email address": "نئے ایڈمن کی ای میل",
+        "Search name...": "نام تلاش کریں..."
+    };
+
+    document.querySelectorAll("[placeholder]").forEach(el => {
+        const value = el.getAttribute("placeholder");
+        if (placeholders[value]) {
+            el.setAttribute("placeholder", placeholders[value]);
+        }
+    });
+
+    const titles = {
+        "Home": "ہوم",
+        "About": "تعارف",
+        "Contact": "رابطہ"
+    };
+
+    document.querySelectorAll("[title]").forEach(el => {
+        const value = el.getAttribute("title");
+        if (titles[value]) el.setAttribute("title", titles[value]);
+    });
+
+    const toggle = document.getElementById("languageToggle");
+    if (toggle) toggle.textContent = "English";
+}
 
 function displayMemberName(member) {
     if (currentLanguage !== "ur") return member.name;
@@ -2447,22 +2579,36 @@ function displayMemberName(member) {
     const key = (member.name || "").trim().toLowerCase();
     return verifiedUrduNames[key] || member.name;
 }
-    
-    function toggleLanguage(){
+
+function toggleLanguage() {
     currentLanguage = currentLanguage === "en" ? "ur" : "en";
+
     localStorage.setItem("manglorLanguage", currentLanguage);
 
-    document.documentElement.lang = currentLanguage;
-    document.documentElement.dir = currentLanguage === "ur" ? "rtl" : "ltr";
+    if (currentLanguage === "en") {
+        location.reload();
+        return;
+    }
+
+    translatePage();
 
     renderTree();
     loadFatherOptions();
     renderRecentlyAddedMembers();
     renderFamilyBranches();
 
-    document.getElementById("languageToggle").textContent =
-        currentLanguage === "en" ? "اردو" : "English";
+    // Translate newly rendered content as well.
+    translatePage();
 }
+
+// Restore the visitor's saved language when the page opens.
+if (currentLanguage === "ur") {
+    translatePage();
+} else {
+    document.documentElement.lang = "en";
+    document.documentElement.dir = "ltr";
+}
+
 async function loadMembers(){
  const {data,error}=await db.from("family_members")
  .select("*").eq("approved",true).order("name");
