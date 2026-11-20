@@ -1,0 +1,440 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Manglor Sayedan - Family Lineage Print</title>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<style>
+:root {
+  --green:#145c3b;
+  --dark:#0b3828;
+  --gold:#c9a44c;
+  --light:#edf5ef;
+  --text:#193b2c;
+}
+*{box-sizing:border-box}
+body{
+  margin:0;
+  padding:20px;
+  background:#edf5ef;
+  color:var(--text);
+  font-family:Arial,sans-serif;
+}
+.container{max-width:1100px;margin:auto}
+header{
+  text-align:center;
+  padding:22px 10px;
+  background:var(--dark);
+  color:white;
+  border-bottom:5px solid var(--gold);
+  border-radius:12px;
+}
+header h1{margin:0 0 8px;font-size:27px}
+header p{margin:0;color:#ead9a8}
+.search-panel,.result-panel,.family-panel{
+  background:white;
+  padding:20px;
+  border-radius:12px;
+  margin-top:18px;
+  box-shadow:0 3px 14px #00000012;
+}
+h2{color:var(--green);margin-top:0}
+.fields{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:12px;
+}
+input{
+  width:100%;
+  padding:13px;
+  border:1px solid #b8cbbd;
+  border-radius:8px;
+  font-size:16px;
+}
+button{
+  padding:12px 18px;
+  border:0;
+  border-radius:8px;
+  background:var(--green);
+  color:white;
+  font-size:15px;
+  cursor:pointer;
+  margin-top:12px;
+}
+button:hover{background:var(--dark)}
+button.secondary{background:#777}
+#status{margin-top:12px;color:#8a5a00}
+.result{
+  border:1px solid #d5e3d8;
+  border-radius:8px;
+  padding:12px;
+  margin:9px 0;
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  gap:12px;
+}
+.result button{margin:0;white-space:nowrap}
+.person-card{
+  display:inline-block;
+  min-width:190px;
+  max-width:260px;
+  padding:13px 18px;
+  background:var(--light);
+  border:2px solid var(--green);
+  border-radius:9px;
+  text-align:center;
+  font-weight:bold;
+}
+.person-card small{
+  display:block;
+  margin-top:5px;
+  color:#66776b;
+  font-weight:normal;
+}
+.ancestor{
+  text-align:center;
+  margin:12px auto;
+}
+.connector{
+  text-align:center;
+  color:var(--gold);
+  font-size:25px;
+  line-height:22px;
+}
+.selected-card{
+  background:#fff8e5;
+  border-color:var(--gold);
+}
+.children-wrap{
+  overflow-x:auto;
+  padding:15px 0;
+}
+.children-row{
+  display:flex;
+  flex-wrap:nowrap;
+  justify-content:flex-start;
+  align-items:stretch;
+  gap:10px;
+  width:max-content;
+  min-width:100%;
+}
+.child-card{
+  min-width:145px;
+  max-width:210px;
+  padding:12px;
+  border:1px solid var(--gold);
+  background:#fffaf0;
+  border-radius:8px;
+  text-align:center;
+  font-weight:bold;
+}
+.child-card small{
+  display:block;
+  margin-top:5px;
+  font-weight:normal;
+  color:#66776b;
+}
+.empty{color:#777;text-align:center;padding:15px}
+.actions{text-align:center}
+footer{text-align:center;color:#718078;margin:22px 0}
+@media(max-width:650px){
+  body{padding:10px}
+  .fields{grid-template-columns:1fr}
+  header h1{font-size:22px}
+  .result{align-items:flex-start;flex-direction:column}
+}
+@media print{
+  @page{size:A4 landscape;margin:10mm}
+  body{background:white;padding:0}
+  .container{max-width:none}
+  header{
+    background:white!important;
+    color:var(--dark)!important;
+    border:2px solid var(--gold);
+  }
+  header p{color:var(--green)}
+  .search-panel,.result-panel,.actions,footer{display:none!important}
+  .family-panel{box-shadow:none;margin-top:10px;padding:10px}
+  .children-wrap{overflow:visible}
+  .children-row{width:max-content;min-width:100%;gap:6px}
+  .child-card{min-width:105px;padding:7px;font-size:11px}
+  .person-card{min-width:150px;padding:9px}
+  .ancestor{margin:7px auto}
+  *{-webkit-print-color-adjust:exact;print-color-adjust:exact}
+}
+</style>
+</head>
+<body>
+<div class="container">
+
+<header>
+  <h1>Manglor Sayedan Family Tree</h1>
+  <p>Family Lineage Search &amp; Printing</p>
+</header>
+
+<section class="search-panel">
+  <h2>Find a Family Member</h2>
+  <div class="fields">
+    <input id="personName" placeholder="Enter person's name">
+    <input id="fatherName" placeholder="Enter father's name">
+  </div>
+  <button id="searchButton" onclick="searchFamily()">Search Family</button>
+  <div id="status"></div>
+</section>
+
+<section class="result-panel" id="resultsPanel" style="display:none">
+  <h2>Search Results</h2>
+  <div id="results"></div>
+</section>
+
+<section class="family-panel" id="familyPanel" style="display:none">
+  <h2 style="text-align:center">Family Lineage</h2>
+  <div id="lineage"></div>
+  <h2 style="text-align:center;margin-top:30px">Children</h2>
+  <div class="children-wrap">
+    <div class="children-row" id="children"></div>
+  </div>
+  <div class="actions">
+    <button onclick="window.print()">Print / Save as PDF</button>
+    <button class="secondary" onclick="window.location.reload()">New Search</button>
+  </div>
+</section>
+
+<footer>Manglor Sayedan Family Record</footer>
+</div>
+
+<script>
+const SUPABASE_URL = "https://mkpgibnfftqihoztpnhy.supabase.co";
+const SUPABASE_KEY = "sb_publishable_t8OgRxv90fao6omiHsTmiw_1UfkbkUc";
+const db = window.supabase.createClient(SUPABASE_URL,SUPABASE_KEY);
+
+const statusBox = document.getElementById("status");
+
+function clean(value){
+  return String(value || "").trim();
+}
+
+function escapeHTML(value){
+  return String(value ?? "").replace(/[&<>"']/g, ch => ({
+    "&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"
+  }[ch]));
+}
+
+async function searchFamily(){
+  const person = clean(document.getElementById("personName").value);
+  const father = clean(document.getElementById("fatherName").value);
+  const button = document.getElementById("searchButton");
+
+  if(!person || !father){
+    statusBox.textContent="Please enter both the person's name and father's name.";
+    return;
+  }
+
+  button.disabled=true;
+  statusBox.textContent="Searching family database...";
+  document.getElementById("resultsPanel").style.display="none";
+  document.getElementById("familyPanel").style.display="none";
+
+  try{
+    // Search father names on the server, with a bounded result set.
+    const {data:fathers,error:fatherError}=await db
+      .from("family_members")
+      .select("id,name")
+      .eq("approved",true)
+      .ilike("name","%"+father+"%")
+      .order("name")
+      .limit(30);
+
+    if(fatherError) throw fatherError;
+
+    if(!fathers || !fathers.length){
+      statusBox.textContent="No matching father found. Check the spelling.";
+      return;
+    }
+
+    const fatherIds=fathers.map(x=>x.id);
+
+    // Search people whose father is one of the matching father records.
+    const {data:people,error:peopleError}=await db
+      .from("family_members")
+      .select("id,name,father_id,branch")
+      .eq("approved",true)
+      .in("father_id",fatherIds)
+      .ilike("name","%"+person+"%")
+      .order("name")
+      .limit(50);
+
+    if(peopleError) throw peopleError;
+
+    const fatherMap=new Map(fathers.map(x=>[String(x.id),x]));
+
+    const matches=(people||[]).map(p=>({
+      ...p,
+      father:fatherMap.get(String(p.father_id))
+    })).filter(p=>p.father);
+
+    if(!matches.length){
+      statusBox.textContent="No matching person found with this father's name.";
+      return;
+    }
+
+    statusBox.textContent=matches.length+" matching record(s) found.";
+    showResults(matches);
+
+  }catch(error){
+    console.error(error);
+    statusBox.textContent="Database error: "+error.message;
+  }finally{
+    button.disabled=false;
+  }
+}
+
+function showResults(matches){
+  const panel=document.getElementById("resultsPanel");
+  const box=document.getElementById("results");
+  box.innerHTML="";
+
+  matches.forEach(person=>{
+    const item=document.createElement("div");
+    item.className="result";
+
+    const details=document.createElement("div");
+    details.innerHTML="<strong>"+escapeHTML(person.name)+
+      "</strong><br><small>Father: "+
+      escapeHTML(person.father.name)+"</small>";
+
+    const button=document.createElement("button");
+    button.textContent="Select";
+    button.onclick=()=>loadFamily(person.id);
+
+    item.appendChild(details);
+    item.appendChild(button);
+    box.appendChild(item);
+  });
+
+  panel.style.display="block";
+}
+
+async function getMember(id){
+  const {data,error}=await db
+    .from("family_members")
+    .select("id,name,father_id,branch")
+    .eq("id",id)
+    .eq("approved",true)
+    .maybeSingle();
+
+  if(error) throw error;
+  return data;
+}
+
+async function loadFamily(id){
+  statusBox.textContent="Loading family lineage...";
+  document.getElementById("familyPanel").style.display="none";
+
+  try{
+    const selected=await getMember(id);
+    if(!selected){
+      statusBox.textContent="Selected family member was not found.";
+      return;
+    }
+
+    // Fetch ancestors one at a time, without loading the entire family.
+    const ancestors=[];
+    let current=selected;
+    const visited=new Set();
+
+    while(current){
+      if(visited.has(String(current.id))){
+        throw new Error("A circular family relationship was detected.");
+      }
+      visited.add(String(current.id));
+      ancestors.push(current);
+
+      if(!current.father_id) break;
+
+      current=await getMember(current.father_id);
+      if(!current) break;
+
+      if(ancestors.length>=100){
+        throw new Error("Lineage exceeds 100 generations. Please check the records.");
+      }
+    }
+
+    // Fetch all direct children of the selected person.
+    const {data:children,error:childrenError}=await db
+      .from("family_members")
+      .select("id,name,branch")
+      .eq("approved",true)
+      .eq("father_id",selected.id)
+      .order("name")
+      .limit(1000);
+
+    if(childrenError) throw childrenError;
+
+    renderFamily(ancestors,selected,children||[]);
+    statusBox.textContent="Family lineage loaded successfully.";
+
+  }catch(error){
+    console.error(error);
+    statusBox.textContent="Could not load family: "+error.message;
+  }
+}
+
+function renderFamily(ancestors,selected,children){
+  const lineage=document.getElementById("lineage");
+  const childBox=document.getElementById("children");
+  lineage.innerHTML="";
+  childBox.innerHTML="";
+
+  // Display from oldest ancestor down to selected person.
+  const ordered=[...ancestors].reverse();
+
+  ordered.forEach((person,index)=>{
+    const div=document.createElement("div");
+    div.className="ancestor";
+
+    const card=document.createElement("div");
+    card.className="person-card";
+    if(String(person.id)===String(selected.id)){
+      card.classList.add("selected-card");
+    }
+
+    card.innerHTML=escapeHTML(person.name)+
+      (String(person.id)===String(selected.id)
+        ?"<small>Selected Person</small>":"");
+
+    div.appendChild(card);
+    lineage.appendChild(div);
+
+    if(index<ordered.length-1){
+      const connector=document.createElement("div");
+      connector.className="connector";
+      connector.textContent="↓";
+      lineage.appendChild(connector);
+    }
+  });
+
+  if(!children.length){
+    childBox.innerHTML='<div class="empty">No children recorded yet.</div>';
+  }else{
+    children.forEach(child=>{
+      const card=document.createElement("div");
+      card.className="child-card";
+      card.innerHTML=escapeHTML(child.name)+
+        "<small>"+escapeHTML(child.branch||"Family member")+"</small>";
+      childBox.appendChild(card);
+    });
+  }
+
+  document.getElementById("familyPanel").style.display="block";
+  document.getElementById("familyPanel").scrollIntoView({
+    behavior:"smooth",
+    block:"start"
+  });
+}
+</script>
+</body>
+</html>
