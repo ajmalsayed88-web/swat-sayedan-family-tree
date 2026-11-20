@@ -3833,68 +3833,66 @@ function renderTree(rootOverride=null){
  requestAnimationFrame(()=>updateConnectorLines());
 }
 
+
 function searchFamily(){
- const input=document.getElementById("searchInput");
- const message=document.getElementById("searchStatus");
- const query=input.value.trim().toLowerCase();
+    const input = document.getElementById("searchInput");
+    const message = document.getElementById("searchStatus");
+    const query = input.value.trim().toLowerCase();
 
- document.querySelectorAll(".person.search-match").forEach(el=>{
-  el.classList.remove("search-match");
- });
+    document.querySelectorAll(".person.search-match").forEach(card => {
+        card.classList.remove("search-match");
+    });
 
- if(!query){
-  message.textContent="Type a name to find a family member.";
-  return;
- }
+    if(!query){
+        message.textContent = "Type a name to find a family member.";
+        return;
+    }
 
- const matches=members.filter(m=>
-  m.name.toLowerCase().includes(query)
- );
+    const matches = members.filter(m =>
+        String(m.name || "").toLowerCase().includes(query) ||
+        String(m.urdu_name || "").includes(query)
+    );
 
- if(!matches.length){
-  message.textContent="No family member found with that name.";
-  return;
- }
+    if(!matches.length){
+        message.textContent = "No family member found with that name.";
+        return;
+    }
 
- const map=new Map(members.map(m=>[String(m.id),m]));
+    const memberMap = new Map(
+        members.map(m => [String(m.id), m])
+    );
 
- matches.forEach(m=>{
-  let current=m;
-  const visited=new Set();
+    matches.forEach(member => {
+        let current = member;
+        const visited = new Set();
 
-  while(current&&current.father_id){
-   const key=String(current.id);
+        while(current && current.father_id){
+            if(visited.has(String(current.id))) break;
 
-   if(visited.has(key))break;
-   visited.add(key);
+            visited.add(String(current.id));
+            expandedIds.add(String(current.father_id));
 
-   expandedIds.add(String(current.father_id));
-   current=map.get(String(current.father_id));
-  }
- });
+            current = memberMap.get(String(current.father_id));
+        }
+    });
 
- renderTree();
+    renderTree();
 
- const visibleMatches=[];
+    const firstMatch = document.querySelector(
+        '.person[data-member-id="' + String(matches[0].id) + '"]'
+    );
 
- document.querySelectorAll(".person").forEach(card=>{
-  const match=matches.find(m=>String(m.id)===card.dataset.memberId);
+    if(firstMatch){
+        firstMatch.classList.add("search-match");
 
-  if(match){
-   card.classList.add("search-match");
-   visibleMatches.push(card);
-  }
- });
+        firstMatch.scrollIntoView({
+            behavior: "smooth",
+            block: "center",
+            inline: "center"
+        });
+    }
 
- message.textContent=matches.length+" matching member(s) found.";
-
- if(visibleMatches.length){
-  visibleMatches[0].scrollIntoView({
-   behavior:"smooth",
-   block:"center",
-   inline:"center"
-  });
- }
+    message.textContent = matches.length + " matching member(s) found.";
 }
 
 function expandAll(){
