@@ -4071,6 +4071,7 @@ async function saveMember(){
 
  cancelEditing();
  await loadMembers();
+  document.getElementById("formTitle").textContent="Add Family Member";
 }
 function addSonToFather(fatherId){
  if(!isAdmin)return;
