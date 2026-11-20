@@ -2146,6 +2146,26 @@ onclick="window.location.href='family-print.html'">
 <button class="secondary hidden" id="cancelEdit" onclick="cancelEditing()">Cancel Edit</button>
 </section>
 
+<section class="card hidden" id="urduNameManagerSection">
+  <h2>Urdu Family Name Corrections</h2>
+  <p>Review and correct Urdu spellings for your family members.</p>
+
+  <input
+    id="urduNameManagerSearch"
+    oninput="renderUrduNameManager()"
+    type="search"
+    placeholder="Search family member..."
+  >
+
+  <div id="urduNameManagerList"></div>
+
+  <button type="button" id="saveUrduNameChanges" onclick="saveUrduNameChanges()">
+    Save Corrected Names
+  </button>
+
+  <p id="urduNameManagerStatus" aria-live="polite"></p>
+</section>
+
 <section class="card hidden" id="familyTreeSection">
     
 <button type="button" class="secondary" onclick="showHome()">
@@ -2754,7 +2774,8 @@ function showAdmin(value,owner=false){
   document.getElementById("loginBox").classList.toggle("hidden",value);
   document.getElementById("adminBox").classList.toggle("hidden",!value);
   document.getElementById("addBox").classList.toggle("hidden",!value);
-  document.getElementById("ownerInviteBox").classList.toggle("hidden",!(value&&owner));
+  document.getElementById("urduNameManagerSection").classList.toggle("hidden",!value);
+if(value) renderUrduNameManager();
   document.getElementById("dashboardAdminPanel").classList.toggle("hidden",!value);
     document.getElementById("dashboardBranchManagement").classList.toggle("hidden",!value);
   document.getElementById("dashboardAddMember").classList.toggle("hidden",!value);
@@ -3735,6 +3756,112 @@ treeViewport.addEventListener("wheel",event=>{
   event.clientY
  );
 },{passive:false});
+  
+function renderUrduNameManager() {
+    const list = document.getElementById("urduNameManagerList");
+    if (!list) return;
+
+    list.textContent = "";
+
+    const query = (
+        document.getElementById("urduNameManagerSearch")?.value || ""
+    ).trim().toLowerCase();
+
+    const visibleMembers = members.filter(member =>
+        !query ||
+        (member.name || "").toLowerCase().includes(query) ||
+        (member.urdu_name || "").toLowerCase().includes(query)
+    );
+
+    if (!visibleMembers.length) {
+        list.textContent = "No family members found.";
+        return;
+    }
+
+    visibleMembers.forEach(member => {
+        const row = document.createElement("div");
+        row.style.cssText =
+            "display:grid;grid-template-columns:1fr 1fr;gap:10px;padding:10px 0;border-bottom:1px solid #ddd;";
+
+        const english = document.createElement("div");
+        english.textContent = member.name || "";
+
+        const input = document.createElement("input");
+        input.type = "text";
+        input.dir = "rtl";
+        input.lang = "ur";
+
+        const key = (member.name || "").trim().toLowerCase();
+
+        input.value =
+            (member.urdu_name || "").trim() ||
+            verifiedUrduNames[key] ||
+            transliterateNameToUrdu(member.name || "");
+
+        input.dataset.memberId = String(member.id);
+        input.dataset.changed = "false";
+
+        input.addEventListener("input", () => {
+            input.dataset.changed = "true";
+        });
+
+        row.append(english, input);
+        list.append(row);
+    });
+}
+
+async function saveUrduNameChanges() {
+    if (!isAdmin) return;
+
+    const button = document.getElementById("saveUrduNameChanges");
+    const statusBox = document.getElementById("urduNameManagerStatus");
+
+    const inputs = [
+        ...document.querySelectorAll(
+            '#urduNameManagerList input[data-changed="true"]'
+        )
+    ];
+
+    if (!inputs.length) {
+        statusBox.textContent = "No corrected names to save.";
+        return;
+    }
+
+    button.disabled = true;
+
+    let saved = 0;
+    let failed = 0;
+
+    for (const input of inputs) {
+        const id = input.dataset.memberId;
+        const urduName = input.value.trim();
+
+        const { error } = await db
+            .from("family_members")
+            .update({ urdu_name: urduName || null })
+            .eq("id", id);
+
+        if (error) {
+            failed++;
+            continue;
+        }
+
+        const member = members.find(m => String(m.id) === id);
+        if (member) member.urdu_name = urduName || null;
+
+        input.dataset.changed = "false";
+        saved++;
+    }
+
+    button.disabled = false;
+
+    statusBox.textContent =
+        saved + " names saved. " + failed + " failed.";
+
+    renderTree();
+    renderRecentlyAddedMembers();
+}
+
 async function saveMember(){
  if(!isAdmin)return;
 
