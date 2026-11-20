@@ -2858,7 +2858,8 @@ function makePersonCard(m){
 }
 
 const name=document.createElement("strong");
-name.textContent=m.name;
+name.textContent=displayMemberName(m);
+name.dir=currentLanguage==="ur"?"rtl":"ltr";
 card.appendChild(name);
 
  if(m.branch){
