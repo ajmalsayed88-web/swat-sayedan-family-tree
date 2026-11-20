@@ -3415,9 +3415,17 @@ function makePersonCard(m){
   card.setAttribute("aria-expanded",
    expandedIds.has(String(m.id))?"true":"false");
 
-  card.onclick=(event)=>{
- if(event.detail===2)return;
- toggleBranch(m.id);
+  card.onclick=()=>{
+ if(card._clickTimer){
+  clearTimeout(card._clickTimer);
+  card._clickTimer=null;
+  return;
+ }
+
+ card._clickTimer=setTimeout(()=>{
+  card._clickTimer=null;
+  toggleBranch(m.id);
+ },250);
 };
 
   card.onkeydown=(event)=>{
