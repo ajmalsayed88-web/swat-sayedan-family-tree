@@ -122,7 +122,50 @@ button.secondary{background:#777}
   min-width:0;
   margin:0 auto;
   padding-top:25px;
+}
+
+.children-row::before{
+  content:"";
+  position:absolute;
+  top:0;
+  left:0;
+  right:0;
   border-top:2px solid #c9a44c;
+}
+
+.children-row::after{
+  content:"";
+  position:absolute;
+  top:-6px;
+  left:0;
+  width:7px;
+  height:7px;
+  border-left:2px solid #c9a44c;
+  border-top:2px solid #c9a44c;
+}
+
+.child-branch{
+  position:relative;
+  padding-top:20px;
+}
+
+.child-branch::before{
+  content:"";
+  position:absolute;
+  top:0;
+  left:50%;
+  height:20px;
+  border-left:2px solid #c9a44c;
+}
+
+.child-branch::after{
+  content:"";
+  position:absolute;
+  top:0;
+  left:calc(50% - 5px);
+  border-left:6px solid transparent;
+  border-right:6px solid transparent;
+  border-top:9px solid #c9a44c;
 }
   .children-tree{
   text-align:center;
