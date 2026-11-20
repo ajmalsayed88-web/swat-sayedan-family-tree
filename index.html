@@ -2088,6 +2088,88 @@ html[lang="ur"] .stat-card span {
     }
 }
 
+/* PROFESSIONAL FAMILY TREE NAME CARDS - ENGLISH & URDU */
+
+#tree .person {
+    box-sizing: border-box !important;
+    min-height: 88px !important;
+    padding: 14px 12px !important;
+    display: flex !important;
+    flex-direction: column !important;
+    align-items: center !important;
+    justify-content: center !important;
+    text-align: center !important;
+    white-space: normal !important;
+}
+
+#tree .person strong {
+    display: block !important;
+    width: 100% !important;
+    max-width: 100% !important;
+    font-size: 16px !important;
+    font-weight: 700 !important;
+    line-height: 1.5 !important;
+    text-align: center !important;
+    white-space: normal !important;
+    overflow-wrap: break-word !important;
+    word-break: normal !important;
+    hyphens: none !important;
+}
+
+#tree .person strong[dir="rtl"] {
+    direction: rtl !important;
+    unicode-bidi: plaintext !important;
+    line-height: 1.85 !important;
+    font-size: 17px !important;
+}
+
+#tree .person .small {
+    width: 100% !important;
+    margin-top: 5px !important;
+    font-size: 12px !important;
+    line-height: 1.5 !important;
+    text-align: center !important;
+    overflow-wrap: break-word !important;
+    word-break: normal !important;
+}
+
+#tree .person .expand-hint {
+    margin-top: 7px !important;
+    font-size: 11px !important;
+    line-height: 1.5 !important;
+    text-align: center !important;
+}
+
+#tree .person.root {
+    min-height: 100px !important;
+    padding: 16px 14px !important;
+}
+
+#tree .person.root strong {
+    font-size: 19px !important;
+    line-height: 1.6 !important;
+}
+
+@media (max-width: 600px) {
+    #tree .person {
+        min-height: 82px !important;
+        padding: 11px 8px !important;
+    }
+
+    #tree .person strong {
+        font-size: 14px !important;
+    }
+
+    #tree .person strong[dir="rtl"] {
+        font-size: 15px !important;
+        line-height: 1.8 !important;
+    }
+
+    #tree .person.root strong {
+        font-size: 17px !important;
+    }
+}
+
 </style>
 </head>
 
