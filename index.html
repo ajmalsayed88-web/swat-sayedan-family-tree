@@ -2424,6 +2424,14 @@ populateBranchFormOptions(data);
   list.appendChild(button);
  });
 }
+    let currentLanguage = localStorage.getItem("manglorLanguage") || "en";
+
+function displayMemberName(member) {
+    if (currentLanguage === "ur") {
+        return member.urdu_name || member.name;
+    }
+    return member.name;
+}
 async function loadMembers(){
  const {data,error}=await db.from("family_members")
  .select("*").eq("approved",true).order("name");
