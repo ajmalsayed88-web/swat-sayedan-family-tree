@@ -3920,16 +3920,31 @@ function searchFamily(){
         '.person[data-member-id="' + String(matches[0].id) + '"]'
     );
 
-    if(firstMatch){
-        firstMatch.classList.add("search-match");
+    requestAnimationFrame(() => {
+    const target = document.querySelector(
+        '.person[data-member-id="' + String(matches[0].id) + '"]'
+    );
 
-        firstMatch.scrollIntoView({
-            behavior: "smooth",
-            block: "center",
-            inline: "center"
-        });
+    const viewport = document.getElementById("treeScroll");
+
+    if(target && viewport){
+        target.classList.add("search-match");
+
+        const targetRect = target.getBoundingClientRect();
+        const viewportRect = viewport.getBoundingClientRect();
+        const zoom = Math.max(treeZoom || 1, 0.2);
+
+        viewport.scrollTop += (
+            targetRect.top + targetRect.height / 2 -
+            (viewportRect.top + viewportRect.height / 2)
+        ) / zoom;
+
+        viewport.scrollLeft += (
+            targetRect.left + targetRect.width / 2 -
+            (viewportRect.left + viewportRect.width / 2)
+        ) / zoom;
     }
-
+});
     message.textContent = matches.length + " matching member(s) found.";
 }
 
