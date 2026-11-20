@@ -3531,6 +3531,7 @@ function editMember(id){
  editingId=id;
 
  document.getElementById("memberName").value=m.name;
+ document.getElementById("memberUrduName").value=m.urdu_name||"";
  document.getElementById("branch").value=m.branch||"";
 
  loadFatherOptions();
