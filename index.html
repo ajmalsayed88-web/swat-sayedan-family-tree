@@ -2429,19 +2429,24 @@ populateBranchFormOptions(data);
 }
     let currentLanguage = localStorage.getItem("manglorLanguage") || "en";
 
+// Only use verified Urdu spellings. Never guess a spelling automatically.
+const verifiedUrduNames = {
+    "syed masood": "سید مسعود",
+    "syed masud": "سید مسعود",
+    "abdul wahab": "عبد الوہاب",
+    "mian abdul wahab": "میاں عبد الوہاب",
+    "ashiq baba": "عاشق بابا"
+};
+
 function displayMemberName(member) {
-    if (currentLanguage === "ur") {
-        return member.urdu_name || member.name;
-    }
-    return member.name;
+    if (currentLanguage !== "ur") return member.name;
+
+    const savedUrduName = (member.urdu_name || "").trim();
+    if (savedUrduName) return savedUrduName;
+
+    const key = (member.name || "").trim().toLowerCase();
+    return verifiedUrduNames[key] || member.name;
 }
-  const urduNameCache = new Map();
-
-async function convertNameToUrdu(name) {
-    if (urduNameCache.has(name)) {
-        return urduNameCache.get(name);
-    }
-
     try {
         const url = "https://inputtools.google.com/request?text=" +
             encodeURIComponent(name) +
