@@ -2169,7 +2169,45 @@ html[lang="ur"] .stat-card span {
         font-size: 17px !important;
     }
 }
+/* FAMILY TREE LAYOUT AND GENERATION SPACING */
 
+#tree .children-row {
+    gap: 14px !important;
+    margin-top: 36px !important;
+    padding-top: 36px !important;
+}
+
+#tree .children-row:after {
+    top: -36px !important;
+    height: 36px !important;
+}
+
+#tree .children-row > .family-node:before {
+    top: -36px !important;
+    height: 36px !important;
+}
+
+#tree .family-node {
+    align-items: center !important;
+}
+
+@media (max-width: 600px) {
+    #tree .children-row {
+        gap: 9px !important;
+        margin-top: 30px !important;
+        padding-top: 30px !important;
+    }
+
+    #tree .children-row:after {
+        top: -30px !important;
+        height: 30px !important;
+    }
+
+    #tree .children-row > .family-node:before {
+        top: -30px !important;
+        height: 30px !important;
+    }
+}
 </style>
 </head>
 
