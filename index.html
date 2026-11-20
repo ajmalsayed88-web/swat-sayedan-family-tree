@@ -1466,16 +1466,43 @@ header.hero {
     white-space: nowrap !important;
 }
 
-#familyTreeSection .tree-controls #searchInput {
+/* PROFESSIONAL FAMILY SEARCH BOX */
+#familyTreeSection .tree-search-wrap {
+    display: flex;
+    flex: 1 1 auto;
+    min-width: 100px;
+    align-items: center;
+    gap: 5px;
+    height: 40px;
+    padding: 3px 5px;
+    background: #ffffff;
+    border: 1px solid #c5d9ca;
+    border-radius: 10px;
+    box-sizing: border-box;
+}
+
+#familyTreeSection .tree-search-wrap #searchInput {
     flex: 1 1 auto !important;
-    width: auto !important;
+    width: 100% !important;
     min-width: 0 !important;
-    height: 36px !important;
-    min-height: 36px !important;
-    padding: 6px 10px !important;
-    margin: 0 !important;
-    font-size: 13px !important;
-    box-sizing: border-box !important;
+    border: none !important;
+    outline: none !important;
+    box-shadow: none !important;
+    height: 34px !important;
+}
+
+#familyTreeSection .tree-controls .tree-search-button {
+    flex: 0 0 34px !important;
+    width: 34px !important;
+    height: 34px !important;
+    min-height: 34px !important;
+    padding: 0 !important;
+    border: none !important;
+    border-radius: 8px !important;
+    background: #176344 !important;
+    color: white !important;
+    font-size: 23px !important;
+    cursor: pointer;
 }
 /* HOME SECTION - FULL SCREEN WIDTH */
 .upper-section {
