@@ -2024,6 +2024,70 @@ html[lang="ur"] .stat-card {
     }
 }
 
+/* COMPACT HOMEPAGE STATISTIC BOXES - ENGLISH & URDU */
+.home-stats {
+    align-items: stretch !important;
+    gap: 12px !important;
+    margin: 18px auto 8px !important;
+}
+
+.stat-card {
+    min-height: 112px !important;
+    padding: 12px 8px !important;
+    display: flex !important;
+    flex-direction: column !important;
+    align-items: center !important;
+    justify-content: center !important;
+    line-height: 1.4 !important;
+    box-sizing: border-box !important;
+}
+
+.stat-icon {
+    width: 21px !important;
+    height: 21px !important;
+    margin: 0 auto 4px !important;
+}
+
+.stat-card strong {
+    font-size: 27px !important;
+    line-height: 1.2 !important;
+    margin-bottom: 3px !important;
+}
+
+.stat-card span {
+    font-size: 12px !important;
+    line-height: 1.5 !important;
+}
+
+html[lang="ur"] .stat-card {
+    line-height: 1.7 !important;
+    padding: 10px 6px !important;
+}
+
+html[lang="ur"] .stat-card span {
+    line-height: 1.8 !important;
+}
+
+@media (max-width: 600px) {
+    .home-stats {
+        gap: 7px !important;
+        margin-top: 14px !important;
+    }
+
+    .stat-card {
+        min-height: 100px !important;
+        padding: 9px 4px !important;
+    }
+
+    .stat-card strong {
+        font-size: 23px !important;
+    }
+
+    .stat-card span {
+        font-size: 10px !important;
+    }
+}
+
 </style>
 </head>
 
