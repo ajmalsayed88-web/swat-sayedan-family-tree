@@ -2447,45 +2447,7 @@ function displayMemberName(member) {
     const key = (member.name || "").trim().toLowerCase();
     return verifiedUrduNames[key] || member.name;
 }
-    try {
-        const url = "https://inputtools.google.com/request?text=" +
-            encodeURIComponent(name) +
-            "&itc=ur-t-i0-und&num=1&cp=0&cs=1&ie=utf-8&oe=utf-8&app=test";
-
-        const response = await fetch(url);
-        if (!response.ok) throw new Error("Conversion unavailable");
-
-        const result = await response.json();
-        const converted = result?.[1]?.[0]?.[1]?.[0];
-
-        if (result?.[0] === "SUCCESS" && converted) {
-            urduNameCache.set(name, converted);
-            return converted;
-        }
-    } catch (error) {
-        console.warn("Urdu conversion failed:", error);
-    }
-
-    return name;
-}
-  function convertVisibleTreeNamesToUrdu() {
-    if (currentLanguage !== "ur") return;
-
-    document.querySelectorAll(".person strong").forEach(async element => {
-        if (element.dataset.hasUrdu === "true") return;
-
-        const original = element.dataset.originalName;
-        if (!original) return;
-
-        const urdu = await convertNameToUrdu(original);
-
-        if (currentLanguage === "ur" && element.isConnected) {
-            element.textContent = urdu;
-            element.dir = "rtl";
-            element.style.fontFamily = "'Noto Nastaliq Urdu', serif";
-        }
-    });
-}
+    
     function toggleLanguage(){
     currentLanguage = currentLanguage === "en" ? "ur" : "en";
     localStorage.setItem("manglorLanguage", currentLanguage);
