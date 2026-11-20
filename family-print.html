@@ -132,7 +132,18 @@ button.secondary{background:#777}
   border-left:2px solid #c9a44c;
   border-top:2px solid #c9a44c;
 }
+.children-row::marker{
+  content:"";
+}
 
+.children-row::before{
+  content:"";
+  position:absolute;
+  top:0;
+  left:0;
+  right:0;
+  border-top:2px solid #c9a44c;
+}
 .child-branch{
   position:relative;
   padding-top:20px;
