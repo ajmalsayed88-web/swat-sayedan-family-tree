@@ -494,7 +494,7 @@ function showResults(matches){
 async function getMember(id){
   const {data,error}=await db
     .from("family_members")
-    .select("id,name,father_id,branch")
+    .select("id,name,urdu_name,father_id,branch")
     .eq("id",id)
     .eq("approved",true)
     .maybeSingle();
