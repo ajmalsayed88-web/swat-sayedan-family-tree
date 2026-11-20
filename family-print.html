@@ -478,26 +478,7 @@ function transliterateNameToUrdu(name) {
 }
 
 
-  const letters = {
-    a:"ا", b:"ب", c:"ک", d:"د", e:"ی",
-    f:"ف", g:"گ", h:"ہ", i:"ی", j:"ج",
-    k:"ک", l:"ل", m:"م", n:"ن", o:"و",
-    p:"پ", q:"ق", r:"ر", s:"س", t:"ت",
-    u:"و", v:"و", w:"و", x:"کس", y:"ی", z:"ز"
-  };
-
-  return String(name || "").replace(/[A-Za-z]+/g, word => {
-    const lower = word.toLowerCase();
-    if (known[lower]) return known[lower];
-
-    let result = "";
-    for (let i = 0; i < lower.length; i++) {
-      result += letters[lower[i]] || lower[i];
-    }
-    return result;
-  });
-}
-
+  
 function memberNameHTML(member) {
   const english = String(member.name || "");
   const urdu = String(member.urdu_name || "").trim()
