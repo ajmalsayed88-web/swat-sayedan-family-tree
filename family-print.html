@@ -575,7 +575,7 @@ function renderFamily(ancestors,selected,children){
       card.classList.add("selected-card");
     }
 
-    card.innerHTML=escapeHTML(person.name)+
+    card.innerHTML=memberNameHTML(person)+
       (String(person.id)===String(selected.id)
         ?"<small>Selected Person</small>":"");
 
