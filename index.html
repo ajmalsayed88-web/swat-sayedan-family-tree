@@ -2504,16 +2504,27 @@ Tap a person's card to open their children. Tap again to close their family bran
 <div class="tree-controls">
     <button class="secondary" onclick="expandAll()">Expand</button>
 
-    <input
-        id="searchInput"
-        type="search"
-        placeholder="Search name..."
-        oninput="searchFamily()"
-    >
+    <div class="tree-search-wrap">
+        <input
+            id="searchInput"
+            type="search"
+            placeholder="Search family member..."
+            onkeydown="if(event.key === 'Enter'){event.preventDefault();searchFamily();}"
+        >
+
+        <button
+            type="button"
+            class="tree-search-button"
+            onclick="searchFamily()"
+            aria-label="Search family member"
+            title="Search"
+        >⌕</button>
+    </div>
 
     <button class="secondary" onclick="collapseAll()">Collapse</button>
 </div>
 
+<div id="searchStatus" role="status" aria-live="polite"></div>
 <div class="tree-scroll" id="treeScroll">
 <div id="tree" class="tree-canvas"></div>
 </div>
