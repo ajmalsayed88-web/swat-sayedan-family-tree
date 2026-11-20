@@ -3415,7 +3415,10 @@ function makePersonCard(m){
   card.setAttribute("aria-expanded",
    expandedIds.has(String(m.id))?"true":"false");
 
-  card.onclick=()=>toggleBranch(m.id);
+  card.onclick=(event)=>{
+ if(event.detail===2)return;
+ toggleBranch(m.id);
+};
 
   card.onkeydown=(event)=>{
    if(event.key==="Enter"||event.key===" "){
