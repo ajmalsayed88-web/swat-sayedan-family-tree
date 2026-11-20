@@ -475,9 +475,9 @@ function showResults(matches){
     item.className="result";
 
     const details=document.createElement("div");
-    details.innerHTML="<strong>"+escapeHTML(person.name)+
+    details.innerHTML="<strong>"+memberNameHTML(person)+
       "</strong><br><small>Father: "+
-      escapeHTML(person.father.name)+"</small>";
+      memberNameHTML(person.father)+"</small>";
 
     const button=document.createElement("button");
     button.textContent="Select";
