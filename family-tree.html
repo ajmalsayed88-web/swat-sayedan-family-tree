@@ -1,0 +1,4636 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Nastaliq+Urdu:wght@400;700&display=swap" rel="stylesheet">
+<title>Manglor Sayedan </title>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
+<style>
+    html, body {
+    width: 100%;
+    max-width: 100%;
+    margin: 0;
+    padding: 0;
+    overflow-x: hidden;
+    box-sizing: border-box;
+}
+
+*, *::before, *::after {
+    box-sizing: border-box;
+}
+*{box-sizing:border-box}
+
+:root{
+ --person-width:190px;
+ --line:#176344;
+ --green:#145c3b;
+ --dark-green:#0b3828;
+ --gold:#c9a44c;
+ --light-green:#edf5ef;
+ --text:#193b2c;
+}
+
+body {
+    font-family: 'Noto Nastaliq Urdu', Arial, sans-serif;
+    background: #f3f7f3;
+    color: var(--text);
+    margin: 0;
+    padding: 0;
+    width: 100%;
+    overflow-x: hidden;
+}
+
+header{
+  position:relative;
+ background:linear-gradient(135deg,#0b3828,#176344);
+ background:linear-gradient(135deg,#0b3828,#176344);
+ color:white;
+ text-align:center;
+ padding:42px 20px;
+ border-radius:18px;
+ border:1px solid var(--gold);
+ box-shadow:0 5px 18px #0002;
+}
+
+header h1{
+ font-size:34px;
+ margin:0 0 10px;
+ color:#f5d98b;
+ letter-spacing:1px;
+}
+
+header p{
+ margin:0;
+ color:#e4eee6;
+ font-size:16px;
+}
+.hero{
+ min-height:480px;
+ display:flex;
+ align-items:center;
+ justify-content:center;
+ text-align:center;
+ padding:65px 20px;
+ background:linear-gradient(135deg,#062d20,#145c3b,#24734e);
+ border:2px solid #c9a44c;
+ border-radius:20px;
+ box-shadow:0 8px 25px rgba(0,0,0,.18);
+}
+
+.hero-content{
+ max-width:750px;
+}
+
+.hero-logo{
+ width:155px;
+ height:155px;
+ object-fit:contain;
+ border-radius:50%;
+ padding:8px;
+ background:white;
+ border:3px solid #c9a44c;
+ box-shadow:0 5px 20px rgba(0,0,0,.3);
+ margin-bottom:22px;
+ animation:logoAppear 1.2s ease-out;
+}
+
+@keyframes logoAppear{
+ from{
+  opacity:0;
+  transform:scale(.75);
+ }
+ to{
+  opacity:1;
+  transform:scale(1);
+ }
+}
+
+
+@media(max-width:600px){
+
+  .hero{
+   width:100%;
+   box-sizing:border-box;
+   border-radius:12px;
+   padding:38px 10px;
+  }
+
+  .hero-content{
+   width:100%;
+   max-width:100%;
+  }
+
+ .hero-logo{
+  width:120px;
+  height:120px;
+ }
+}
+.hero-label{
+ color:#f5d98b;
+ font-size:14px;
+ font-weight:700;
+ letter-spacing:3px;
+ margin-bottom:20px;
+ text-transform:uppercase;
+ text-shadow:0 2px 8px rgba(0,0,0,.3);
+}
+
+@media(max-width:600px){
+ .hero-label{
+  font-size:10px;
+  letter-spacing:2px;
+ }
+}
+
+.hero h1{
+ font-size:52px;
+ font-weight:800;
+ letter-spacing:1px;
+ color:#f5d98b;
+ margin:0 0 18px;
+ text-shadow:0 3px 12px rgba(0,0,0,.25);
+}
+
+@media(max-width:600px){
+ .hero{
+  min-height:420px;
+  padding:45px 14px;
+ }
+
+ .hero h1{
+  font-size:34px;
+ }
+
+ .hero-description{
+  font-size:15px;
+ }
+
+ .hero-button{
+  min-width:190px;
+  padding:13px 20px;
+ }
+}
+.hero-description{
+ color:#e4eee6;
+ font-size:17px;
+ line-height:1.7;
+ max-width:620px;
+ margin:0 auto 25px;
+}
+
+.hero-button{
+ width:auto;
+ min-width:230px;
+ padding:15px 30px;
+ border:2px solid #f5d98b;
+ border-radius:35px;
+ background:linear-gradient(135deg,#f5d98b,#c9a44c);
+ color:#0b3828;
+ font-size:16px;
+ font-weight:bold;
+ cursor:pointer;
+ transition:all .3s ease;
+ box-shadow:0 5px 15px rgba(0,0,0,.2);
+}
+
+.hero-button:hover{
+ transform:translateY(-3px);
+ box-shadow:0 8px 20px rgba(0,0,0,.3);
+}
+    .home-stats{
+ display:grid;
+ grid-template-columns:repeat(3,minmax(0,1fr));
+ gap:16px;
+ width:min(760px,100%);
+ margin:35px auto 10px;
+}
+
+.stat-card{
+ background:linear-gradient(145deg,rgba(255,255,255,.14),rgba(255,255,255,.06));
+ border:1px solid #c9a44c;
+ border-radius:16px;
+ padding:22px 12px;
+ box-shadow:0 6px 18px rgba(0,0,0,.16);
+ backdrop-filter:blur(6px);
+}
+
+.stat-card strong{
+ display:block;
+ color:#f5d98b;
+ font-size:32px;
+ font-weight:800;
+ margin-bottom:8px;
+}
+
+.stat-card span{
+ display:block;
+ color:#ffffff;
+ font-size:13px;
+ font-weight:600;
+}
+
+@media(max-width:600px){
+ .home-stats{
+  gap:8px;
+  margin-top:25px;
+ }
+
+ .stat-card{
+  padding:16px 5px;
+ }
+
+ .stat-card strong{
+  font-size:24px;
+ }
+
+ .stat-card span{
+  font-size:11px;
+ }
+}
+ .section-intro{
+ color:#52715f;
+ font-size:16px;
+ line-height:1.6;
+ text-align:center;
+ margin:0 0 12px;
+ font-style:italic;
+}
+ #familyTreeSection h2{
+ color:#145c3b;
+ font-size:28px;
+ font-weight:800;
+ text-align:center;
+ margin:10px 0 22px;
+ padding-bottom:14px;
+ border-bottom:2px solid #c9a44c;
+}
+.card{
+ background:white;
+ padding:22px;
+ margin-top:18px;
+ border-radius:16px;
+ border:1px solid #e0e9e1;
+ box-shadow:0 4px 16px #123b2810;
+}
+.login-card{
+ max-width:480px;
+ margin:25px auto;
+ padding:28px;
+}
+
+.login-card h2{
+ text-align:center;
+ color:#145c3b;
+ font-size:23px;
+ margin-top:0;
+ margin-bottom:22px;
+}
+
+.login-card button{
+ margin-top:14px;
+}
+input,select,button{
+ width:100%;
+ padding:14px;
+ margin:8px 0;
+ border-radius:10px;
+ font-size:16px;
+ font-family:Arial,sans-serif;
+}
+
+input,select{
+ border:1px solid #c5d8ca;
+ background:#fff;
+ color:#193b2c;
+ outline:none;
+}
+
+input:focus,select:focus{
+ border-color:#176344;
+ box-shadow:0 0 0 3px #17634420;
+}
+
+button{
+ background:linear-gradient(135deg,#145c3b,#176344);
+ color:white;
+ border:0;
+ font-weight:bold;
+ cursor:pointer;
+ transition:0.2s;
+}
+
+button:hover{
+ background:#0b3828;
+}
+
+button.secondary{
+ background:#65766b;
+}
+
+button.danger{
+ background:#a52b2b;
+}
+.top-login-button{
+ position:absolute;
+ top:18px;
+ right:22px;
+ width:auto;
+ min-width:110px;
+ padding:10px 20px;
+ margin:0;
+ border:1px solid #e4c36d;
+ border-radius:8px;
+ background:#c9a44c;
+ color:#0b3828;
+ font-size:14px;
+ font-weight:bold;
+ box-shadow:0 3px 10px #0002;
+}
+
+.top-login-button:hover{
+ background:#f0d58b;
+ color:#0b3828;
+}
+
+.login-modal{
+ position:fixed;
+ inset:0;
+ z-index:9999;
+ background:rgba(0,0,0,.65);
+ display:flex;
+ align-items:center;
+ justify-content:center;
+ padding:20px;
+}
+
+.login-modal.hidden{
+ display:none;
+}
+
+.login-modal .login-card{
+ width:100%;
+ max-width:420px;
+ margin:0;
+ position:relative;
+ padding:30px;
+}
+
+.close-login{
+ position:absolute;
+ top:12px;
+ right:12px;
+ width:32px;
+ height:32px;
+ padding:0;
+ margin:0;
+ border-radius:50%;
+ background:#edf5ef;
+ color:#145c3b;
+ font-size:22px;
+ display:flex;
+ align-items:center;
+ justify-content:center;
+}
+
+.hidden{
+ display:none !important;
+}
+.small{font-size:13px;color:#617267}
+#status{overflow-wrap:anywhere}
+
+.actions{
+ display:flex;
+ gap:7px;
+ margin-top:8px
+}
+
+.actions button{
+ font-size:13px;
+ padding:9px;
+ margin:0
+}
+
+
+
+.tree-scroll {
+  width: 100%;
+      height: 76vh;
+  min-height: 420px;
+  max-height: 850px;
+  overflow: auto;
+  padding: 28px 12px 40px;
+  box-sizing: border-box;
+  background: linear-gradient(180deg,#f8fbf8,#edf5ef);
+  border: 1px solid #dce9df;
+  border-radius: 14px;
+  -webkit-overflow-scrolling: touch;
+  touch-action: pan-x pan-y;
+}
+
+
+.tree-scroll::-webkit-scrollbar{
+ display:none;
+}
+
+.tree-scroll{
+ scrollbar-width:none;
+}
+.tree-horizontal-scroll{
+ display:none;
+}
+
+.tree-horizontal-scroll.is-visible{
+ display:block;
+}
+.tree-horizontal-scroll{
+    position:fixed;
+bottom:10px;
+left:18px;
+width:calc(100% - 36px);
+z-index:9999;
+box-shadow:0 2px 10px #0003;
+width:calc(100% - 36px);
+ height:20px;
+ overflow-x:scroll;
+ overflow-y:hidden;
+ margin-top:8px;
+ background:#dce9df;
+ border:1px solid #b8cdbd;
+ border-radius:10px;
+}
+
+.tree-horizontal-scroll::-webkit-scrollbar{
+ height:14px;
+}
+
+.tree-horizontal-scroll::-webkit-scrollbar-thumb{
+ background:#176344;
+ border:2px solid #dce9df;
+ border-radius:10px;
+}
+
+.tree-horizontal-scroll::-webkit-scrollbar-track{
+ background:#dce9df;
+}
+
+#treeHorizontalSpacer{
+ height:1px;
+}
+
+.tree-canvas{ 
+ display:inline-block;
+ min-width:100%;
+ text-align:center;
+ padding:10px 5px;
+}
+
+
+.family-node{
+ display:flex;
+ flex-direction:column;
+ align-items:center;
+ flex:0 0 auto;
+ position:relative
+}
+
+
+.person{
+ width:var(--person-width);
+ background:linear-gradient(145deg,#ffffff,#f0f7f1);
+ border:1px solid #c5d9ca;
+ border-radius:16px;
+ padding:16px 12px;
+ min-height:75px;
+ text-align:center;
+ box-shadow:0 5px 16px rgba(20,92,59,.10);
+ overflow-wrap:anywhere;
+ position:relative;
+ z-index:1;
+ transition:transform .2s,box-shadow .2s;
+}
+
+.person:hover{
+ transform:translateY(-3px);
+ box-shadow:0 8px 20px rgba(20,92,59,.16);
+}
+
+.person:focus-visible{
+ outline:3px solid #c9a44c;
+ outline-offset:3px;
+}
+
+.person strong{
+  display:block;
+  font-size:16px;
+  line-height:1.5;
+  font-weight:700;
+  color:#145c3b;
+}
+
+.person.root{
+ background:linear-gradient(135deg,#0b3828,#176344);
+ color:white;
+ border:2px solid #c9a44c;
+ box-shadow:0 5px 16px #0b382840;
+}
+
+.person.root strong{
+ color:#f5d98b;
+}
+
+.person .small{
+ margin-top:5px;
+}
+
+.person.root .small{
+ color:#e1f1e5;
+}
+
+.person.has-children{
+ cursor:pointer;
+ border:2px solid #176344;
+}
+
+.person.has-children:active{
+ transform:scale(.98);
+}
+
+.expand-hint{
+ display:block;
+ margin-top:7px;
+ font-size:12px;
+ color:#386a45;
+ font-weight:bold;
+}
+
+.person.root .expand-hint{
+ color:#f5d98b;
+}
+
+.person.search-match{
+ background:#fff0a8!important;
+ color:#183b2b!important;
+ border:3px solid #d18b00;
+ box-shadow:0 0 0 5px #f5d98a;
+}
+
+/* FAMILY TREE CONNECTORS */
+
+.children-row{
+ display:flex;
+ width:max-content;
+ max-width:none;
+ align-items:flex-start;
+ justify-content:center;
+ gap:8px;
+ position:relative;
+ margin:42px auto 0;
+ padding-top:42px
+}
+
+.children-row:before{
+ content:"";
+ position:absolute;
+ top:0;
+ left:var(--connector-left, calc(var(--person-width)/2));
+ right:var(--connector-right, calc(var(--person-width)/2));
+ border-top:4px solid var(--line);
+}
+
+.children-row:after{
+ content:"";
+ position:absolute;
+ top:-42px;
+ left:50%;
+ height:42px;
+ border-left:4px solid var(--line)
+}
+
+.children-row>.family-node:before{
+ content:"";
+ position:absolute;
+ top:-42px;
+ left:50%;
+ height:42px;
+ border-left:4px solid var(--line)
+}
+
+.children-row>.family-node:after{
+ content:"";
+ position:absolute;
+ top:-10px;
+ left:calc(50% - 7px);
+ border-left:7px solid transparent;
+ border-right:7px solid transparent;
+ border-top:10px solid var(--line);
+ z-index:2
+}
+
+.children-row:has(>.family-node:only-child):before{
+ display:none
+}
+
+.generation-label{
+ font-size:12px;
+ color:#718477;
+ margin:14px 0 2px
+}
+
+.unlinked-area{
+ margin-top:22px;
+ border-top:1px dashed #c5d3c8;
+ padding-top:14px;
+ text-align:left
+}
+
+.unlinked-area h3{font-size:15px}
+
+#searchStatus{margin:4px 0 10px}
+
+.tree-help{
+ background:#edf5ee;
+ padding:12px;
+ border-radius:9px;
+ font-size:13px;
+ line-height:1.6;
+ margin:10px 0
+}
+
+.tree-controls{
+ display:flex;
+ gap:8px;
+ margin:10px 0
+}
+
+.tree-controls button{
+ margin:0;
+ font-size:13px
+}
+
+/* DASHBOARD MENU */
+.dashboard-toggle{
+ position:absolute;
+ top:18px;
+ left:22px;
+ width:auto;
+ min-width:130px;
+ padding:11px 18px;
+ background:rgba(255,255,255,.15);
+ color:white;
+ border:1px solid rgba(255,255,255,.6);
+ border-radius:9px;
+ cursor:pointer;
+ font-weight:600;
+ z-index:10;
+}
+
+.dashboard-backdrop{
+ position:fixed;
+ inset:0;
+ background:rgba(0,0,0,.45);
+ z-index:9990;
+}
+
+.dashboard-panel{
+ position:fixed;
+ top:0;
+ left:0;
+ bottom:0;
+ width:300px;
+ max-width:85vw;
+ background:#fff;
+ padding:22px;
+ z-index:9991;
+ border:0;
+outline:none;
+box-shadow:none;
+ overflow-y:auto;
+ transform:translateX(-110%);
+ transition:transform .3s ease;
+}
+
+.dashboard-panel.open{
+ transform:translateX(0);
+}
+
+.dashboard-heading{
+ display:flex;
+ justify-content:space-between;
+ align-items:center;
+ color:#145c3b;
+ font-size:20px;
+}
+
+.dashboard-close{
+ width:35px;
+ height:35px;
+ padding:0;
+ background:#eee;
+ color:#333;
+ border:0;
+ border-radius:7px;
+ font-size:24px;
+ cursor:pointer;
+}
+
+.dashboard-caption{
+ color:#777;
+ font-size:13px;
+ margin:8px 0 22px;
+}
+.dashboard-recent{
+ background:#edf5ef;
+ border:1px solid #d5e5d8;
+ border-radius:10px;
+ padding:12px;
+ margin:12px 0 18px;
+}
+
+.dashboard-recent strong{
+ display:block;
+ color:#145c3b;
+ font-size:14px;
+ margin-bottom:9px;
+}
+
+.recent-members-list p{
+ color:#777;
+ font-size:12px;
+ margin:5px 0;
+}
+
+.recent-member-item{
+ padding:7px 0;
+ border-bottom:1px solid #d5e5d8;
+ color:#193b2c;
+ font-size:13px;
+}
+
+.recent-member-item:last-child{
+ border-bottom:none;
+}
+    .dashboard-branches{
+ background:#fff;
+ border:1px solid #d5e5d8;
+ border-radius:10px;
+ padding:12px;
+ margin:12px 0 18px;
+}
+
+.dashboard-branches strong{
+ display:block;
+ color:#145c3b;
+ font-size:14px;
+ margin-bottom:9px;
+}
+
+.family-branch-item{
+ display:block;
+ width:100%;
+ padding:9px;
+ margin:5px 0;
+ text-align:left;
+ background:#edf5ef;
+ color:#145c3b;
+ border:1px solid #d5e5d8;
+ border-radius:7px;
+ font-size:13px;
+ cursor:pointer;
+}
+
+.family-branch-item:hover{
+ background:#dcecdf;
+}
+    .family-branches-list{
+ max-height:220px;
+ overflow-y:auto;
+ overflow-x:hidden;
+ padding:2px 5px 2px 0;
+ overscroll-behavior:contain;
+ -webkit-overflow-scrolling:touch;
+}
+
+.family-branch-item{
+ box-sizing:border-box;
+ white-space:normal;
+ overflow-wrap:anywhere;
+ line-height:1.4;
+}
+
+.family-branches-list::-webkit-scrollbar{
+ width:5px;
+}
+
+.family-branches-list::-webkit-scrollbar-thumb{
+ background:#9bbda3;
+ border-radius:10px;
+}
+.dashboard-item{
+ display:block;
+ width:100%;
+ padding:12px;
+ margin:6px 0;
+ text-align:left;
+ background:transparent;
+ color:#145c3b;
+ border:0;
+ border-radius:8px;
+ cursor:pointer;
+ font-size:15px;
+}
+
+.dashboard-item:hover{
+ background:#eaf4ee;
+}
+
+.dashboard-divider{
+ height:1px;
+ background:#ddd;
+ margin:18px 0;
+}
+
+.dashboard-section-title{
+ color:#888;
+ font-size:12px;
+ text-transform:uppercase;
+ letter-spacing:1px;
+}
+
+@media(max-width:600px){
+ 
+ body{
+ padding:0;
+ margin:0;
+ width:100%;
+}
+
+  .hero{
+   width:100%;
+   box-sizing:border-box;
+   border-radius:12px;
+   padding:38px 10px;
+  }
+
+  .hero-content{
+   width:100%;
+   max-width:100%;
+  }
+
+  .dashboard-toggle{
+  top:10px;
+  left:10px;
+  min-width:0;
+  padding:8px 12px;
+  border:none;
+  outline:none;
+  box-shadow:none;
+ }
+
+ .hero-content{
+  padding-top:45px;
+ }
+ 
+.hero h1{
+ font-size:36px;
+ line-height:1.25;
+}
+
+.hero-description{
+ font-size:17px;
+ line-height:1.7;
+ padding:0 5px;
+}
+
+.hero-label{
+ font-size:11px;
+ letter-spacing:1.5px;
+}
+
+
+/* Full-width mobile layout */
+html{
+ width:100%;
+ max-width:100%;
+ overflow-x:hidden;
+}
+
+body{
+ width:100%;
+ max-width:100%;
+ margin:0 !important;
+ padding:0 !important;
+ overflow-x:hidden;
+}
+
+header.hero,
+#familyTreeSection{
+ width:100% !important;
+ max-width:100% !important;
+ margin-left:0 !important;
+ margin-right:0 !important;
+}
+}
+    
+/* ===== ROYAL HERITAGE DESIGN UPGRADE ===== */
+
+:root {
+  --green: #103d32;
+  --dark-green: #082c23;
+  --gold: #c9a34e;
+  --light-green: #edf4ef;
+  --text: #193b2c;
+}
+
+/* Homepage hero */
+header.hero {
+  background:
+    radial-gradient(circle at top, #28674e 0%, transparent 55%),
+    linear-gradient(135deg, #082c23, #145c3b, #103d32);
+  border: 2px solid var(--gold);
+  border-radius: 20px;
+  box-shadow: 0 12px 35px rgba(8, 44, 35, 0.20);
+  overflow: hidden;
+}
+
+.hero h1 {
+  color: #f4d58a;
+  font-size: clamp(30px, 5vw, 46px);
+  letter-spacing: 1.5px;
+  text-shadow: 0 3px 12px #0005;
+}
+
+.hero-description {
+  color: #f0f4ef;
+  max-width: 680px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.hero-logo {
+  border: 3px solid var(--gold);
+  box-shadow: 0 8px 25px #0005;
+}
+
+/* Premium buttons */
+.hero-button {
+  background: linear-gradient(135deg, #f5dc9c, #c9a34e);
+  color: #103d32;
+  border: 1px solid #f8e6b7;
+  border-radius: 30px;
+  font-weight: 800;
+  box-shadow: 0 6px 18px #0003;
+}
+
+.hero-button:hover {
+  transform: translateY(-3px);
+  filter: brightness(1.05);
+}
+
+/* Dashboard */
+.dashboard-panel {
+  background: #fbfaf5;
+  border-right: 3px solid var(--gold);
+  box-shadow: 8px 0 30px #0002;
+}
+
+.dashboard-heading {
+  color: var(--green);
+  padding-bottom: 14px;
+  border-bottom: 2px solid #e6d5aa;
+}
+
+.dashboard-item {
+  color: var(--green);
+  transition: background .2s ease, padding .2s ease;
+}
+
+.dashboard-item:hover {
+  background: #e8f1e9;
+  padding-left: 18px;
+}
+
+/* Content cards */
+.card {
+  border: 1px solid #e4d8b9;
+  border-radius: 16px;
+  box-shadow: 0 6px 22px rgba(16, 61, 50, .08);
+}
+
+/* Smooth page movement */
+html {
+  scroll-behavior: smooth;
+}
+@media(max-width:600px){
+ #familyTreeSection{
+  padding:10px 4px !important;
+ }
+.tree-horizontal-scroll{
+ display:none !important;
+ }
+ .tree-scroll{
+  width:100%;
+  padding:12px 4px;
+  border-radius:8px;
+ }
+}
+ /* PROFESSIONAL FAMILY TREE SECTION WIDTH */
+#familyTreeSection {
+    width: 100%;
+    max-width: 100%;
+    margin: 18px auto 0;
+    padding: 22px !important;
+    box-sizing: border-box;
+}
+
+@media (max-width: 600px) {
+    #familyTreeSection {
+        padding: 12px !important;
+    }
+}
+    
+/* HOME PAGE - CLEAN RESPONSIVE LAYOUT */
+header.hero {
+    width: 100%;
+    min-height: 620px;
+    padding: 65px 25px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    border-radius: 22px;
+}
+
+.hero-content {
+    width: 100%;
+    max-width: 780px;
+    margin: 0 auto;
+}
+
+.hero-logo {
+    display: block;
+    width: 170px;
+    height: 170px;
+    object-fit: contain;
+    margin: 0 auto 25px;
+}
+
+.hero-label {
+    margin: 0 0 16px;
+    font-size: 13px;
+    letter-spacing: 3px;
+}
+
+.hero h1 {
+    font-size: clamp(38px, 5vw, 56px);
+    line-height: 1.2;
+    margin: 0 0 20px;
+}
+
+.hero-description {
+    max-width: 680px;
+    margin: 0 auto 30px;
+    font-size: 18px;
+    line-height: 1.7;
+}
+
+.hero-button {
+    min-width: 230px;
+    padding: 15px 28px;
+}
+
+@media (max-width: 600px) {
+    header.hero {
+        min-height: 560px;
+        padding: 65px 18px 45px;
+        border-radius: 14px;
+    }
+
+    .hero-logo {
+        width: 135px;
+        height: 135px;
+        margin-bottom: 22px;
+    }
+
+    .hero-label {
+        font-size: 10px;
+        letter-spacing: 1.5px;
+        line-height: 1.6;
+    }
+
+    .hero h1 {
+        font-size: 35px;
+    }
+
+    .hero-description {
+        font-size: 15px;
+        line-height: 1.7;
+    }
+
+    .hero-button {
+        min-width: 200px;
+        padding: 13px 20px;
+    }
+}
+
+/* REMOVE MIDDLE HEADING */
+#familyTreeSection > h2 {
+    display: none;
+}
+
+/* INDEPENDENT FAMILY TREE SCROLLING */
+#familyTreeSection {
+    display: flex;
+    flex-direction: column;
+    min-height: 0;
+}
+
+#familyTreeSection .tree-scroll {
+    height: 65vh;
+    min-height: 450px;
+    max-height: 750px;
+    overflow-x: auto;
+    overflow-y: auto;
+    overscroll-behavior: contain;
+    scrollbar-width: thin;
+    scrollbar-color: #b89545 #e8eee8;
+}
+
+#familyTreeSection .tree-canvas {
+    min-width: max-content;
+    min-height: 100%;
+}
+
+@media (max-width: 600px) {
+    #familyTreeSection .tree-scroll {
+        height: 65vh;
+        min-height: 350px;
+    }
+}
+
+
+/* UPPER SECTION - NO INTERNAL SCROLLING */
+.upper-section {
+    height: auto !important;
+    max-height: none !important;
+    min-height: 0 !important;
+    overflow: hidden !important;
+    border-radius: 22px;
+}
+
+.upper-section .hero {
+    height: auto !important;
+    min-height: 0 !important;
+}
+
+/* FAMILY TREE SPACING IMPROVEMENT */
+#tree .children-row {
+    gap: 24px;
+    margin-top: 50px;
+    padding-top: 42px;
+}
+
+#tree .children-row:before,
+#tree .children-row:after,
+#tree .children-row > .family-node:before {
+    border-width: 2px;
+}
+
+#tree .person {
+    border-radius: 14px;
+    padding: 17px 12px;
+    box-shadow: 0 5px 16px rgba(20, 92, 59, 0.12);
+}
+
+@media (max-width: 600px) {
+      #tree {
+        --person-width: 185px;
+    }
+    #tree .children-row {
+        gap: 18px;
+    }
+}
+
+/* COMMON ANCESTOR - PEER BABA */
+#tree .person.root {
+    min-width: 230px;
+    padding: 22px 18px;
+    border: 3px solid #c9a44c;
+    border-radius: 18px;
+    background: linear-gradient(135deg, #092f22, #176344);
+    box-shadow: 0 8px 24px rgba(11, 56, 40, 0.25);
+}
+
+#tree .person.root strong {
+    color: #f5d98b;
+    font-size: 19px;
+}
+
+#tree .person.root .small {
+    color: #ffffff;
+    font-size: 13px;
+}
+
+#tree .person.root .expand-hint {
+    color: #f5d98b;
+}
+
+/* CLEARER FAMILY MEMBER CARDS */
+#tree {
+    --person-width: 210px;
+}
+
+#tree .person {
+    width: var(--person-width);
+    min-height: 85px;
+    padding: 18px 14px;
+    border: 1.5px solid #b8d2bf;
+    border-radius: 16px;
+    background: linear-gradient(145deg, #ffffff, #edf6ef);
+    line-height: 1.45;
+}
+
+#tree .person strong {
+    display: block;
+    font-size: 16px;
+    line-height: 1.4;
+    font-weight: 700;
+    overflow-wrap: anywhere;
+}
+
+#tree .person .small {
+    margin-top: 7px;
+    font-size: 13px;
+    line-height: 1.4;
+    color: #456b52;
+    overflow-wrap: anywhere;
+}
+
+#tree .person .expand-hint {
+    margin-top: 10px;
+    font-size: 12px;
+    font-weight: 700;
+}
+
+#tree .person:focus-visible {
+    outline: 3px solid #c9a44c;
+    outline-offset: 4px;
+}
+
+@media (max-width: 600px) {
+    #tree {
+        --person-width: 185px;
+    }
+
+    #tree .person strong {
+        font-size: 15px;
+    }
+}
+
+/* FAMILY CARD HOVER EFFECT */
+#tree .person {
+    transition: transform 0.2s ease,
+                box-shadow 0.2s ease,
+                border-color 0.2s ease;
+}
+
+@media (hover: hover) {
+    #tree .person:hover {
+        transform: translateY(-5px);
+        border-color: #c9a44c;
+        box-shadow: 0 10px 24px rgba(20, 92, 59, 0.18);
+    }
+}
+
+/* HERITAGE FAMILY TREE BACKGROUND */
+#familyTreeSection {
+    background: linear-gradient(145deg, #f7fbf7, #eaf3eb);
+    border: 1px solid #d5e5d8;
+    border-radius: 20px;
+}
+
+#familyTreeSection .tree-scroll {
+    background:
+        radial-gradient(circle, rgba(23, 99, 68, 0.09) 1px, transparent 1.5px);
+    background-size: 22px 22px;
+    border-radius: 14px;
+}
+
+/* FAMILY SEARCH DESIGN */
+#familyTreeSection input[type="text"],
+#familyTreeSection input[type="search"] {
+    min-height: 48px;
+    padding: 12px 16px;
+    border: 2px solid #c5d9ca;
+    border-radius: 12px;
+    background: #ffffff;
+    font-size: 16px;
+    transition: border-color 0.2s, box-shadow 0.2s;
+}
+
+#familyTreeSection input[type="text"]:focus,
+#familyTreeSection input[type="search"]:focus {
+    outline: none;
+    border-color: #176344;
+    box-shadow: 0 0 0 4px rgba(23, 99, 68, 0.12);
+}
+
+#familyTreeSection input::placeholder {
+    color: #819487;
+}
+
+/* FAMILY TREE CONTROL BUTTONS */
+.tree-controls {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 12px;
+    margin: 16px 0;
+}
+
+.tree-controls button {
+    min-height: 42px;
+    padding: 10px 20px;
+    border-radius: 10px;
+    font-size: 14px;
+    font-weight: 700;
+    background: linear-gradient(135deg, #145c3b, #176344);
+    border: 1px solid #c9a44c;
+    transition: transform 0.2s, box-shadow 0.2s;
+}
+
+.tree-controls button:hover {
+    background: #0b3828;
+    box-shadow: 0 5px 14px rgba(20, 92, 59, 0.2);
+    transform: translateY(-2px);
+}
+
+@media (max-width: 600px) {
+    .tree-controls button {
+        flex: 1;
+        padding: 10px;
+    }
+}
+
+/* FAMILY TREE INTRODUCTION */
+#familyTreeSection > p:first-of-type {
+    color: #456b52;
+    font-size: 15px;
+    line-height: 1.8;
+    text-align: center;
+    max-width: 850px;
+    margin: 12px auto 22px;
+}
+
+#familyTreeSection::before {
+    content: "";
+    display: block;
+    width: 110px;
+    height: 4px;
+    margin: 0 auto 20px;
+    border-radius: 10px;
+    background: linear-gradient(90deg, #176344, #c9a44c);
+}
+
+/* MOBILE FAMILY TREE OPTIMIZATION */
+@media (max-width: 600px) {
+    #familyTreeSection {
+        padding: 12px;
+        border-radius: 14px;
+    }
+
+    #familyTreeSection .tree-scroll {
+        -webkit-overflow-scrolling: touch;
+        touch-action: pan-x pan-y;
+    }
+
+    #tree .children-row {
+        gap: 18px;
+    }
+
+    #tree .person {
+        font-size: 14px;
+    }
+
+    #tree .person.root {
+        min-width: 210px;
+    }
+
+    #searchInput {
+        width: 100%;
+        box-sizing: border-box;
+    }
+}
+
+/* FAMILY TREE HELP PANEL */
+#familyTreeSection .tree-help {
+    background: linear-gradient(135deg, #edf6ef, #fff9e9);
+    border: 1px solid #d7c38b;
+    border-left: 5px solid #c9a44c;
+    border-radius: 12px;
+    padding: 16px 18px;
+    color: #315b40;
+    font-size: 14px;
+    line-height: 1.8;
+    margin: 18px 0;
+}
+
+#familyTreeSection .tree-help strong {
+    color: #145c3b;
+    font-size: 15px;
+}
+
+/* FINAL COMPACT FAMILY TREE TOOLBAR */
+#familyTreeSection .tree-controls {
+    display: flex !important;
+    flex-direction: row !important;
+    flex-wrap: nowrap !important;
+    align-items: center !important;
+    gap: 8px !important;
+    width: 100%;
+}
+
+#familyTreeSection .tree-controls button {
+    flex: 0 0 76px !important;
+    width: 76px !important;
+    height: 32px !important;
+    min-height: 32px !important;
+    padding: 0 5px !important;
+    margin: 0 !important;
+    font-size: 11px !important;
+    line-height: 1 !important;
+    border-radius: 7px !important;
+    white-space: nowrap !important;
+}
+
+/* PROFESSIONAL FAMILY SEARCH BOX */
+#familyTreeSection .tree-search-wrap {
+    display: flex;
+    flex: 1 1 auto;
+    min-width: 100px;
+    align-items: center;
+    gap: 5px;
+    height: 40px;
+    padding: 3px 5px;
+    background: #ffffff;
+    border: 1px solid #c5d9ca;
+    border-radius: 10px;
+    box-sizing: border-box;
+}
+
+#familyTreeSection .tree-search-wrap #searchInput {
+    flex: 1 1 auto !important;
+    width: 100% !important;
+    min-width: 0 !important;
+    border: none !important;
+    outline: none !important;
+    box-shadow: none !important;
+    height: 34px !important;
+}
+
+#familyTreeSection .tree-controls .tree-search-button {
+    flex: 0 0 34px !important;
+    width: 34px !important;
+    height: 34px !important;
+    min-height: 34px !important;
+    padding: 0 !important;
+    border: none !important;
+    border-radius: 8px !important;
+    background: #176344 !important;
+    color: white !important;
+    font-size: 23px !important;
+    cursor: pointer;
+}
+/* HOME SECTION - FULL SCREEN WIDTH */
+.upper-section {
+    width: 100% !important;
+    max-width: 100% !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    border: none !important;
+    border-radius: 0 !important;
+    overflow-y: hidden !important;
+overflow-x: hidden !important;
+}
+
+.upper-section header.hero {
+    width: 100% !important;
+    max-width: 100% !important;
+    margin: 0 !important;
+    border-radius: 0 !important;
+    box-sizing: border-box !important;
+}
+
+html, body {
+    width: 100%;
+    max-width: 100%;
+    margin: 0;
+    padding: 0;
+    overflow-x: hidden;
+}
+/* SWITCH BETWEEN HOME AND FAMILY TREE */
+.upper-section.tree-view-active {
+    display: none !important;
+}
+/* HIDE HOME PAGE VERTICAL SCROLLBAR */
+html:has(.upper-section:not(.tree-view-active)),
+body:has(.upper-section:not(.tree-view-active)) {
+    overflow-y: hidden !important;
+    height: 100% !important;
+}
+
+/* RESTORE MAIN PAGE SCROLLBAR IN FAMILY TREE VIEW */
+html:has(.upper-section.tree-view-active),
+body:has(.upper-section.tree-view-active) {
+    height: auto !important;
+    min-height: 100vh !important;
+    overflow-y: auto !important;
+}
+    /* FINAL HOME PAGE SCROLLBAR FIX */
+body {
+    padding: 0 !important;
+    margin: 0 !important;
+    min-height: 0 !important;
+}
+    
+/* FAMILY TREE CARD ALIGNMENT AND READABILITY */
+#tree .person {
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  white-space: normal;
+  overflow-wrap: anywhere;
+  min-height: 96px;
+  padding: 16px 14px;
+}
+
+#tree .person strong,
+#tree .person .small {
+  width: 100%;
+  max-width: 100%;
+  text-align: center;
+  overflow-wrap: anywhere;
+}
+
+#tree .person strong {
+  line-height: 1.35;
+}
+
+#tree .person .small {
+  margin-top: 6px;
+}
+
+#tree .person.root {
+  align-items: center;
+  justify-content: center;
+}
+
+@media (max-width: 600px) {
+  #tree .person {
+    min-height: 88px;
+    padding: 14px 11px;
+  }
+
+  #tree .person strong {
+    font-size: 15px;
+  }
+
+  #tree .person .small {
+    font-size: 12px;
+  }
+}
+
+/* CENTER THE FAMILY TREE CONTENT */
+#tree.tree-canvas {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: max-content;
+    min-width: 100%;
+    box-sizing: border-box;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+#tree.tree-canvas > .family-node {
+    align-self: center;
+}
+
+#tree.tree-canvas > .generation-label {
+    align-self: center;
+    text-align: center;
+}
+
+#tree.tree-canvas > .unlinked-area {
+    align-self: center;
+}
+
+/* FAMILY TREE BRANCH AND GENERATION SPACING */
+#tree .children-row {
+    gap: 20px;
+    margin-top: 48px;
+    padding-top: 48px;
+}
+
+#tree .children-row::after {
+    top: -48px;
+    height: 48px;
+}
+
+#tree .children-row > .family-node::before {
+    top: -48px;
+    height: 48px;
+}
+
+@media (max-width: 600px) {
+    #tree .children-row {
+        gap: 18px;
+        margin-top: 48px;
+        padding-top: 48px;
+    }
+}
+
+/* AUTOMATIC COMPACT SPACING FOR COLLAPSED BRANCHES */
+
+/* Keep names closer when no child branch is expanded */
+#tree .children-row:not(:has(> .family-node > .children-row)) {
+    gap: 8px;
+}
+
+/* Restore comfortable spacing when a child branch is expanded */
+#tree .children-row:has(> .family-node > .children-row) {
+    gap: 20px;
+}
+
+@media (max-width: 600px) {
+    #tree .children-row:not(:has(> .family-node > .children-row)) {
+        gap: 6px;
+    }
+
+    #tree .children-row:has(> .family-node > .children-row) {
+        gap: 18px;
+    }
+}
+
+/* KEEP SIBLING CARDS CLOSE WHILE CHILDREN SPREAD BELOW */
+#tree .family-node {
+    position: relative;
+}
+
+#tree .family-node > .children-row {
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
+    margin: 0;
+    width: max-content;
+    max-width: none;
+}
+
+/* EXTEND CONNECTORS WHEN BRANCHES MOVE DOWN */
+#tree .children-row::after {
+    top: calc(-48px - var(--branch-lane, 0px));
+    height: calc(48px + var(--branch-lane, 0px));
+}
+
+/* SHARED GENERATION ROW LAYOUT */
+#tree {
+    position: relative;
+}
+
+#tree .generation-connectors {
+    position: absolute;
+    top: 0;
+    left: 0;
+    z-index: 0;
+    overflow: visible;
+    pointer-events: none;
+}
+
+#tree .generation-row {
+    display: block;
+    position: relative;
+    align-items: flex-start;
+    width: max-content;
+    min-width: 100%;
+    z-index: 1;
+}
+
+#tree .generation-row .family-node {
+    position: relative;
+    flex: 0 0 auto;
+}
+
+#tree .unlinked-area .generation-row {
+    margin-top: 45px;
+}
+
+@media (max-width: 600px) {
+    #tree .generation-row {
+        min-width: 100%;
+    }
+}
+/* COMPACT HOMEPAGE */
+header.hero{
+ min-height:0 !important;
+ height:auto !important;
+ padding:30px 20px !important;
+}
+
+.hero-logo{
+ width:105px !important;
+ height:105px !important;
+ margin-bottom:12px !important;
+}
+
+.hero-label{
+ margin-bottom:8px !important;
+}
+
+.hero h1{
+ margin-bottom:10px !important;
+}
+
+.hero-description{
+ margin-bottom:14px !important;
+ font-size:16px !important;
+}
+
+.home-stats{
+ margin-top:18px !important;
+ gap:10px !important;
+}
+
+.stat-card{
+ padding:14px 8px !important;
+}
+
+@media(max-width:600px){
+ header.hero{
+  padding:22px 10px !important;
+ }
+
+ .hero-logo{
+  width:85px !important;
+  height:85px !important;
+ }
+
+ .hero h1{
+  font-size:29px !important;
+ }
+
+ .hero-description{
+  font-size:14px !important;
+ }
+
+ .home-stats{
+  margin-top:14px !important;
+ }
+}
+    .stat-icon{
+ width:22px;
+height:22px;
+ display:block;
+ margin:0 auto 5px;
+ color:white;
+}
+
+.stat-icon path,
+.stat-icon circle{
+ stroke:white;
+}
+    /* SMALL TOP NAVIGATION ICONS */
+.top-nav-icons{
+ position:absolute;
+ top:18px;
+ right:18px;
+ display:flex;
+ gap:7px;
+ z-index:10;
+}
+
+.top-nav-icon{
+ width:30px;
+ height:30px;
+ padding:6px;
+ margin:0;
+ display:flex;
+ align-items:center;
+ justify-content:center;
+ background:rgba(255,255,255,.12);
+ border:1px solid #c9a44c;
+ border-radius:50%;
+ color:white;
+ cursor:pointer;
+}
+
+.top-nav-icon svg{
+ width:15px;
+ height:15px;
+ fill:none;
+ stroke:currentColor;
+ stroke-width:1.8;
+ stroke-linecap:round;
+ stroke-linejoin:round;
+}
+
+.info-card h2{
+ color:#145c3b;
+ margin-bottom:15px;
+}
+
+.info-card p{
+ line-height:1.6;
+ color:#193b2c;
+}
+
+@media(max-width:600px){
+ .top-nav-icons{
+  top:12px;
+  right:10px;
+  gap:5px;
+ }
+ .top-nav-icon{
+  width:27px;
+  height:27px;
+ }
+}
+    .contact-dropdown-wrap{
+ position:relative;
+}
+
+.contact-dropdown{
+ position:absolute;
+ top:calc(100% + 10px);
+ right:0;
+ width:230px;
+ padding:14px;
+ display:flex;
+ flex-direction:column;
+ gap:12px;
+ background:#fff;
+ border:1px solid #c9a44c;
+ border-radius:10px;
+ box-shadow:0 6px 20px #0003;
+ text-align:left;
+ z-index:100;
+}
+
+.contact-dropdown.hidden{
+ display:none;
+}
+
+.contact-dropdown strong{
+ color:#145c3b;
+ font-size:15px;
+}
+
+.contact-dropdown a{
+ color:#193b2c;
+ text-decoration:none;
+ font-size:13px;
+ overflow-wrap:anywhere;
+}
+
+.contact-dropdown a:hover{
+ color:#b08a35;
+}
+    /* FAMILY TREE VERTICAL SCROLLBAR */
+#familyTreeSection .tree-scroll {
+    display: block !important;
+    flex: 0 0 76vh !important;
+    width: 100% !important;
+    height: 76vh !important;
+    min-height: 420px !important;
+    max-height: 850px !important;
+    box-sizing: border-box !important;
+    overflow-y: auto !important;
+    overflow-x: auto !important;
+    scrollbar-width: auto !important;
+    scrollbar-color: #176344 #dce9df !important;
+}
+
+#familyTreeSection .tree-scroll::-webkit-scrollbar {
+    display: block !important;
+    width: 14px;
+    height: 14px;
+}
+
+#familyTreeSection .tree-scroll::-webkit-scrollbar-thumb {
+    background: #176344;
+    border-radius: 10px;
+}
+
+#familyTreeSection .tree-scroll::-webkit-scrollbar-track {
+    background: #dce9df;
+}
+    /* KEEP BACK TO HOME BUTTON VISIBLE */
+#familyTreeSection > button:first-child {
+    position: fixed !important;
+    top: 12px !important;
+    left: 12px !important;
+    z-index: 99999 !important;
+    margin: 0 !important;
+    box-shadow: 0 3px 12px rgba(0,0,0,0.25);
+}
+  
+/* PROFESSIONAL URDU PAGE LAYOUT */
+html[lang="ur"] body {
+    font-family: 'Noto Nastaliq Urdu', serif;
+    line-height: 2.1;
+    text-align: right;
+}
+
+html[lang="ur"] .hero {
+    padding: 55px 22px;
+    text-align: center;
+}
+
+html[lang="ur"] .hero h1 {
+    font-size: clamp(36px, 5vw, 52px);
+    line-height: 1.9;
+    letter-spacing: 0;
+    margin-bottom: 12px;
+}
+
+html[lang="ur"] .hero-label {
+    font-size: 17px;
+    letter-spacing: 0;
+    line-height: 2;
+}
+
+html[lang="ur"] .hero-description {
+    font-size: 19px;
+    line-height: 2.2;
+    max-width: 720px;
+}
+
+html[lang="ur"] .hero-button {
+    font-family: inherit;
+    font-size: 17px;
+    line-height: 2;
+    margin: 7px;
+    letter-spacing: 0;
+}
+
+html[lang="ur"] .top-nav-icons {
+    right: auto;
+    left: 18px;
+    flex-direction: row-reverse;
+}
+
+html[lang="ur"] .dashboard-toggle {
+    left: auto;
+    right: 22px;
+    font-family: inherit;
+}
+
+html[lang="ur"] .dashboard-panel {
+    left: auto;
+    right: 0;
+    transform: translateX(110%);
+    text-align: right;
+    direction: rtl;
+}
+
+html[lang="ur"] .dashboard-panel.open {
+    transform: translateX(0);
+}
+
+html[lang="ur"] .dashboard-heading,
+html[lang="ur"] .dashboard-recent,
+html[lang="ur"] .dashboard-branches {
+    text-align: right;
+    direction: rtl;
+}
+
+html[lang="ur"] .card,
+html[lang="ur"] .card h2,
+html[lang="ur"] .card h3,
+html[lang="ur"] label {
+    text-align: right;
+    direction: rtl;
+}
+
+html[lang="ur"] input,
+html[lang="ur"] select,
+html[lang="ur"] textarea {
+    font-family: inherit;
+    text-align: right;
+    direction: rtl;
+    line-height: 2;
+}
+
+html[lang="ur"] .home-stats {
+    direction: rtl;
+}
+
+html[lang="ur"] .stat-card {
+    text-align: center;
+    line-height: 2;
+}
+
+@media (max-width: 600px) {
+    html[lang="ur"] .hero {
+        padding: 45px 14px;
+    }
+
+    html[lang="ur"] .hero-description {
+        font-size: 16px;
+    }
+
+    html[lang="ur"] .hero-button {
+        width: 100%;
+        max-width: 300px;
+        margin: 6px auto;
+    }
+
+    html[lang="ur"] .dashboard-toggle {
+        right: 10px;
+        left: auto;
+        min-width: 110px;
+    }
+
+    html[lang="ur"] .top-nav-icons {
+        left: 10px;
+        right: auto;
+    }
+}
+
+/* COMPACT HOMEPAGE STATISTIC BOXES - ENGLISH & URDU */
+.home-stats {
+    align-items: stretch !important;
+    gap: 12px !important;
+    margin: 18px auto 8px !important;
+}
+
+.stat-card {
+    min-height: 112px !important;
+    padding: 12px 8px !important;
+    display: flex !important;
+    flex-direction: column !important;
+    align-items: center !important;
+    justify-content: center !important;
+    line-height: 1.4 !important;
+    box-sizing: border-box !important;
+}
+
+.stat-icon {
+    width: 21px !important;
+    height: 21px !important;
+    margin: 0 auto 4px !important;
+}
+
+.stat-card strong {
+    font-size: 27px !important;
+    line-height: 1.2 !important;
+    margin-bottom: 3px !important;
+}
+
+.stat-card span {
+    font-size: 12px !important;
+    line-height: 1.5 !important;
+}
+
+html[lang="ur"] .stat-card {
+    line-height: 1.7 !important;
+    padding: 10px 6px !important;
+}
+
+html[lang="ur"] .stat-card span {
+    line-height: 1.8 !important;
+}
+
+@media (max-width: 600px) {
+    .home-stats {
+        gap: 7px !important;
+        margin-top: 14px !important;
+    }
+
+    .stat-card {
+        min-height: 100px !important;
+        padding: 9px 4px !important;
+    }
+
+    .stat-card strong {
+        font-size: 23px !important;
+    }
+
+    .stat-card span {
+        font-size: 10px !important;
+    }
+}
+
+/* PROFESSIONAL FAMILY TREE NAME CARDS - ENGLISH & URDU */
+
+#tree .person {
+    box-sizing: border-box !important;
+  border-radius: 13px !important;
+    min-height: 82px !important;
+    padding: 12px 12px !important;
+    display: flex !important;
+    flex-direction: column !important;
+    align-items: center !important;
+    justify-content: center !important;
+    text-align: center !important;
+    white-space: normal !important;
+}
+
+#tree .person strong {
+    display: block !important;
+    width: 100% !important;
+    max-width: 100% !important;
+    font-size: 16px !important;
+    font-weight: 700 !important;
+    line-height: 1.5 !important;
+    text-align: center !important;
+    white-space: normal !important;
+    overflow-wrap: break-word !important;
+    word-break: normal !important;
+    hyphens: none !important;
+}
+
+#tree .person strong[dir="rtl"] {
+    direction: rtl !important;
+    unicode-bidi: plaintext !important;
+    line-height: 1.85 !important;
+    font-size: 17px !important;
+}
+
+#tree .person .small {
+    width: 100% !important;
+    margin-top: 5px !important;
+    font-size: 13px !important;
+    line-height: 1.6 !important;
+    text-align: center !important;
+    overflow-wrap: break-word !important;
+    word-break: normal !important;
+}
+
+#tree .person .expand-hint {
+    margin-top: 7px !important;
+    font-size: 12px !important;
+    line-height: 1.5 !important;
+    text-align: center !important;
+}
+
+#tree .person.root {
+    min-height: 100px !important;
+    padding: 16px 14px !important;
+}
+#tree .person.root .generation-label {
+    display: inline-block;
+    color: #f5d98b;
+    background: rgba(255,255,255,0.12);
+    padding: 4px 10px;
+    border-radius: 20px;
+    font-size: 11px;
+    font-weight: 700;
+    margin-bottom: 8px;
+}
+#tree .person.root strong {
+    font-size: 19px !important;
+    line-height: 1.6 !important;
+}
+
+@media (max-width: 600px) {
+    #tree .person {
+        min-height: 82px !important;
+        padding: 11px 8px !important;
+    }
+
+    #tree .person strong {
+        font-size: 14px !important;
+    }
+
+    #tree .person strong[dir="rtl"] {
+        font-size: 15px !important;
+        line-height: 1.8 !important;
+    }
+
+    #tree .person.root strong {
+        font-size: 17px !important;
+    }
+}
+/* FAMILY TREE LAYOUT AND GENERATION SPACING */
+
+#tree .children-row {
+    gap: 14px !important;
+    margin-top: 36px !important;
+    padding-top: 36px !important;
+}
+
+#tree .children-row:after {
+    top: -36px !important;
+    height: 36px !important;
+}
+
+#tree .children-row > .family-node:before {
+    top: -36px !important;
+    height: 36px !important;
+}
+
+#tree .family-node {
+    align-items: center !important;
+}
+
+@media (max-width: 600px) {
+    #tree .children-row {
+        gap: 9px !important;
+        margin-top: 30px !important;
+        padding-top: 30px !important;
+    }
+
+    #tree .children-row:after {
+        top: -30px !important;
+        height: 30px !important;
+    }
+
+    #tree .children-row > .family-node:before {
+        top: -30px !important;
+        height: 30px !important;
+    }
+}
+  
+/* CLEAN MINIMAL HOME PAGE */
+.home-stats {
+    display: none !important;
+}
+
+.hero-content button[onclick*="family-print.html"] {
+    display: none !important;
+}
+
+header.hero {
+    min-height: 540px !important;
+    padding: 45px 20px !important;
+}
+
+.hero-logo {
+    width: 130px !important;
+    height: 130px !important;
+}
+
+.hero-description {
+    max-width: 520px !important;
+    margin-bottom: 24px !important;
+}
+.site-footer {
+    background: #082c23;
+    color: #f5d98b;
+    text-align: center;
+    padding: 25px 15px;
+    margin: 0;
+    border-top: 2px solid #c9a44c;
+}
+
+.site-footer h3 {
+    margin: 0 0 8px;
+    font-size: 20px;
+}
+
+.site-footer p {
+    margin: 5px 0 12px;
+    color: #ffffff;
+}
+
+.site-footer small {
+    color: #d6dfd8;
+}
+  .site-footer p,
+.site-footer small {
+    display: block !important;
+    visibility: visible !important;
+    opacity: 1 !important;
+    color: #ffffff !important;
+    font-size: 15px !important;
+    margin: 10px 0 !important;
+}
+</style>
+</head>
+
+<body>
+
+<div class="upper-section">
+<header class="hero">
+ <button type="button" class="dashboard-toggle"
+ onclick="toggleDashboard()"
+ aria-expanded="false"
+ aria-controls="dashboardPanel">
+ ☰ Dashboard
+</button>
+    <div class="top-nav-icons">
+        <button type="button" id="languageToggle"
+ onclick="toggleLanguage()"
+ style="padding:7px 12px;border-radius:20px;cursor:pointer;font-weight:bold;">
+ اردو
+</button>
+ <button class="top-nav-icon" onclick="showHome()" title="Home">
+  <svg viewBox="0 0 24 24"><path d="m3 10 9-7 9 7v10h-6v-7H9v7H4V10Z"/></svg>
+ </button>
+ <button class="top-nav-icon" onclick="openInfoModal('about')" title="About">
+  <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M12 11v5m0-8h.01"/></svg>
+ </button>
+ <div class="contact-dropdown-wrap">
+ <button class="top-nav-icon" onclick="toggleContactDropdown()" title="Contact">
+  <svg viewBox="0 0 24 24"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="m3 7 9 6 9-6"/></svg>
+ </button>
+
+ <div id="contactDropdown" class="contact-dropdown hidden">
+  <strong>Contact Us</strong>
+  <a href="tel:+923435646768">📞 +92 343 5646768</a>
+  <a href="mailto:mr.ajmalsayed@gmail.com">✉️ Email Us</a>
+  <a href="https://wa.me/923435646768" target="_blank" rel="noopener">WhatsApp Message</a>
+ </div>
+</div>
+</div>
+ <div class="hero-content">
+  <img
+ src="decc4d6d-60b2-4efb-9ec2-e3eba2320502.jfif"
+ alt="Manglor Sayedan Logo"
+class="hero-logo">
+  <p class="hero-label">OUR FAMILY • OUR HERITAGE • OUR LEGACY</p>
+  <h1>Manglor Sayedan </h1>
+  <p class="hero-description">
+  Discover our roots, honour our ancestors, and preserve the proud heritage of Manglor Sayedan for future generations.
+  </p>
+  <button class="hero-button" onclick="showFamilyTree()">
+    Explore Family Tree →
+</button>
+     <button class="hero-button" type="button"
+onclick="window.location.href='family-print.html'">
+    Family Search & Print →
+</button>
+<div class="home-stats">
+  <div class="stat-card">
+    <svg class="stat-icon" viewBox="0 0 24 24" fill="none">
+      <path d="M16 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2" stroke="white" stroke-width="1.7" stroke-linecap="round"/>
+      <circle cx="10" cy="7" r="4" stroke="white" stroke-width="1.7"/>
+      <path d="M20 21v-2a4 4 0 0 0-3-3.87M16 3.13a4 4 0 0 1 0 7.75" stroke="white" stroke-width="1.7" stroke-linecap="round"/>
+    </svg>
+    <strong id="totalMembers">0</strong>
+    <span>Total Members</span>
+  </div>
+
+  <div class="stat-card">
+    <svg class="stat-icon" viewBox="0 0 24 24" fill="none">
+      <path d="M12 22V11M12 16l-4-3M12 14l4-3" stroke="white" stroke-width="1.7" stroke-linecap="round"/>
+      <path d="M12 2 7 8h10L12 2ZM12 7l-7 7h14L12 7Z" stroke="white" stroke-width="1.7" stroke-linejoin="round"/>
+      <path d="M8 22h8" stroke="white" stroke-width="1.7" stroke-linecap="round"/>
+    </svg>
+    <strong id="totalGenerations">0</strong>
+    <span>Generations</span>
+  </div>
+
+  <div class="stat-card">
+    <svg class="stat-icon" viewBox="0 0 24 24" fill="none">
+      <path d="M12 22s8-4 8-11V5l-8-3-8 3v6c0 7 8 11 8 11Z" stroke="white" stroke-width="1.7" stroke-linejoin="round"/>
+      <path d="m9 12 2 2 4-4" stroke="white" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/>
+    </svg>
+    <strong id="connectedMembers">0</strong>
+    <span>Family Roots</span>
+  </div>
+</div>
+
+ </div>
+
+  </header>
+</div>
+
+<footer class="site-footer">
+    <h3>Manglor Sayedan Family Tree</h3>
+    <p>Our Family • Our Heritage • Our Legacy</p>
+    <small>© 2026 Manglor Sayedan. All Rights Reserved.</small>
+</footer>
+
+<div id="infoModal" class="login-modal hidden" onclick="closeInfoModal(event)">
+ <section class="card login-card info-card">
+  <button class="close-login" onclick="closeInfoModal()">×</button>
+  <h2 id="infoModalTitle">About</h2>
+  <p id="infoModalText"></p>
+ </section>
+</div>
+<div id="dashboardBackdrop" class="dashboard-backdrop hidden"
+ onclick="closeDashboard()"></div>
+
+<nav id="dashboardPanel" class="dashboard-panel"
+ aria-label="Website dashboard">
+
+ <div class="dashboard-heading">
+  <strong>Manglor Sayedan</strong>
+  <button type="button" class="dashboard-close"
+   onclick="closeDashboard()">×</button>
+ </div>
+
+ <p class="dashboard-caption">Family Heritage Dashboard</p>
+<div class="dashboard-recent">
+ <strong>Recently Added Family Members</strong>
+ <div id="recentMembersList" class="recent-members-list">
+  <p>Loading family members...</p>
+ </div>
+</div>
+    <div class="dashboard-branches">
+ <strong>Family Branches</strong>
+ <div id="familyBranchesList" class="family-branches-list">
+  <p>Loading family branches...</p>
+ </div>
+</div>
+ <button class="dashboard-item"
+  onclick="dashboardGo('home')">⌂ Home</button>
+
+ <button class="dashboard-item"
+  onclick="dashboardGo('tree')">♧ Family Tree</button>
+
+ <button class="dashboard-item"
+  onclick="dashboardGo('search')">⌕ Search Family Members</button>
+  <button class="dashboard-item" type="button"
+  onclick="window.location.href='family-print.html'">
+  🖨 Family Search & Print
+</button>
+
+ <div class="dashboard-divider"></div>
+
+ <p class="dashboard-section-title">Administration</p>
+
+ <button id="dashboardLogin" class="dashboard-item"
+  onclick="dashboardGo('login')">Admin Login</button>
+
+ <button id="dashboardAdminPanel" class="dashboard-item hidden"
+  onclick="dashboardGo('admin')">Administrator Panel</button>
+<button id="dashboardBranchManagement" class="dashboard-item hidden"
+ onclick="dashboardGo('branches')">🌳 Manage Family Branches</button>
+ <button id="dashboardAddMember" class="dashboard-item hidden"
+  onclick="dashboardGo('add')">Add Family Member</button>
+
+ <button id="dashboardManageAdmins" class="dashboard-item hidden"
+  onclick="dashboardGo('manage')">Manage Administrators</button>
+
+</nav>
+
+
+
+<div id="loginModal" class="login-modal hidden">
+<section class="card login-card">
+
+<button type="button" class="close-login"
+ onclick="document.getElementById('loginModal').classList.add('hidden')">
+ ×
+</button>
+
+<h2>Administrator Login</h2>
+
+<div id="loginBox">
+<input id="email" type="email" placeholder="Administrator email">
+<input id="password" type="password" placeholder="Password">
+<button onclick="login()">Login</button>
+<button class="secondary" onclick="forgotPassword()">Forgot Password?</button>
+</div>
+ <div id="resetPasswordBox" class="hidden">
+  <h3>Set a New Password</h3>
+  <input id="newPassword" type="password" placeholder="New password">
+  <input id="confirmNewPassword" type="password" placeholder="Confirm new password">
+  <button onclick="saveNewPassword()">Update Password</button>
+</div>
+<div id="adminBox" class="hidden">
+<p>Administrator logged in</p>
+   
+<button class="secondary" onclick="logout()">Logout</button>
+ <div id="adminManagementBox">
+  <h3>Manage Administrators</h3>
+<button type="button" onclick="loadAdministrators()" style="background:#2563eb;color:white;cursor:pointer;position:relative;z-index:10;">Refresh Administrator List</button>  <div id="adminList" class="small" aria-live="polite"></div>
+</div>
+</div>
+<div id="ownerInviteBox" class="hidden">
+  <h3>Owner tools</h3>
+  <p class="small">Invite another family administrator by email.</p>
+  <input id="adminInviteEmail" type="email" placeholder="New administrator's email address" autocomplete="email">
+  <button id="inviteAdminButton" onclick="inviteAdmin()">Invite Administrator</button>
+  <p id="inviteStatus" class="small" aria-live="polite"></p>
+</div>
+<p id="status" class="small">Loading family tree...</p>
+</section>
+ </div>
+<section class="card hidden" id="branchManagementSection" style="position:relative;">
+  <h2>🌳 Manage Family Branches</h2>
+    <button type="button"
+ onclick="document.getElementById('branchManagementSection').classList.add('hidden')"
+ style="position:absolute;top:10px;right:10px;padding:4px 9px;font-size:14px;min-width:auto;">
+ ✕
+</button>
+  <p>Create a new family branch and select its top ancestor.</p>
+
+  <div id="createBranchBox">
+    <input
+      id="newBranchName"
+      type="text"
+      placeholder="Enter branch name"
+    >
+
+    <label for="newBranchAncestor">Top Family Ancestor</label>
+    <select id="newBranchAncestor">
+      <option value="">Select top ancestor</option>
+    </select>
+
+    <label for="newBranchParent">Parent Branch (optional)</label>
+    <select id="newBranchParent">
+      <option value="">No parent — Main Branch</option>
+    </select>
+
+    <button type="button" onclick="createFamilyBranch()">
+      Create Branch
+    </button>
+
+    <p id="branchCreateStatus" class="small"></p>
+  </div>
+</section>
+<section class="card hidden" id="addBox">
+<h2 id="formTitle">Add Family Member</h2>
+
+<label>Member's name (English)</label>
+<input id="memberName" placeholder="Member's name">
+
+<label>Member's name (Urdu)</label>
+<input id="memberUrduName" placeholder="مثلاً: سید مسعود" dir="rtl" lang="ur">
+
+<label>Father's name</label>
+<select id="father">
+<option value="">Father unknown / not added</option>
+</select>
+
+<input id="branch" placeholder="Family branch (optional)">
+
+<button onclick="saveMember()">Save Member</button>
+<button class="secondary hidden" id="cancelEdit" onclick="cancelEditing()">Cancel Edit</button>
+</section>
+
+<section class="card hidden" id="urduNameManagerSection">
+  <h2>Urdu Family Name Corrections</h2>
+  <p>Review and correct Urdu spellings for your family members.</p>
+
+  <input
+    id="urduNameManagerSearch"
+    oninput="renderUrduNameManager()"
+    type="search"
+    placeholder="Search family member..."
+  >
+
+  <div id="urduNameManagerList"></div>
+
+  <button type="button" id="saveUrduNameChanges" onclick="saveUrduNameChanges()">
+    Save Corrected Names
+  </button>
+
+  <p id="urduNameManagerStatus" aria-live="polite"></p>
+</section>
+
+<section class="card hidden" id="familyTreeSection">
+    
+<button type="button" class="secondary" onclick="showHome()">
+    ← Back to Home
+</button>
+
+<h2>Family Heritage & Ancestral Tree</h2>
+
+<div class="tree-help">
+<strong>How to explore the family:</strong><br>
+Tap a person's card to open their children. Tap again to close their family branch. You can explore several branches at the same time.
+</div>
+
+
+<div class="tree-controls">
+    <button class="secondary" onclick="expandAll()">Expand</button>
+
+    <div class="tree-search-wrap">
+        <input
+            id="searchInput"
+            type="search"
+            placeholder="Search family member..."
+            onkeydown="if(event.key === 'Enter'){event.preventDefault();searchFamily();}"
+        >
+
+        <button
+            type="button"
+            class="tree-search-button"
+            onclick="searchFamily()"
+            aria-label="Search family member"
+            title="Search"
+        >⌕</button>
+    </div>
+
+    <button class="secondary" onclick="collapseAll()">Collapse</button>
+</div>
+
+<div id="searchStatus" role="status" aria-live="polite"></div>
+<div class="tree-scroll" id="treeScroll">
+<div id="tree" class="tree-canvas"></div>
+</div>
+    <div class="tree-horizontal-scroll" id="treeHorizontalScroll">
+ <div id="treeHorizontalSpacer"></div>
+</div>
+</section>
+
+<script>
+const SUPABASE_URL = "https://mkpgibnfftqihoztpnhy.supabase.co";
+const SUPABASE_KEY = "sb_publishable_t8OgRxv90fao6omiHsTmiw_1UfkbkUc";
+const OWNER_ID = "699210e6-0eba-4ea8-b5eb-55d89518431b";
+const db = window.supabase.createClient(SUPABASE_URL,SUPABASE_KEY);
+
+let members=[];
+let isAdmin=false;
+let editingId=null;
+let expandedIds=new Set();
+
+function status(message){
+ document.getElementById("status").textContent=message;
+}
+
+function getChildren(id){
+ return members.filter(m=>String(m.father_id)===String(id));
+}
+function updateHomeStats(){
+ const total=document.getElementById("totalMembers");
+ const generations=document.getElementById("totalGenerations");
+ const connectedCount=document.getElementById("connectedMembers");
+
+ if(!total||!generations||!connectedCount)return;
+
+ total.textContent=members.length;
+
+ const root=members.find(m=>
+  String(m.name).trim().toLowerCase()==="peer baba"
+ );
+
+ if(!root){
+  generations.textContent="0";
+  connectedCount.textContent="0";
+  return;
+ }
+
+ const connected=getConnectedIds(root);
+ connectedCount.textContent=connected.size;
+
+ let maxDepth=0;
+
+ function countDepth(member,depth,path){
+  maxDepth=Math.max(maxDepth,depth);
+
+  const key=String(member.id);
+  if(path.has(key))return;
+
+  const nextPath=new Set(path);
+  nextPath.add(key);
+
+  getChildren(member.id).forEach(child=>{
+   countDepth(child,depth+1,nextPath);
+  });
+ }
+
+ countDepth(root,1,new Set());
+ generations.textContent=maxDepth;
+}
+    function renderRecentlyAddedMembers(){
+ const list=document.getElementById("recentMembersList");
+ if(!list)return;
+
+ list.innerHTML="";
+
+ const recent=members
+  .filter(m=>m.created_at && !isNaN(Date.parse(m.created_at)))
+  .sort((a,b)=>Date.parse(b.created_at)-Date.parse(a.created_at))
+  .slice(0,5);
+
+ if(!recent.length){
+  const message=document.createElement("p");
+  message.textContent="No recently added members yet.";
+  list.appendChild(message);
+  return;
+ }
+
+ recent.forEach(member=>{
+  const item=document.createElement("div");
+  item.className="recent-member-item";
+  item.textContent=displayMemberName(member)+" · "+
+   new Date(member.created_at).toLocaleDateString();
+
+  list.appendChild(item);
+ });
+}
+    function showFamilyBranch(branch){
+ const root=members.find(m=>
+  String(m.id)===String(branch.top_member_id)
+ );
+
+ if(!root){
+  status("Branch ancestor not found: "+branch.name);
+  return;
+ }
+
+ closeDashboard();
+
+ expandedIds.clear();
+expandedIds.add(String(root.id));
+ showFamilyTree();
+ renderTree(root);
+
+ document.getElementById("searchInput").value="";
+ document.getElementById("searchStatus").textContent=
+  "Family branch: "+branch.name;
+}
+    
+function populateBranchFormOptions(branches=[]){
+ const ancestorSelect=document.getElementById("newBranchAncestor");
+ const parentSelect=document.getElementById("newBranchParent");
+
+ if(!ancestorSelect||!parentSelect)return;
+
+ ancestorSelect.innerHTML=
+  '<option value="">Select top ancestor</option>';
+
+ members
+  .slice()
+  .sort((a,b)=>a.name.localeCompare(b.name))
+  .forEach(member=>{
+   const option=document.createElement("option");
+   option.value=member.id;
+   option.textContent=member.name;
+   ancestorSelect.appendChild(option);
+  });
+
+ parentSelect.innerHTML=
+  '<option value="">No parent — Main Branch</option>';
+
+ branches.forEach(branch=>{
+  const option=document.createElement("option");
+  option.value=branch.id;
+  option.textContent=branch.name;
+  parentSelect.appendChild(option);
+ });
+}
+
+async function createFamilyBranch(){
+ if(!isAdmin){
+  status("Administrator login required.");
+  return;
+ }
+
+ const name=document.getElementById("newBranchName").value.trim();
+ const topMemberId=document.getElementById("newBranchAncestor").value;
+ const parentBranchId=document.getElementById("newBranchParent").value;
+ const message=document.getElementById("branchCreateStatus");
+
+ if(!name||!topMemberId){
+  message.textContent="Enter a branch name and select its top ancestor.";
+  return;
+ }
+
+ let slug=name.toLowerCase()
+  .normalize("NFD")
+  .replace(/[\u0300-\u036f]/g,"")
+  .replace(/[^a-z0-9]+/g,"-")
+  .replace(/^-|-$/g,"");
+
+ if(!slug){
+  message.textContent="Please enter a valid branch name.";
+  return;
+ }
+
+ const {data:existing,error:checkError}=await db
+  .from("family_branches")
+  .select("slug")
+  .like("slug",slug+"%");
+
+ if(checkError){
+  message.textContent="Could not check branch name.";
+  return;
+ }
+
+ const used=new Set((existing||[]).map(b=>b.slug));
+ let baseSlug=slug;
+ let number=2;
+
+ while(used.has(slug)){
+  slug=baseSlug+"-"+number;
+  number++;
+ }
+
+ message.textContent="Creating branch...";
+
+ const {error}=await db
+  .from("family_branches")
+  .insert({
+   name:name,
+   slug:slug,
+   top_member_id:topMemberId,
+   parent_branch_id:parentBranchId||null
+  });
+
+ if(error){
+  message.textContent="Could not create branch: "+error.message;
+  return;
+ }
+
+ document.getElementById("newBranchName").value="";
+ document.getElementById("newBranchAncestor").value="";
+ document.getElementById("newBranchParent").value="";
+
+ message.textContent="Branch created successfully!";
+
+ await renderFamilyBranches();
+}
+
+    async function renderFamilyBranches(){
+ const list=document.getElementById("familyBranchesList");
+ if(!list)return;
+
+ list.innerHTML="<p>Loading family branches...</p>";
+
+ const {data,error}=await db
+  .from("family_branches")
+  .select("id,name,slug,top_member_id,parent_branch_id")
+  .order("name");
+
+ if(error){
+  list.innerHTML="<p>Could not load family branches.</p>";
+  console.error("Family branches error:",error);
+  return;
+ }
+
+ list.innerHTML="";
+populateBranchFormOptions(data);
+ if(!data||!data.length){
+  list.innerHTML="<p>No family branches created yet.</p>";
+  return;
+ }
+
+ data.forEach(branch=>{
+  const button=document.createElement("button");
+  button.type="button";
+  button.className="family-branch-item";
+  button.textContent="🌳 "+branch.name;
+
+  button.addEventListener("click",()=>{
+   showFamilyBranch(branch);
+  });
+
+  list.appendChild(button);
+ });
+}
+    
+let currentLanguage = localStorage.getItem("manglorLanguage") || "en";
+
+// Only verified Urdu spellings are used for family names.
+
+const verifiedUrduNames = {
+  "lakhkar mian": "لخکر میاں",
+  "lashkar mian": "لشکر میاں",
+  "amir khitab": "امیر خطاب",
+  "mustafa": "مصطفیٰ",
+  "syed masood": "سید مسعود",
+  "syed masud": "سید مسعود",
+  "abdul wahab": "عبد الوہاب",
+  "mian abdul wahab": "میاں عبد الوہاب",
+  "ashiq baba": "عاشق بابا",
+  "mian shaudin": "میاں شاودین"
+};
+
+
+// English-to-Urdu website translations.
+const websiteTranslations = {
+    "☰ Dashboard": "☰ ڈیش بورڈ",
+    "OUR FAMILY • OUR HERITAGE • OUR LEGACY": "ہمارا خاندان • ہمارا ورثہ • ہماری میراث",
+  "Manglor Sayedan": "منگلور سیدان",
+    "Discover our roots, honour our ancestors, and preserve the proud heritage of Manglor Sayedan for future generations.": "اپنی جڑوں کو جانیں، اپنے آباؤ اجداد کو خراجِ عقیدت پیش کریں، اور منگلور سادات کے ورثے کو آنے والی نسلوں کے لیے محفوظ رکھیں۔",
+    "Explore Family Tree →": "شجرۂ نسب دیکھیں ←",
+    "Family Search & Print →": "خاندان تلاش کریں اور پرنٹ کریں ←",
+    "Total Members": "کل افراد",
+    "Generations": "نسلیں",
+    "Family Roots": "خاندانی شجرے",
+    "Contact Us": "رابطہ کریں",
+    "Email Us": "ای میل کریں",
+    "WhatsApp Message": "واٹس ایپ پیغام",
+    "Family Heritage Dashboard": "خاندانی ورثے کا ڈیش بورڈ",
+    "Recently Added Family Members": "حال ہی میں شامل کیے گئے افراد",
+    "Loading family members...": "خاندان کے افراد لوڈ ہو رہے ہیں...",
+    "Family Branches": "خاندانی شاخیں",
+    "Loading family branches...": "خاندانی شاخیں لوڈ ہو رہی ہیں...",
+    "Home": "ہوم",
+    "Family Tree": "شجرۂ نسب",
+    "Search Family Members": "خاندان کے افراد تلاش کریں",
+    "Administration": "انتظامیہ",
+    "Admin Login": "ایڈمن لاگ اِن",
+    "Administrator Panel": "ایڈمن پینل",
+    "Manage Family Branches": "خاندانی شاخوں کا انتظام",
+    "Add Family Member": "خاندان کا فرد شامل کریں",
+    "Manage Administrators": "ایڈمنز کا انتظام",
+    "Administrator Login": "ایڈمن لاگ اِن",
+    "Administrator email": "ایڈمن کی ای میل",
+    "Password": "پاس ورڈ",
+    "Login": "لاگ اِن",
+    "Forgot Password?": "پاس ورڈ بھول گئے؟",
+    "Set a New Password": "نیا پاس ورڈ مقرر کریں",
+    "New password": "نیا پاس ورڈ",
+    "Confirm new password": "نئے پاس ورڈ کی تصدیق کریں",
+    "Update Password": "پاس ورڈ اپ ڈیٹ کریں",
+    "Administrator logged in": "ایڈمن لاگ اِن ہے",
+    "Logout": "لاگ آؤٹ",
+    "Refresh Administrator List": "ایڈمنز کی فہرست تازہ کریں",
+    "Owner tools": "مالک کے ٹولز",
+    "Invite another family administrator by email": "ای میل کے ذریعے خاندان کے ایک اور ایڈمن کو دعوت دیں",
+    "New administrator's email address": "نئے ایڈمن کی ای میل",
+    "Invite Administrator": "ایڈمن کو دعوت دیں",
+    "Create a new family branch and select its top ancestor.": "خاندان کی نئی شاخ بنائیں اور اس کے سب سے بڑے جدِ امجد کا انتخاب کریں۔",
+    "Enter branch name": "شاخ کا نام درج کریں",
+    "Top Family Ancestor": "خاندان کے سب سے بڑے جدِ امجد",
+    "Select top ancestor": "سب سے بڑے جدِ امجد کا انتخاب کریں",
+    "Parent Branch (optional)": "والد شاخ (اختیاری)",
+    "No parent — Main Branch": "کوئی والد شاخ نہیں — مرکزی شاخ",
+    "Create Branch": "شاخ بنائیں",
+    "Member's name (English)": "فرد کا نام (انگریزی)",
+    "Member's name (Urdu)": "فرد کا نام (اردو)",
+    "Member's name": "فرد کا نام",
+    "Father's name": "والد کا نام",
+    "Father unknown / not added": "والد نامعلوم / شامل نہیں",
+    "Family branch (optional)": "خاندانی شاخ (اختیاری)",
+    "Save Member": "فرد محفوظ کریں",
+    "Cancel Edit": "ترمیم منسوخ کریں",
+    "Back to Home": "ہوم پر واپس جائیں",
+    "Family Heritage & Ancestral Tree": "خاندانی ورثہ اور شجرۂ نسب",
+    "How to explore the family:": "خاندان کو کیسے دیکھیں:",
+    "Expand": "کھولیں",
+    "Search name...": "نام تلاش کریں...",
+    "Collapse": "بند کریں",
+    "About": "تعارف",
+    "Contact": "رابطہ",
+    "Edit": "ترمیم",
+    "Delete": "حذف کریں",
+    "COMMON ANCESTOR": "مشترکہ جدِ امجد"
+};
+
+function translatePage() {
+    const isUrdu = currentLanguage === "ur";
+
+    document.documentElement.lang = currentLanguage;
+    document.documentElement.dir = isUrdu ? "rtl" : "ltr";
+    document.body.dir = isUrdu ? "rtl" : "ltr";
+
+    if (!isUrdu) return;
+
+    // Translate visible website text without changing family data.
+    const walker = document.createTreeWalker(
+        document.body,
+        NodeFilter.SHOW_TEXT
+    );
+
+    let node;
+    while ((node = walker.nextNode())) {
+        const original = node.nodeValue;
+        const trimmed = original.trim();
+
+        if (websiteTranslations[trimmed]) {
+            node.nodeValue = original.replace(
+                trimmed,
+                websiteTranslations[trimmed]
+            );
+        }
+    }
+
+    // Translate common input placeholders and tooltips.
+    const placeholders = {
+        "Administrator email": "ایڈمن کی ای میل",
+        "Password": "پاس ورڈ",
+        "New password": "نیا پاس ورڈ",
+        "Confirm new password": "نئے پاس ورڈ کی تصدیق کریں",
+        "New administrator's email address": "نئے ایڈمن کی ای میل",
+        "Search name...": "نام تلاش کریں..."
+    };
+
+    document.querySelectorAll("[placeholder]").forEach(el => {
+        const value = el.getAttribute("placeholder");
+        if (placeholders[value]) {
+            el.setAttribute("placeholder", placeholders[value]);
+        }
+    });
+
+    const titles = {
+        "Home": "ہوم",
+        "About": "تعارف",
+        "Contact": "رابطہ"
+    };
+
+    document.querySelectorAll("[title]").forEach(el => {
+        const value = el.getAttribute("title");
+        if (titles[value]) el.setAttribute("title", titles[value]);
+    });
+
+    const toggle = document.getElementById("languageToggle");
+    if (toggle) toggle.textContent = "English";
+}
+
+
+function transliterateNameToUrdu(name) {
+    if (!name) return "";
+
+    const wordOverrides = {
+        "syed": "سید",
+        "sayed": "سید",
+        "sayyid": "سید",
+        "muhammad": "محمد",
+        "mohammad": "محمد",
+        "mohammed": "محمد",
+        "ahmad": "احمد",
+        "ahmed": "احمد",
+        "abdul": "عبدال",
+        "wahab": "وہاب",
+        "masood": "مسعود",
+        "masud": "مسعود",
+        "mian": "میاں",
+        "baba": "بابا",
+        "ashiq": "عاشق",
+        "khan": "خان",
+        "shah": "شاہ",
+        "ali": "علی",
+        "hussain": "حسین",
+        "husain": "حسین",
+        "ullah": "اللہ",
+        "rahman": "رحمان",
+        "rehman": "رحمان",
+        "noor": "نور",
+        "uddin": "الدین"
+    };
+
+    const rules = [
+        ["aa", "آ"], ["ee", "ی"], ["oo", "و"],
+        ["kh", "خ"], ["gh", "غ"], ["sh", "ش"],
+        ["ch", "چ"], ["zh", "ژ"], ["th", "تھ"],
+        ["dh", "دھ"], ["ph", "ف"], ["bh", "بھ"],
+        ["ai", "ے"], ["ay", "ے"], ["ou", "و"]
+    ];
+
+    const letters = {
+        a: "ا", b: "ب", c: "ک", d: "د",
+        e: "ی", f: "ف", g: "گ", h: "ہ",
+        i: "ی", j: "ج", k: "ک", l: "ل",
+        m: "م", n: "ن", o: "و", p: "پ",
+        q: "ق", r: "ر", s: "س", t: "ت",
+        u: "و", v: "و", w: "و", x: "کس",
+        y: "ی", z: "ز"
+    };
+
+    return name.replace(/[A-Za-z]+/g, word => {
+        const lower = word.toLowerCase();
+
+        if (wordOverrides[lower]) {
+            return wordOverrides[lower];
+        }
+
+        let result = "";
+        let i = 0;
+
+        while (i < lower.length) {
+            let matched = false;
+
+            for (const [pattern, urdu] of rules) {
+                if (lower.startsWith(pattern, i)) {
+                    result += urdu;
+                    i += pattern.length;
+                    matched = true;
+                    break;
+                }
+            }
+
+            if (matched) continue;
+
+            const letter = lower[i];
+
+            if (letter === "c") {
+                result += /[eiy]/.test(lower[i + 1] || "")
+                    ? "س" : "ک";
+            } else {
+                result += letters[letter] || letter;
+            }
+
+            i++;
+        }
+
+        return result;
+    });
+}
+
+function displayMemberName(member) {
+    if (currentLanguage !== "ur") return member.name;
+
+    const savedUrduName = (member.urdu_name || "").trim();
+    if (savedUrduName) return savedUrduName;
+
+    const key = (member.name || "").trim().toLowerCase();
+
+    if (verifiedUrduNames[key]) {
+        return verifiedUrduNames[key];
+    }
+
+    return transliterateNameToUrdu(member.name);
+}
+
+
+function toggleLanguage() {
+    currentLanguage = currentLanguage === "en" ? "ur" : "en";
+
+    localStorage.setItem("manglorLanguage", currentLanguage);
+
+    if (currentLanguage === "en") {
+        location.reload();
+        return;
+    }
+
+    translatePage();
+
+    renderTree();
+    loadFatherOptions();
+    renderRecentlyAddedMembers();
+    renderFamilyBranches();
+
+    // Translate newly rendered content as well.
+    translatePage();
+}
+
+// Restore the visitor's saved language when the page opens.
+if (currentLanguage === "ur") {
+    translatePage();
+} else {
+    document.documentElement.lang = "en";
+    document.documentElement.dir = "ltr";
+}
+
+async function loadMembers(){
+ const {data,error}=await db.from("family_members")
+ .select("*").eq("approved",true).order("name");
+
+ if(error){
+  status("Database error: "+error.message);
+  return;
+ }
+
+ members=data||[];
+ renderRecentlyAddedMembers();
+ renderFamilyBranches();
+ updateHomeStats();
+ loadFatherOptions();
+ renderTree();
+  if(isAdmin) renderUrduNameManager();
+}
+
+async function checkAdmin(){
+ const {data:{session}}=await db.auth.getSession();
+
+ if(!session){
+  showAdmin(false,false);
+  return;
+ }
+
+ const {data,error}=await db.from("family_admins")
+ .select("user_id").eq("user_id",session.user.id).maybeSingle();
+
+ if(error){
+  status("Admin check failed: "+error.message);
+  return;
+ }
+
+ showAdmin(!!data,session.user.id===OWNER_ID);
+
+ if(data)await ensureRoot();
+}
+
+
+function showAdmin(value,owner=false){
+  isAdmin=value;
+
+  document.getElementById("loginBox").classList.toggle("hidden",value);
+  document.getElementById("adminBox").classList.toggle("hidden",!value);
+  document.getElementById("addBox").classList.toggle("hidden",!value);
+  document.getElementById("urduNameManagerSection").classList.toggle("hidden",!value);
+if(value) renderUrduNameManager();
+  document.getElementById("dashboardAdminPanel").classList.toggle("hidden",!value);
+    document.getElementById("dashboardBranchManagement").classList.toggle("hidden",!value);
+  document.getElementById("dashboardAddMember").classList.toggle("hidden",!value);
+  document.getElementById("dashboardManageAdmins").classList.toggle("hidden",!(value&&owner));
+}
+
+async function login(){
+ const email=document.getElementById("email").value.trim();
+ const password=document.getElementById("password").value;
+
+ if(!email||!password){
+  status("Enter your email and password.");
+  return;
+ }
+
+ const {error}=await db.auth.signInWithPassword({email,password});
+
+ if(error){
+  status("Login failed: "+error.message);
+  return;
+ }
+
+ await checkAdmin();
+
+ if(isAdmin){
+   document.getElementById("loginModal").classList.add("hidden");
+   status("Administrator login successful.");
+   await loadMembers();
+ }else{
+  status("This account is not an administrator.");
+ }
+}
+async function forgotPassword(){
+ const email=document.getElementById("email").value.trim();
+
+ if(!email){
+  status("Please enter your email address first.");
+  return;
+ }
+
+ status("Sending password reset email...");
+
+ const {error}=await db.auth.resetPasswordForEmail(email,{
+  redirectTo:window.location.origin+window.location.pathname
+ });
+
+ if(error){
+  status("Password reset failed: "+error.message);
+  return;
+ }
+
+ status("Password reset link sent. Please check your email inbox.");
+}
+ async function saveNewPassword(){
+ const newPassword=document.getElementById("newPassword").value;
+ const confirmPassword=document.getElementById("confirmNewPassword").value;
+
+ if(!newPassword||!confirmPassword){
+  status("Please enter and confirm your new password.");
+  return;
+ }
+
+ if(newPassword.length<8){
+  status("Password must be at least 8 characters.");
+  return;
+ }
+
+ if(newPassword!==confirmPassword){
+  status("Passwords do not match.");
+  return;
+ }
+
+ status("Updating password...");
+
+ const {error}=await db.auth.updateUser({password:newPassword});
+
+ if(error){
+  status("Password update failed: "+error.message);
+  return;
+ }
+
+ await db.auth.signOut();
+
+ document.getElementById("resetPasswordBox").classList.add("hidden");
+ document.getElementById("loginBox").classList.remove("hidden");
+ document.getElementById("newPassword").value="";
+ document.getElementById("confirmNewPassword").value="";
+
+ status("Password updated successfully. You can now log in.");
+}
+async function logout(){
+ await db.auth.signOut();
+ showAdmin(false,false);
+ cancelEditing();
+ status("Logged out.");
+ await loadMembers();
+}
+
+async function inviteAdmin(){
+ if(!isAdmin)return;
+
+ const inviteStatus=document.getElementById("inviteStatus");
+ const inviteButton=document.getElementById("inviteAdminButton");
+ const email=document.getElementById("adminInviteEmail").value.trim().toLowerCase();
+
+ const {data:{session}}=await db.auth.getSession();
+
+ if(!session||session.user.id!==OWNER_ID){
+  inviteStatus.textContent="Only the website owner can invite administrators.";
+  showAdmin(false,false);
+  return;
+ }
+
+ if(!email||!/^\S+@\S+\.\S+$/.test(email)){
+  inviteStatus.textContent="Please enter a valid email address.";
+  return;
+ }
+
+ inviteButton.disabled=true;
+ inviteStatus.textContent="Sending invitation...";
+
+ const {data,error}=await db.functions.invoke("manage-family-admins",{
+  body:{action:"invite",email}
+ });
+
+ inviteButton.disabled=false;
+
+ if(error){
+  inviteStatus.textContent="Invitation failed: "+error.message;
+  return;
+ }
+
+ if(data&&data.error){
+  inviteStatus.textContent="Invitation failed: "+data.error;
+  return;
+ }
+
+ inviteStatus.textContent=data?.message||"Administrator invitation sent successfully.";
+ document.getElementById("adminInviteEmail").value="";
+}
+
+async function loadAdministrators(){
+ const list=document.getElementById("adminList");
+ list.textContent="Loading administrators...";
+
+ const {data:{session}}=await db.auth.getSession();
+
+ if(!session||session.user.id!==OWNER_ID){
+  list.textContent="Only the website owner can view administrators.";
+  return;
+ }
+
+ const {data,error}=await db.functions.invoke("manage-family-admins",{
+  body:{action:"list"}
+ });
+
+ if(error){
+  list.textContent="Could not load administrators: "+error.message;
+  return;
+ }
+
+ if(data?.error){
+  list.textContent="Could not load administrators: "+data.error;
+  return;
+ }
+
+ const admins=data?.admins||[];
+ list.innerHTML="";
+
+ if(!admins.length){
+  list.textContent="No administrators found.";
+  return;
+ }
+
+ admins.forEach(admin=>{
+  const row=document.createElement("div");
+  row.style.cssText="padding:10px 0;border-bottom:1px solid #ddd";
+
+  if(!admin.is_owner){
+   const btn=document.createElement("button");
+   btn.className="danger";
+   btn.textContent="Remove Access";
+   btn.onclick=()=>removeAdministrator(admin.user_id,admin.email);
+   row.appendChild(btn);
+  }
+
+  list.appendChild(row);
+ });
+}
+
+async function removeAdministrator(userId,email){
+ if(!confirm("Remove administrator access for "+email+
+  "? Their login account and family-tree data will remain."))return;
+
+ const {data:{session}}=await db.auth.getSession();
+
+ if(!session||session.user.id!==OWNER_ID){
+  alert("Only the website owner can remove administrators.");
+  return;
+ }
+
+ const {data,error}=await db.functions.invoke("manage-family-admins",{
+  body:{action:"remove",user_id:userId}
+ });
+
+ if(error){
+  alert("Removal failed: "+error.message);
+  return;
+ }
+
+ if(data?.error){
+  alert("Removal failed: "+data.error);
+  return;
+ }
+
+ alert(data?.message||"Administrator access removed.");
+ await loadAdministrators();
+}
+
+async function ensureRoot(){
+ const {data,error}=await db.from("family_members")
+ .select("id").eq("name","Peer Baba").limit(1);
+
+ if(error){
+  status(error.message);
+  return;
+ }
+
+ if(!data.length){
+  const {error:insertError}=await db.from("family_members")
+  .insert({
+   name:"Peer Baba",
+   branch:"Common Ancestor",
+   approved:true
+  });
+
+  if(insertError){
+   status("Could not add starting ancestor: "+insertError.message);
+   return;
+  }
+ }
+}
+
+window.loadAdministrators=loadAdministrators;
+window.removeAdministrator=removeAdministrator;
+
+
+function loadFatherOptions(){
+ const select=document.getElementById("father");
+ const previous=select.value;
+
+ select.innerHTML='<option value="">Father unknown / not added</option>';
+
+ members.forEach(m=>{
+  if(String(m.id)===String(editingId))return;
+
+  const o=document.createElement("option");
+  o.value=m.id;
+  o.textContent=displayMemberName(m);
+  select.appendChild(o);
+ });
+
+ if([...select.options].some(o=>o.value===previous)){
+  select.value=previous;
+ }
+}
+
+
+function toggleBranch(id){
+ const viewport=document.getElementById("treeScroll");
+ const memberId=String(id);
+ const pageX=window.scrollX;
+ const pageY=window.scrollY;
+
+ if(expandedIds.has(memberId)){
+  expandedIds.delete(memberId);
+ }else{
+  expandedIds.add(memberId);
+ }
+
+ renderTree();
+
+ requestAnimationFrame(()=>{
+  const selected=document.querySelector(
+   `.person[data-member-id="${memberId}"]`
+  );
+
+  if(selected){
+   const visibleCards=[selected];
+
+   function collectDescendants(parentId){
+    if(!expandedIds.has(String(parentId)))return;
+
+    getChildren(parentId).forEach(child=>{
+     const childCard=document.querySelector(
+      `.person[data-member-id="${String(child.id)}"]`
+     );
+
+     if(childCard){
+      visibleCards.push(childCard);
+      collectDescendants(child.id);
+     }
+    });
+   }
+
+   collectDescendants(id);
+
+   const rects=visibleCards.map(card=>
+    card.getBoundingClientRect()
+   );
+
+   const viewportRect=viewport.getBoundingClientRect();
+   const zoom=Math.max(treeZoom||1,0.2);
+
+   const branchTop=Math.min(...rects.map(r=>r.top));
+   const branchBottom=Math.max(...rects.map(r=>r.bottom));
+   const branchLeft=Math.min(...rects.map(r=>r.left));
+   const branchRight=Math.max(...rects.map(r=>r.right));
+
+   const branchHeight=branchBottom-branchTop;
+   const availableHeight=viewport.clientHeight-40;
+
+   let targetTop=viewportRect.top+24;
+
+   if(branchHeight<=availableHeight){
+    targetTop=viewportRect.top+
+     (availableHeight-branchHeight)/2;
+   }
+
+   viewport.scrollTop+=
+    (branchTop-targetTop)/zoom;
+
+   const branchCenter=(branchLeft+branchRight)/2;
+
+   viewport.scrollLeft+=
+    (
+     branchCenter-
+     (viewportRect.left+viewportRect.width/2)
+    )/zoom;
+  }
+
+  window.scrollTo(pageX,pageY);
+  updateHorizontalBar();
+  updateConnectorLines();
+ });
+}
+function makePersonCard(m){
+ const node=document.createElement("div");
+ node.className="family-node";
+
+ const card=document.createElement("div");
+ card.className="person"+(m.name==="Peer Baba"?" root":"");
+ card.dataset.memberId=m.id;
+
+ const children=getChildren(m.id);
+ const hasChildren=children.length>0;
+
+ if(hasChildren){
+  card.classList.add("has-children");
+  card.setAttribute("role","button");
+  card.setAttribute("tabindex","0");
+  card.setAttribute("aria-expanded",
+   expandedIds.has(String(m.id))?"true":"false");
+
+  card.onclick=()=>{
+ if(card._clickTimer){
+  clearTimeout(card._clickTimer);
+  card._clickTimer=null;
+  return;
+ }
+
+ card._clickTimer=setTimeout(()=>{
+  card._clickTimer=null;
+  toggleBranch(m.id);
+ },250);
+};
+
+  card.onkeydown=(event)=>{
+   if(event.key==="Enter"||event.key===" "){
+    event.preventDefault();
+    toggleBranch(m.id);
+   }
+  };
+ }
+ if(m.name==="Peer Baba"){
+ const label=document.createElement("div");
+ label.className="generation-label";
+ label.textContent=currentLanguage==="ur"
+    ? "مشترکہ جدِ امجد"
+    : "COMMON ANCESTOR";
+ card.appendChild(label);
+}
+
+const name=document.createElement("strong");
+name.textContent=displayMemberName(m);
+name.dir=currentLanguage==="ur"?"rtl":"ltr";
+name.dataset.originalName=m.name;
+name.dataset.hasUrdu=m.urdu_name?"true":"false";
+card.appendChild(name);
+
+ if(m.branch){
+  const b=document.createElement("div");
+  b.className="small";
+  b.textContent=m.branch;
+  card.appendChild(b);
+ }
+
+ if(hasChildren){
+  const hint=document.createElement("span");
+  hint.className="expand-hint";
+
+  hint.textContent=expandedIds.has(String(m.id))
+    ? (currentLanguage==="ur" ? "▼ خاندان چھپائیں" : "▼ Hide family")
+    : (currentLanguage==="ur"
+        ? "＋ خاندان کے "+children.length+" افراد دکھائیں"
+        : "＋ Show "+children.length+" family member(s)");
+
+  card.appendChild(hint);
+ }
+
+ if(isAdmin){
+  const actions=document.createElement("div");
+  actions.className="actions";
+
+  const edit=document.createElement("button");
+  edit.textContent="Edit";
+  edit.onclick=(event)=>{
+   event.stopPropagation();
+   editMember(m.id);
+  };
+  actions.appendChild(edit);
+   const addSon=document.createElement("button");
+   addSon.textContent="Add Son";
+   addSon.onclick=(event)=>{
+    event.stopPropagation();
+    addSonToFather(m.id);
+   };
+   actions.appendChild(addSon);
+  const del=document.createElement("button");
+  del.textContent="Delete";
+  del.className="danger";
+  del.onclick=(event)=>{
+   event.stopPropagation();
+   deleteMember(m.id);
+  };
+  actions.appendChild(del);
+
+  card.appendChild(actions);
+ }
+
+ node.appendChild(card);
+ return node;
+}
+
+
+
+let generationEdges = [];
+
+const TREE_CARD_WIDTH = 190;
+const TREE_SIBLING_GAP = 30;
+const TREE_FAMILY_GAP = 55;
+
+function getConnectedIds(root){
+ const connected=new Set();
+ const stack=[root];
+
+ while(stack.length){
+  const current=stack.pop();
+  const key=String(current.id);
+
+  if(connected.has(key))continue;
+  connected.add(key);
+
+  getChildren(current.id).forEach(child=>stack.push(child));
+ }
+
+ return connected;
+}
+
+function renderGenerationGroup(roots,host,seen){
+ const rows=[];
+ const widthCache=new Map();
+
+ function getBranchWidth(member,visiting=new Set()){
+  const key=String(member.id);
+
+  if(widthCache.has(key))return widthCache.get(key);
+  if(visiting.has(key))return TREE_CARD_WIDTH;
+
+  const nextVisiting=new Set(visiting);
+  nextVisiting.add(key);
+
+  let children=[];
+
+  if(expandedIds.has(key)){
+   children=getChildren(member.id);
+  }
+
+  let width=TREE_CARD_WIDTH;
+
+  if(children.length){
+   const childrenWidth=children.reduce((sum,child)=>
+    sum+getBranchWidth(child,nextVisiting),0
+   )+(children.length-1)*TREE_SIBLING_GAP;
+
+   width=Math.max(TREE_CARD_WIDTH,childrenWidth);
+  }
+
+  widthCache.set(key,width);
+  return width;
+ }
+
+ function placeMember(member,left,depth){
+  const key=String(member.id);
+
+  if(seen.has(key))return;
+  seen.add(key);
+
+  if(!rows[depth])rows[depth]=[];
+
+  const branchWidth=getBranchWidth(member);
+  const center=left+branchWidth/2;
+
+  rows[depth].push({
+   member,
+   center
+  });
+
+  if(!expandedIds.has(key))return;
+
+  const children=getChildren(member.id)
+   .filter(child=>!seen.has(String(child.id)));
+
+  if(!children.length)return;
+
+  generationEdges.push({
+   parentId:key,
+   childIds:children.map(child=>String(child.id))
+  });
+
+  const childrenWidth=children.reduce((sum,child)=>
+   sum+getBranchWidth(child),0
+  )+(children.length-1)*TREE_SIBLING_GAP;
+
+  let childLeft=left+(branchWidth-childrenWidth)/2;
+
+  children.forEach(child=>{
+   const childWidth=getBranchWidth(child);
+   placeMember(child,childLeft,depth+1);
+   childLeft+=childWidth+TREE_SIBLING_GAP;
+  });
+ }
+
+ const rootWidths=roots.map(root=>getBranchWidth(root));
+
+ const totalWidth=rootWidths.reduce((sum,width)=>sum+width,0)
+  +Math.max(0,roots.length-1)*TREE_FAMILY_GAP;
+
+ let rootLeft=0;
+
+ roots.forEach((root,index)=>{
+  placeMember(root,rootLeft,0);
+  rootLeft+=rootWidths[index]+TREE_FAMILY_GAP;
+ });
+
+ rows.forEach((items,depth)=>{
+  const row=document.createElement("div");
+  row.className="generation-row";
+
+  row.style.display="block";
+  row.style.position="relative";
+  row.style.width=totalWidth+"px";
+  row.style.minWidth="0";
+  row.style.height="auto";
+  row.style.margin="70px auto 0";
+row.style.padding="0";
+  row.style.zIndex="1";
+
+  items.forEach(item=>{
+   const node=makePersonCard(item.member);
+
+   node.style.position="absolute";
+   node.style.left=(item.center-TREE_CARD_WIDTH/2)+"px";
+   node.style.top="0";
+   node.style.margin="0";
+
+   row.appendChild(node);
+  });
+
+  host.appendChild(row);
+
+  let rowHeight=0;
+
+  Array.from(row.children).forEach(node=>{
+   rowHeight=Math.max(rowHeight,node.offsetHeight);
+  });
+
+  row.style.height=rowHeight+"px";
+ });
+}
+
+function updateConnectorLines(){
+ const box=document.getElementById("tree");
+ const svg=box.querySelector(".generation-connectors");
+
+ if(!svg)return;
+
+ const scale=treeZoom||1;
+ const boxRect=box.getBoundingClientRect();
+
+ const width=Math.max(box.scrollWidth,1);
+ const height=Math.max(box.scrollHeight,1);
+
+ svg.setAttribute("width",width);
+ svg.setAttribute("height",height);
+ svg.setAttribute("viewBox",`0 0 ${width} ${height}`);
+ svg.innerHTML="";
+
+ const cards=new Map();
+
+ box.querySelectorAll(".person[data-member-id]").forEach(card=>{
+  cards.set(String(card.dataset.memberId),card);
+ });
+
+ generationEdges.forEach(edge=>{
+  const parent=cards.get(edge.parentId);
+  if(!parent)return;
+
+  const children=edge.childIds
+   .map(id=>cards.get(id))
+   .filter(Boolean);
+
+  if(!children.length)return;
+
+  const parentRect=parent.getBoundingClientRect();
+
+  const startX=(parentRect.left+parentRect.width/2-boxRect.left)/scale;
+  const startY=(parentRect.bottom-boxRect.top)/scale;
+
+  const childRects=children.map(card=>card.getBoundingClientRect());
+
+  const childXs=childRects.map(rect=>
+   (rect.left+rect.width/2-boxRect.left)/scale
+  );
+
+  const endY=(Math.min(...childRects.map(rect=>rect.top))-boxRect.top)/scale;
+  const middleY=(startY+endY)/2;
+
+  const minX=Math.min(...childXs);
+  const maxX=Math.max(...childXs);
+
+  const path=document.createElementNS(
+   "http://www.w3.org/2000/svg","path"
+  );
+
+  let d=`M ${startX} ${startY} V ${middleY}`;
+
+  if(childXs.length===1){
+   d+=` V ${endY}`;
+  }else{
+   d+=` H ${maxX} M ${minX} ${middleY} H ${maxX}`;
+
+   childXs.forEach(x=>{
+    d+=` M ${x} ${middleY} V ${endY}`;
+   });
+  }
+
+  path.setAttribute("d",d);
+  path.setAttribute("fill","none");
+  path.setAttribute("stroke","#176344");
+  path.setAttribute("stroke-width","3");
+  path.setAttribute("stroke-linecap","round");
+  path.setAttribute("stroke-linejoin","round");
+
+  svg.appendChild(path);
+ });
+}
+
+function renderTree(rootOverride=null){
+ const box=document.getElementById("tree");
+ box.innerHTML="";
+ generationEdges=[];
+
+ const svg=document.createElementNS(
+  "http://www.w3.org/2000/svg","svg"
+ );
+
+ svg.classList.add("generation-connectors");
+ box.appendChild(svg);
+
+ const root=rootOverride||members.find(m=>m.name==="Peer Baba");
+ const seen=new Set();
+
+ if(root){
+   renderGenerationGroup([root],box,seen);
+}
+
+ const connected=root?getConnectedIds(root):new Set();
+
+ const unlinked=rootOverride?[]:members.filter(m=>
+   !connected.has(String(m.id))
+);
+
+ if(unlinked.length){
+  const area=document.createElement("div");
+  area.className="unlinked-area";
+
+  const heading=document.createElement("h3");
+  heading.textContent="Members not yet connected to Peer Baba";
+  area.appendChild(heading);
+
+  const map=new Map(members.map(m=>[String(m.id),m]));
+
+  let roots=unlinked.filter(m=>
+   !m.father_id||
+   !map.has(String(m.father_id))
+  );
+
+  if(!roots.length)roots=[unlinked[0]];
+
+  renderGenerationGroup(roots,area,seen);
+  box.appendChild(area);
+ }
+
+ if(!members.length){
+  box.textContent="No family members have been added yet.";
+ }
+
+ requestAnimationFrame(()=>updateConnectorLines());
+}
+
+
+function searchFamily(){
+    const input = document.getElementById("searchInput");
+    const message = document.getElementById("searchStatus");
+    const query = input.value.trim().toLowerCase();
+
+    document.querySelectorAll(".person.search-match").forEach(card => {
+        card.classList.remove("search-match");
+    });
+
+    if(!query){
+        message.textContent = "Type a name to find a family member.";
+        searchFamily.lastQuery = "";
+        searchFamily.lastIndex = -1;
+        return;
+    }
+
+    const matches = members.filter(m =>
+        String(m.name || "").toLowerCase().includes(query) ||
+        String(m.urdu_name || "").includes(query)
+    );
+
+    if(!matches.length){
+        message.textContent = "No family member found with that name.";
+        searchFamily.lastQuery = query;
+        searchFamily.lastIndex = -1;
+        return;
+    }
+
+    if(searchFamily.lastQuery === query){
+        searchFamily.lastIndex =
+            (searchFamily.lastIndex + 1) % matches.length;
+    } else {
+        searchFamily.lastQuery = query;
+        searchFamily.lastIndex = 0;
+    }
+
+    const selectedMember = matches[searchFamily.lastIndex];
+    const memberMap = new Map(
+        members.map(m => [String(m.id), m])
+    );
+
+    let current = selectedMember;
+let branchRoot = selectedMember;
+const visited = new Set();
+
+while(current && current.father_id){
+    if(visited.has(String(current.id))) break;
+
+    visited.add(String(current.id));
+
+    const parent = memberMap.get(String(current.father_id));
+
+    if(!parent) break;
+
+    expandedIds.add(String(parent.id));
+    branchRoot = parent;
+    current = parent;
+}
+
+renderTree(branchRoot);
+
+    requestAnimationFrame(() => {
+        const target = document.querySelector(
+            '.person[data-member-id="' + String(selectedMember.id) + '"]'
+        );
+
+        const viewport = document.getElementById("treeScroll");
+
+        if(target && viewport){
+            target.classList.add("search-match");
+
+            const targetRect = target.getBoundingClientRect();
+            const viewportRect = viewport.getBoundingClientRect();
+            const zoom = Math.max(treeZoom || 1, 0.2);
+
+            viewport.scrollTop += (
+                targetRect.top + targetRect.height / 2 -
+                (viewportRect.top + viewportRect.height / 2)
+            ) / zoom;
+
+            viewport.scrollLeft += (
+                targetRect.left + targetRect.width / 2 -
+                (viewportRect.left + viewportRect.width / 2)
+            ) / zoom;
+        }
+    });
+
+    message.textContent =
+        "Showing " + (searchFamily.lastIndex + 1) +
+        " of " + matches.length + " matching members.";
+}
+function expandAll(){
+    members.forEach(m=>{
+        if(getChildren(m.id).length){
+            expandedIds.add(String(m.id));
+        }
+    });
+    renderTree();
+    requestAnimationFrame(()=>fitTreeToViewport());
+}
+
+function collapseAll(){
+    expandedIds.clear();
+    renderTree();
+    status("All family branches collapsed.");
+}
+
+// FAMILY TREE CONTROLS
+const treeViewport = document.getElementById("treeScroll");
+const treeCanvas = document.getElementById("tree");
+const horizontalBar = document.getElementById("treeHorizontalScroll");
+const horizontalSpacer = document.getElementById("treeHorizontalSpacer");
+const treeSection = document.getElementById("familyTreeSection");
+
+let treeZoom = 1;
+const activePointers = new Map();
+let panStart = null;
+let pinchStart = null;
+let treeHasAutoFit = false;
+
+const treeObserver = new IntersectionObserver(entries=>{
+    entries.forEach(entry=>{
+        horizontalBar.classList.toggle("is-visible",entry.isIntersecting);
+    });
+},{threshold:0.05});
+
+treeObserver.observe(treeSection);
+
+function updateHorizontalBar(){
+    horizontalSpacer.style.width = treeViewport.scrollWidth + "px";
+    horizontalBar.scrollLeft = treeViewport.scrollLeft;
+}
+
+horizontalBar.addEventListener("scroll",()=>{
+    treeViewport.scrollLeft = horizontalBar.scrollLeft;
+});
+
+treeViewport.addEventListener("scroll",()=>{
+    horizontalBar.scrollLeft = treeViewport.scrollLeft;
+});
+
+new ResizeObserver(updateHorizontalBar).observe(treeCanvas);
+
+new MutationObserver(updateHorizontalBar).observe(treeCanvas,{
+    childList:true,
+    subtree:true
+});
+
+window.addEventListener("resize",updateHorizontalBar);
+updateHorizontalBar();
+
+function setTreeZoom(value,focalX,focalY){
+    const oldZoom = treeZoom;
+    const newZoom = Math.min(2.5,Math.max(0.35,value));
+    const rect = treeViewport.getBoundingClientRect();
+    const x = focalX - rect.left;
+    const y = focalY - rect.top;
+
+    const contentX = (treeViewport.scrollLeft + x) / oldZoom;
+    const contentY = (treeViewport.scrollTop + y) / oldZoom;
+
+    treeZoom = newZoom;
+    treeCanvas.style.zoom = treeZoom;
+
+    treeViewport.scrollLeft = contentX * newZoom - x;
+    treeViewport.scrollTop = contentY * newZoom - y;
+
+    requestAnimationFrame(()=>updateConnectorLines());
+}
+
+function fitTreeToViewport(){
+    if(!treeViewport || !treeCanvas || !treeCanvas.children.length){
+        return false;
+    }
+
+    treeCanvas.style.zoom = 1;
+    treeZoom = 1;
+
+    const availableWidth = treeViewport.clientWidth - 40;
+    const naturalWidth = treeCanvas.scrollWidth;
+
+    if(!naturalWidth) return false;
+
+    const fitScale = Math.min(1,availableWidth/naturalWidth);
+    treeZoom = Math.max(0.20,fitScale);
+    treeCanvas.style.zoom = treeZoom;
+
+    requestAnimationFrame(()=>{
+        treeViewport.scrollLeft = Math.max(
+            0,
+            (treeViewport.scrollWidth-treeViewport.clientWidth)/2
+        );
+        updateHorizontalBar();
+        updateConnectorLines();
+    });
+
+    return true;
+}
+
+function showFamilyTree(){
+    document.querySelector(".upper-section").classList.add("tree-view-active");
+    document.getElementById("familyTreeSection").classList.remove("hidden");
+    document.getElementById("familyTreeSection").scrollIntoView({
+        behavior:"smooth"
+    });
+
+    if(!treeHasAutoFit){
+        requestAnimationFrame(()=>{
+            requestAnimationFrame(()=>{
+                fitTreeToViewport();
+                treeHasAutoFit = true;
+            });
+        });
+    }
+}
+
+function pointerDistance(a,b){
+ return Math.hypot(a.x-b.x,a.y-b.y);
+}
+
+treeViewport.addEventListener("pointerdown",event=>{
+ if(event.pointerType==="mouse" && event.button!==0)return;
+
+ activePointers.set(event.pointerId,{x:event.clientX,y:event.clientY});
+
+ if(activePointers.size===1){
+  panStart={
+   x:event.clientX,
+   y:event.clientY,
+   left:treeViewport.scrollLeft,
+   top:treeViewport.scrollTop
+  };
+ }
+
+ if(activePointers.size===2){
+  const points=[...activePointers.values()];
+  pinchStart={
+   distance:pointerDistance(points[0],points[1]),
+   zoom:treeZoom
+  };
+  panStart=null;
+ }
+});
+
+treeViewport.addEventListener("pointermove",event=>{
+ if(!activePointers.has(event.pointerId))return;
+
+ activePointers.set(event.pointerId,{x:event.clientX,y:event.clientY});
+
+ if(activePointers.size===2 && pinchStart){
+  const points=[...activePointers.values()];
+  const distance=pointerDistance(points[0],points[1]);
+  const midX=(points[0].x+points[1].x)/2;
+  const midY=(points[0].y+points[1].y)/2;
+
+  setTreeZoom(
+   pinchStart.zoom * distance / pinchStart.distance,
+   midX,
+   midY
+  );
+ }
+ else if(activePointers.size===1 && panStart){
+  treeViewport.scrollLeft=panStart.left-(event.clientX-panStart.x);
+  treeViewport.scrollTop=panStart.top-(event.clientY-panStart.y);
+ }
+});
+
+function endTreePointer(event){
+ activePointers.delete(event.pointerId);
+ pinchStart=null;
+ panStart=null;
+
+ if(activePointers.size===1){
+  const remaining=[...activePointers.values()][0];
+  panStart={
+   x:remaining.x,
+   y:remaining.y,
+   left:treeViewport.scrollLeft,
+   top:treeViewport.scrollTop
+  };
+ }
+}
+
+treeViewport.addEventListener("pointerup",endTreePointer);
+treeViewport.addEventListener("pointercancel",endTreePointer);
+
+treeViewport.addEventListener("wheel",event=>{
+ if(!event.ctrlKey)return;
+
+ event.preventDefault();
+
+ const factor=event.deltaY<0?1.1:0.9;
+ setTreeZoom(
+  treeZoom*factor,
+  event.clientX,
+  event.clientY
+ );
+},{passive:false});
+  treeViewport.addEventListener("dblclick",event=>{
+ event.preventDefault();
+
+ setTreeZoom(
+  treeZoom*1.25,
+  event.clientX,
+  event.clientY
+ );
+});
+function renderUrduNameManager() {
+    const list = document.getElementById("urduNameManagerList");
+    if (!list) return;
+
+    list.textContent = "";
+
+    const query = (
+        document.getElementById("urduNameManagerSearch")?.value || ""
+    ).trim().toLowerCase();
+
+    const visibleMembers = members.filter(member =>
+        !query ||
+        (member.name || "").toLowerCase().includes(query) ||
+        (member.urdu_name || "").toLowerCase().includes(query)
+    );
+
+    if (!visibleMembers.length) {
+        list.textContent = "No family members found.";
+        return;
+    }
+
+    visibleMembers.forEach(member => {
+        const row = document.createElement("div");
+        row.style.cssText =
+            "display:grid;grid-template-columns:1fr 1fr;gap:10px;padding:10px 0;border-bottom:1px solid #ddd;";
+
+        const english = document.createElement("div");
+        english.textContent = member.name || "";
+
+        const input = document.createElement("input");
+        input.type = "text";
+        input.dir = "rtl";
+        input.lang = "ur";
+
+        const key = (member.name || "").trim().toLowerCase();
+
+        input.value =
+            (member.urdu_name || "").trim() ||
+            verifiedUrduNames[key] ||
+            transliterateNameToUrdu(member.name || "");
+
+        input.dataset.memberId = String(member.id);
+        input.dataset.changed = "false";
+
+        input.addEventListener("input", () => {
+            input.dataset.changed = "true";
+        });
+
+        row.append(english, input);
+        list.append(row);
+    });
+}
+
+async function saveUrduNameChanges() {
+    if (!isAdmin) return;
+
+    const button = document.getElementById("saveUrduNameChanges");
+    const statusBox = document.getElementById("urduNameManagerStatus");
+
+    const inputs = [
+        ...document.querySelectorAll(
+            '#urduNameManagerList input[data-changed="true"]'
+        )
+    ];
+
+    if (!inputs.length) {
+        statusBox.textContent = "No corrected names to save.";
+        return;
+    }
+
+    button.disabled = true;
+
+    let saved = 0;
+    let failed = 0;
+
+    for (const input of inputs) {
+        const id = input.dataset.memberId;
+        const urduName = input.value.trim();
+
+        const { error } = await db
+            .from("family_members")
+            .update({ urdu_name: urduName || null })
+            .eq("id", id);
+
+        if (error) {
+            failed++;
+            continue;
+        }
+
+        const member = members.find(m => String(m.id) === id);
+        if (member) member.urdu_name = urduName || null;
+
+        input.dataset.changed = "false";
+        saved++;
+    }
+
+    button.disabled = false;
+
+    statusBox.textContent =
+        saved + " names saved. " + failed + " failed.";
+
+    renderTree();
+    renderRecentlyAddedMembers();
+}
+
+async function saveMember(){
+ if(!isAdmin)return;
+
+ const name=document.getElementById("memberName").value.trim();
+ const urduName=document.getElementById("memberUrduName").value.trim();
+ const fatherId=document.getElementById("father").value||null;
+ const branch=document.getElementById("branch").value.trim();
+
+ if(!name){
+  status("Enter a member name.");
+  return;
+ }
+
+ if(name.toLowerCase()==="peer baba"&&editingId){
+  status("The common ancestor cannot be renamed.");
+  return;
+ }
+
+ if(fatherId&&editingId){
+  let current=members.find(m=>String(m.id)===String(fatherId));
+
+  while(current){
+   if(String(current.id)===String(editingId)){
+    status("A person cannot be placed under their own descendant.");
+    return;
+   }
+
+   current=members.find(m=>String(m.id)===String(current.father_id));
+  }
+ }
+
+ const duplicate=members.some(m=>
+  m.name.toLowerCase()===name.toLowerCase()&&String(m.id)!==String(editingId)
+ );
+
+ if(duplicate){
+  status("This name already exists. Check before adding.");
+  return;
+ }
+
+ if(editingId){
+  const {error}=await db.from("family_members")
+  .update({name,urdu_name:urduName||null,father_id:fatherId,branch})
+  .eq("id",editingId);
+
+  if(error){
+   status("Update failed: "+error.message);
+   return;
+  }
+
+  status("Member updated.");
+ }else{
+  const {error}=await db.from("family_members")
+  .insert({
+   name,
+   urdu_name:urduName||null,
+   father_id:fatherId,
+   branch,
+   approved:true
+  });
+
+  if(error){
+   status("Add failed: "+error.message);
+   return;
+  }
+
+  if(fatherId)expandedIds.add(String(fatherId));
+
+  status("Member added successfully.");
+ }
+
+ cancelEditing();
+ await loadMembers();
+  document.getElementById("formTitle").textContent="Add Family Member";
+}
+function addSonToFather(fatherId){
+ if(!isAdmin)return;
+
+ const father=members.find(m=>String(m.id)===String(fatherId));
+ if(!father)return;
+
+ editingId=null;
+
+ document.getElementById("memberName").value="";
+ document.getElementById("memberUrduName").value="";
+ document.getElementById("branch").value="";
+
+ loadFatherOptions();
+ document.getElementById("father").value=fatherId;
+
+ document.getElementById("formTitle").textContent=
+  "Add Son of "+father.name;
+
+ document.getElementById("cancelEdit").textContent="Cancel";
+ document.getElementById("cancelEdit").classList.remove("hidden");
+
+ document.getElementById("addBox").classList.remove("hidden");
+ document.getElementById("addBox").scrollIntoView({behavior:"smooth"});
+}
+function editMember(id){
+ const m=members.find(x=>String(x.id)===String(id));
+
+ if(!m||m.name==="Peer Baba")return;
+
+ editingId=id;
+
+ document.getElementById("memberName").value=m.name;
+ document.getElementById("memberUrduName").value=m.urdu_name||"";
+ document.getElementById("branch").value=m.branch||"";
+
+ loadFatherOptions();
+ document.getElementById("father").value=m.father_id||"";
+
+ document.getElementById("formTitle").textContent="Edit Family Member";
+ document.getElementById("cancelEdit").classList.remove("hidden");
+ document.getElementById("addBox").scrollIntoView({behavior:"smooth"});
+}
+
+function cancelEditing(){
+ editingId=null;
+
+ document.getElementById("memberName").value="";
+ document.getElementById("memberUrduName").value="";
+ document.getElementById("branch").value="";
+ document.getElementById("father").value="";
+
+ document.getElementById("formTitle").textContent="Add Family Member";
+ document.getElementById("cancelEdit").classList.add("hidden");
+document.getElementById("cancelEdit").textContent="Cancel Edit";
+ loadFatherOptions();
+}
+
+async function deleteMember(id){
+ if(!isAdmin)return;
+
+ const m=members.find(x=>String(x.id)===String(id));
+
+ if(!m||m.name==="Peer Baba")return;
+
+ if(members.some(x=>String(x.father_id)===String(id))){
+  status("Cannot delete this person yet. They have children connected to them.");
+  return;
+ }
+
+ if(!confirm("Delete "+m.name+"? This cannot be undone."))return;
+
+ const {error}=await db.from("family_members").delete().eq("id",id);
+
+ if(error){
+  status("Delete failed: "+error.message);
+  return;
+ }
+
+ expandedIds.delete(String(id));
+ status("Member deleted.");
+ await loadMembers();
+}
+
+function toggleDashboard(){
+ const panel=document.getElementById("dashboardPanel");
+ const backdrop=document.getElementById("dashboardBackdrop");
+
+ const isOpen=panel.classList.toggle("open");
+
+ backdrop.classList.toggle("hidden",!isOpen);
+
+ document.querySelector(".dashboard-toggle")
+  .setAttribute("aria-expanded",String(isOpen));
+}
+
+function closeDashboard(){
+ document.getElementById("dashboardPanel")
+  .classList.remove("open");
+
+ document.getElementById("dashboardBackdrop")
+  .classList.add("hidden");
+ document.querySelector(".dashboard-toggle")
+  .setAttribute("aria-expanded","false");
+}
+
+    function toggleContactDropdown(){
+ const dropdown=document.getElementById("contactDropdown");
+ dropdown.classList.toggle("hidden");
+}
+function openInfoModal(type){
+ const modal=document.getElementById("infoModal");
+ const title=document.getElementById("infoModalTitle");
+ const content=document.getElementById("infoModalText");
+
+ if(type==="about"){
+  title.textContent="About Manglor Sayedan";
+  content.textContent="This website preserves the family history, ancestry, relationships and heritage of Manglor Sayedan for future generations.";
+ }
+
+ if(type==="contact"){
+  title.textContent="Contact Us";
+content.innerHTML='Phone: <a href="tel:+923435646768">+92 343 5646768</a><br>Email: <a href="mailto:mr.ajmalsayed@gmail.com">mr.ajmalsayed@gmail.com</a>'; }
+
+ modal.classList.remove("hidden");
+}
+
+function closeInfoModal(event){
+ if(event && event.target!==event.currentTarget)return;
+ document.getElementById("infoModal").classList.add("hidden");
+}
+function showHome() {
+    document.getElementById("familyTreeSection").classList.add("hidden");
+    document.querySelector(".upper-section").classList.remove("tree-view-active");
+    window.scrollTo({top:0, behavior:"smooth"});
+}
+
+
+function dashboardGo(destination){
+    closeDashboard();
+
+    if(destination === "home"){
+        showHome();
+    }
+
+    else if(destination === "tree"){
+        showFamilyTree();
+    }
+
+    else if(destination === "search"){
+        showFamilyTree();
+
+        setTimeout(()=>{
+            document.getElementById("searchInput").focus();
+        },400);
+    }
+else if(destination === "branches"){
+    if(!isAdmin){
+        document.getElementById("loginModal").classList.remove("hidden");
+        return;
+    }
+
+    document.getElementById("branchManagementSection")
+        .classList.remove("hidden");
+
+    document.getElementById("branchManagementSection")
+        .scrollIntoView({behavior:"smooth"});
+}
+    else if(destination === "add"){
+        document.getElementById("addBox")
+            .scrollIntoView({behavior:"smooth"});
+    }
+
+    else if(destination === "login" ||
+            destination === "admin" ||
+            destination === "manage"){
+
+        document.getElementById("loginModal")
+            .classList.remove("hidden");
+
+        if(destination === "manage" && isAdmin){
+            loadAdministrators();
+        }
+    }
+}
+
+
+async function start(){
+ if(SUPABASE_URL.includes("PASTE_")||SUPABASE_KEY.includes("PASTE_")){
+  status("Please add your Supabase Project URL and Publishable key in the code.");
+  return;
+ }
+
+ await checkAdmin();
+ await loadMembers();
+}
+
+start();
+</script>
+  
+</body>
+</html>
