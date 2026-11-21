@@ -78,8 +78,9 @@ footer{text-align:center;padding:25px;color:#758078}
 
  <div class="top-actions">
   <button class="back" onclick="location.href='index.html'">← Back to Home</button>
+  <button id="languageToggle" onclick="toggleHistoryLanguage()">اردو</button>
   <button id="loginToggle" onclick="showLogin()">Admin Login</button>
- </div>
+</div>
 
  <div class="search-box">
   <h3>Search Ancestors History</h3>
@@ -151,7 +152,18 @@ function safe(value){
   return {"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c];
  });
 }
+function toggleHistoryLanguage(){
+ currentLanguage = currentLanguage === "en" ? "ur" : "en";
+ localStorage.setItem("manglorLanguage", currentLanguage);
 
+ document.documentElement.lang = currentLanguage;
+ document.documentElement.dir = currentLanguage === "ur" ? "rtl" : "ltr";
+
+ document.getElementById("languageToggle").textContent =
+  currentLanguage === "ur" ? "English" : "اردو";
+
+ renderHistories();
+}
 function showLogin(){
  document.getElementById("loginBox").classList.remove("hidden");
 }
