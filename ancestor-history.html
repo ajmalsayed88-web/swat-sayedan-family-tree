@@ -236,13 +236,8 @@ function toggleHistoryLanguage(){
  currentLanguage = currentLanguage === "en" ? "ur" : "en";
  localStorage.setItem("manglorLanguage", currentLanguage);
 
- document.documentElement.lang = currentLanguage;
- document.documentElement.dir = currentLanguage === "ur" ? "rtl" : "ltr";
-
- document.getElementById("languageToggle").textContent =
-  currentLanguage === "ur" ? "English" : "اردو";
-
  renderHistories();
+ translateHistoryPage();
 }
 function showLogin(){
  document.getElementById("loginBox").classList.remove("hidden");
