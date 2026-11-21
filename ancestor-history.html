@@ -141,6 +141,7 @@ const SUPABASE_KEY = "sb_publishable_t8OgRxv90fao6omiHsTmiw_1UfkbkUc";
 const db = window.supabase.createClient(SUPABASE_URL,SUPABASE_KEY);
 
 let histories = [];
+ let currentLanguage = localStorage.getItem("manglorLanguage") || "en";
 let isAdmin = false;
 let editingId = null;
 let currentPhotoUrl = "";
@@ -259,10 +260,10 @@ function renderHistories(){
 
  list.innerHTML = filtered.map(item => `
   <article class="entry">
-   <h2>${safe(item.ancestor_name)}</h2>
-   <h3>${safe(item.title || "")}</h3>
-   ${item.photo_url ? `<img src="${safe(item.photo_url)}" alt="Photograph of ${safe(item.ancestor_name)}">` : ""}
-   <div class="history-text">${safe(item.history)}</div>
+   <h2 dir="${currentLanguage === "ur" ? "rtl" : "ltr"}">${safe(currentLanguage === "ur" ? (item.ancestor_name_ur || item.ancestor_name) : item.ancestor_name)}</h2>
+<h3 dir="${currentLanguage === "ur" ? "rtl" : "ltr"}">${safe(currentLanguage === "ur" ? (item.title_ur || item.title || "") : (item.title || ""))}</h3>
+${item.photo_url ? `<img src="${safe(item.photo_url)}" alt="Photograph of ${safe(item.ancestor_name)}">` : ""}
+<div class="history-text" dir="${currentLanguage === "ur" ? "rtl" : "ltr"}">${safe(currentLanguage === "ur" ? (item.history_ur || item.history) : item.history)}</div>
    ${isAdmin ? `
     <div class="entry-actions">
      <button onclick="editHistory(${Number(item.id)})">Edit</button>
