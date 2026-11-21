@@ -483,14 +483,10 @@ db.auth.onAuthStateChange(() => {
 async function start(){
  currentLanguage = localStorage.getItem("manglorLanguage") || "en";
 
- document.documentElement.lang = currentLanguage;
- document.documentElement.dir = currentLanguage === "ur" ? "rtl" : "ltr";
-
- document.getElementById("languageToggle").textContent =
-  currentLanguage === "ur" ? "English" : "اردو";
-
  await checkAdmin();
  await loadHistories();
+
+ translateHistoryPage();
 }
 
 start();
