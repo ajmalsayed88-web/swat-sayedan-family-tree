@@ -297,16 +297,17 @@ footer{text-align:center;color:#718078;margin:22px 0}
   .result{align-items:flex-start;flex-direction:column}
 }
 
+
 @media print {
   @page {
     size: A4 portrait;
-    margin: 6mm;
+    margin: 8mm;
   }
 
   body {
     background: white !important;
-    padding: 0 !important;
     margin: 0 !important;
+    padding: 0 !important;
   }
 
   .container {
@@ -319,20 +320,43 @@ footer{text-align:center;color:#718078;margin:22px 0}
   .search-panel,
   .result-panel,
   .actions,
-  footer {
+  footer,
+  .family-panel > h2 {
     display: none !important;
   }
 
   .family-panel {
     display: block !important;
+    width: 100% !important;
     margin: 0 !important;
     padding: 0 !important;
     border: 0 !important;
     box-shadow: none !important;
   }
 
-  .family-panel > h2 {
-    display: none !important;
+  .print-heading {
+    display: block !important;
+    text-align: center !important;
+    margin: 0 0 18px !important;
+    padding-bottom: 10px !important;
+    border-bottom: 2px solid #c9a44c !important;
+    color: #145c3b !important;
+  }
+
+  .english-title {
+    display: block !important;
+    font-family: Georgia, serif !important;
+    font-size: 26px !important;
+    font-weight: bold !important;
+    letter-spacing: 1px !important;
+  }
+
+  .urdu-title {
+    display: block !important;
+    direction: rtl !important;
+    font-family: "Noto Nastaliq Urdu", "Jameel Noori Nastaleeq", serif !important;
+    font-size: 25px !important;
+    line-height: 2 !important;
   }
 
   #lineage {
@@ -341,24 +365,39 @@ footer{text-align:center;color:#718078;margin:22px 0}
   }
 
   .ancestor {
-    margin: 3px auto !important;
-    break-inside: avoid;
-  }
-
-  .connector {
-    font-size: 15px !important;
-    line-height: 13px !important;
+    margin: 8px auto !important;
+    text-align: center !important;
+    break-inside: avoid !important;
   }
 
   .person-card {
-    min-width: 0 !important;
-    padding: 4px 8px !important;
-    font-size: 10px !important;
+    min-width: 210px !important;
+    max-width: 320px !important;
+    padding: 9px 14px !important;
+    font-size: 15px !important;
+  }
+
+  .person-card small,
+  .child-card small {
+    font-size: 12px !important;
+  }
+
+  .urdu-name {
+    font-size: 22px !important;
+  }
+
+  .english-name {
+    font-size: 15px !important;
+  }
+
+  .connector {
+    font-size: 22px !important;
+    line-height: 18px !important;
   }
 
   .children-wrap {
     overflow: visible !important;
-    padding: 3px 0 !important;
+    padding: 10px 0 !important;
   }
 
   .children-row {
@@ -366,14 +405,15 @@ footer{text-align:center;color:#718078;margin:22px 0}
     min-width: 0 !important;
     flex-wrap: wrap !important;
     justify-content: center !important;
-    gap: 4px !important;
+    gap: 10px !important;
   }
 
   .child-card {
-    min-width: 0 !important;
-    max-width: 145px !important;
-    padding: 4px 6px !important;
-    font-size: 9px !important;
+    min-width: 140px !important;
+    max-width: 210px !important;
+    padding: 9px !important;
+    font-size: 14px !important;
+    break-inside: avoid !important;
   }
 
   * {
@@ -381,6 +421,7 @@ footer{text-align:center;color:#718078;margin:22px 0}
     print-color-adjust: exact !important;
   }
 }
+
 
 </style>
 </head>
@@ -411,6 +452,12 @@ footer{text-align:center;color:#718078;margin:22px 0}
 </section>
 
 <section class="family-panel" id="familyPanel" style="display:none">
+
+  <div class="print-heading">
+    <span class="english-title">SAYEDAN FAMILY TREE</span>
+    <span class="urdu-title">شجرۂ نسب سادات</span>
+  </div>
+
   <h2 style="text-align:center">Family Lineage</h2>
   <div id="lineage"></div>
   <div class="children-wrap">
