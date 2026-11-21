@@ -4669,12 +4669,8 @@ function dashboardGo(destination){
     }
 
     else if(destination === "search"){
-        showFamilyTree();
-
-        setTimeout(()=>{
-            document.getElementById("searchInput").focus();
-        },400);
-    }
+    window.location.href = "family-print.html";
+}
 else if(destination === "branches"){
     if(!isAdmin){
         document.getElementById("loginModal").classList.remove("hidden");
