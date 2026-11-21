@@ -400,21 +400,46 @@ footer{text-align:center;color:#718078;margin:22px 0}
     padding: 10px 0 !important;
   }
 
+  
   .children-row {
+    display: flex !important;
     width: 100% !important;
     min-width: 0 !important;
-    flex-wrap: wrap !important;
-    justify-content: center !important;
-    gap: 10px !important;
+    flex-wrap: nowrap !important;
+    justify-content: space-between !important;
+    align-items: flex-start !important;
+    gap: 4px !important;
+  }
+
+  .child-branch {
+    flex: 1 1 0 !important;
+    min-width: 0 !important;
+    max-width: none !important;
+    padding-top: 20px !important;
   }
 
   .child-card {
-    min-width: 140px !important;
-    max-width: 210px !important;
-    padding: 9px !important;
-    font-size: 14px !important;
+    width: 100% !important;
+    min-width: 0 !important;
+    max-width: none !important;
+    padding: 6px 3px !important;
+    font-size: 10px !important;
+    overflow-wrap: anywhere !important;
+    word-break: break-word !important;
+    text-align: center !important;
     break-inside: avoid !important;
   }
+
+  .child-card .urdu-name {
+    font-size: 12px !important;
+    overflow-wrap: anywhere !important;
+  }
+
+  .child-card .english-name {
+    font-size: 9px !important;
+    overflow-wrap: anywhere !important;
+  }
+
 
   * {
     -webkit-print-color-adjust: exact !important;
