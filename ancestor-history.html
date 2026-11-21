@@ -152,6 +152,86 @@ function safe(value){
   return {"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c];
  });
 }
+ const historyTranslations = {
+ "Ancestors History": "آباؤ اجداد کی تاریخ",
+ "Preserving the lives, memories and legacy of Manglor Sayedan": "منگلور سیدان کی شخصیات، یادوں اور ورثے کو محفوظ رکھنا",
+ "Back to Home": "ہوم پر واپس جائیں",
+ "Admin Login": "ایڈمن لاگ اِن",
+ "Search Ancestors History": "آباؤ اجداد کی تاریخ تلاش کریں",
+ "Search ancestor name or history...": "بزرگ کا نام یا تاریخ تلاش کریں...",
+ "Administrator Login": "منتظم کا لاگ اِن",
+ "Admin email": "ایڈمن کی ای میل",
+ "Password": "پاس ورڈ",
+ "Login": "لاگ اِن",
+ "Cancel": "منسوخ کریں",
+ "Manage Ancestors History": "آباؤ اجداد کی تاریخ کا انتظام",
+ "Add a new ancestor's history or update an existing entry.": "کسی نئے بزرگ کی تاریخ شامل کریں یا پہلے سے موجود تاریخ میں ترمیم کریں۔",
+ "Ancestor Name": "بزرگ کا نام",
+ "History Title": "تاریخ کا عنوان",
+ "Written History": "تحریری تاریخ",
+ "Enter ancestor name": "بزرگ کا نام درج کریں",
+ "Enter history title": "تاریخ کا عنوان درج کریں",
+ "Write the ancestor's history here...": "یہاں بزرگ کی تاریخ لکھیں...",
+ "Ancestor Name (Urdu)": "بزرگ کا نام (اردو)",
+ "History Title (Urdu)": "تاریخ کا عنوان (اردو)",
+ "Written History (Urdu)": "تحریری تاریخ (اردو)",
+ "Ancestor Photograph": "بزرگ کی تصویر",
+ "Save History": "تاریخ محفوظ کریں",
+ "Clear Form": "فارم صاف کریں",
+ "Logout": "لاگ آؤٹ",
+ "Edit": "ترمیم",
+ "Delete": "حذف کریں",
+ "No matching ancestors history found.": "مطلوبہ بزرگ کی تاریخ نہیں ملی۔",
+ "Loading ancestors history...": "بزرگوں کی تاریخ لوڈ ہو رہی ہے...",
+ "Manglor Sayedan Family Heritage": "منگلور سیدان کا خاندانی ورثہ"
+};
+
+const historyEnglishText = new WeakMap();
+
+function translateHistoryPage(){
+ const isUrdu = currentLanguage === "ur";
+
+ document.documentElement.lang = currentLanguage;
+ document.documentElement.dir = isUrdu ? "rtl" : "ltr";
+ document.body.dir = isUrdu ? "rtl" : "ltr";
+
+ const walker = document.createTreeWalker(
+  document.body,
+  NodeFilter.SHOW_TEXT
+ );
+
+ let node;
+
+ while((node = walker.nextNode())){
+  if(!historyEnglishText.has(node)){
+   historyEnglishText.set(node,node.nodeValue);
+  }
+
+  const original = historyEnglishText.get(node);
+  const key = original.trim();
+
+  if(isUrdu && historyTranslations[key]){
+   node.nodeValue = original.replace(key,historyTranslations[key]);
+  }else{
+   node.nodeValue = original;
+  }
+ }
+
+ document.querySelectorAll("[placeholder]").forEach(el => {
+  if(!el.dataset.englishPlaceholder){
+   el.dataset.englishPlaceholder = el.getAttribute("placeholder");
+  }
+
+  const original = el.dataset.englishPlaceholder;
+  el.setAttribute(
+   "placeholder",
+   isUrdu ? (historyTranslations[original] || original) : original
+  );
+ });
+
+ document.getElementById("languageToggle").textContent =
+  isUrdu ? "English" : "اردو";
+}
 function toggleHistoryLanguage(){
  currentLanguage = currentLanguage === "en" ? "ur" : "en";
  localStorage.setItem("manglorLanguage", currentLanguage);
