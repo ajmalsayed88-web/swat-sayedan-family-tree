@@ -2059,26 +2059,37 @@ html[lang="ur"] .stat-card {
 
 /* COMPACT HOMEPAGE STATISTIC BOXES - ENGLISH & URDU */
 .home-stats {
-    align-items: stretch !important;
-    gap: 12px !important;
-    margin: 18px auto 8px !important;
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 16px;
+    width: min(760px, 100%);
+    margin: 35px auto 10px;
 }
 
 .stat-card {
-    min-height: 112px !important;
-    padding: 12px 8px !important;
-    display: flex !important;
-    flex-direction: column !important;
-    align-items: center !important;
-    justify-content: center !important;
-    line-height: 1.4 !important;
-    box-sizing: border-box !important;
+    background: linear-gradient(
+        145deg,
+        rgba(255,255,255,.14),
+        rgba(255,255,255,.06)
+    );
+    border: 1px solid #c9a44c;
+    border-radius: 16px;
+    padding: 22px 12px;
+    box-shadow: 0 6px 18px rgba(0,0,0,.16);
+    backdrop-filter: blur(6px);
 }
 
 .stat-icon {
-    width: 14px !important;
-    height: 14px !important;
-    margin: 0 auto 3px !important;
+    width: 30px;
+    height: 30px;
+    display: block;
+    margin: 0 auto 5px;
+    color: white;
+}
+
+.stat-icon path,
+.stat-icon circle {
+    stroke: white;
 }
 
 .stat-card strong {
