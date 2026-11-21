@@ -296,28 +296,92 @@ footer{text-align:center;color:#718078;margin:22px 0}
   header h1{font-size:22px}
   .result{align-items:flex-start;flex-direction:column}
 }
-@media print{
-  @page{size:A4 landscape;margin:10mm}
-@page portrait{size:A4 portrait;margin:10mm}
-body.print-portrait{page:portrait}
-body.print-landscape{page:auto}
-  body{background:white;padding:0}
-  .container{max-width:none}
-  header{
-    background:white!important;
-    color:var(--dark)!important;
-    border:2px solid var(--gold);
+
+@media print {
+  @page {
+    size: A4 portrait;
+    margin: 6mm;
   }
-  header p{color:var(--green)}
-  .search-panel,.result-panel,.actions,footer{display:none!important}
-  .family-panel{box-shadow:none;margin-top:10px;padding:10px}
-  .children-wrap{overflow:visible}
-  .children-row{width:max-content;min-width:100%;gap:6px}
-  .child-card{min-width:105px;padding:7px;font-size:11px}
-  .person-card{min-width:150px;padding:9px}
-  .ancestor{margin:7px auto}
-  *{-webkit-print-color-adjust:exact;print-color-adjust:exact}
+
+  body {
+    background: white !important;
+    padding: 0 !important;
+    margin: 0 !important;
+  }
+
+  .container {
+    width: 100% !important;
+    max-width: none !important;
+    margin: 0 !important;
+  }
+
+  header,
+  .search-panel,
+  .result-panel,
+  .actions,
+  footer {
+    display: none !important;
+  }
+
+  .family-panel {
+    display: block !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    border: 0 !important;
+    box-shadow: none !important;
+  }
+
+  .family-panel > h2 {
+    display: none !important;
+  }
+
+  #lineage {
+    margin: 0 !important;
+    padding: 0 !important;
+  }
+
+  .ancestor {
+    margin: 3px auto !important;
+    break-inside: avoid;
+  }
+
+  .connector {
+    font-size: 15px !important;
+    line-height: 13px !important;
+  }
+
+  .person-card {
+    min-width: 0 !important;
+    padding: 4px 8px !important;
+    font-size: 10px !important;
+  }
+
+  .children-wrap {
+    overflow: visible !important;
+    padding: 3px 0 !important;
+  }
+
+  .children-row {
+    width: 100% !important;
+    min-width: 0 !important;
+    flex-wrap: wrap !important;
+    justify-content: center !important;
+    gap: 4px !important;
+  }
+
+  .child-card {
+    min-width: 0 !important;
+    max-width: 145px !important;
+    padding: 4px 6px !important;
+    font-size: 9px !important;
+  }
+
+  * {
+    -webkit-print-color-adjust: exact !important;
+    print-color-adjust: exact !important;
+  }
 }
+
 </style>
 </head>
 <body>
