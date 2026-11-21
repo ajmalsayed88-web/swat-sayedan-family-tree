@@ -387,7 +387,7 @@ function renderHistories(){
   (item.ancestor_name_ur || "").toLowerCase().includes(term) ||
   (item.title_ur || "").toLowerCase().includes(term) ||
   (item.history_ur || "").toLowerCase().includes(term)
-);
+ );
 
  const list = document.getElementById("historyList");
 
@@ -398,10 +398,20 @@ function renderHistories(){
 
  list.innerHTML = filtered.map(item => `
   <article class="entry">
-   <h2 dir="${currentLanguage === "ur" ? "rtl" : "ltr"}">${safe(currentLanguage === "ur" ? (item.ancestor_name_ur || item.ancestor_name) : item.ancestor_name)}</h2>
-<h3 dir="${currentLanguage === "ur" ? "rtl" : "ltr"}">${safe(currentLanguage === "ur" ? (item.title_ur || item.title || "") : (item.title || ""))}</h3>
-${item.photo_url ? `<img src="${safe(item.photo_url)}" alt="Photograph of ${safe(item.ancestor_name)}">` : ""}
-<div class="history-text" dir="${currentLanguage === "ur" ? "rtl" : "ltr"}">${safe(currentLanguage === "ur" ? (item.history_ur || item.history) : item.history)}</div>
+   <h2 dir="${currentLanguage === "ur" ? "rtl" : "ltr"}">
+    ${safe(currentLanguage === "ur" ? (item.ancestor_name_ur || item.ancestor_name) : item.ancestor_name)}
+   </h2>
+   <h3 dir="${currentLanguage === "ur" ? "rtl" : "ltr"}">
+    ${safe(currentLanguage === "ur" ? (item.title_ur || item.title || "") : (item.title || ""))}
+   </h3>
+   ${item.photo_url ? `<img src="${safe(item.photo_url)}" alt="Photograph of ${safe(item.ancestor_name)}">` : ""}
+   <div class="history-text"
+        id="history-text-${Number(item.id)}"
+        dir="${currentLanguage === "ur" ? "rtl" : "ltr"}">${safe(
+          currentLanguage === "ur"
+          ? (item.history_ur || item.history || "")
+          : (item.history || (item.history_ur ? "Translating Urdu history..." : ""))
+        )}</div>
    ${isAdmin ? `
     <div class="entry-actions">
      <button onclick="editHistory(${Number(item.id)})">Edit</button>
@@ -409,8 +419,63 @@ ${item.photo_url ? `<img src="${safe(item.photo_url)}" alt="Photograph of ${safe
     </div>` : ""}
   </article>
  `).join("");
-}
 
+ if(currentLanguage === "en"){
+  filtered.forEach(async item => {
+   if(item.history || !item.history_ur) return;
+
+   const box = document.getElementById("history-text-" + Number(item.id));
+   if(!box) return;
+
+   try{
+    if(!item.englishTranslationPromise){
+     item.englishTranslationPromise = (async () => {
+      const protectedWords = [];
+
+      const text = item.history_ur.replace(
+       /[A-Za-z][A-Za-z0-9.'’-]*/g,
+       word => {
+        const marker = "ZXQKEEP" + protectedWords.length + "QXZ";
+        protectedWords.push({marker,word});
+        return marker;
+       }
+      );
+
+      const params = new URLSearchParams({
+       client:"gtx", sl:"ur", tl:"en", dt:"t", q:text
+      });
+
+      const response = await fetch(
+       "https://translate.googleapis.com/translate_a/single?" + params
+      );
+
+      if(!response.ok) throw new Error("Translation unavailable");
+
+      const data = await response.json();
+      let result = data[0].map(part => part[0]).join("");
+
+      protectedWords.forEach(item => {
+       result = result.replace(item.marker,item.word);
+      });
+
+      return result;
+     })();
+    }
+
+    const translated = await item.englishTranslationPromise;
+
+    if(currentLanguage === "en" && box.isConnected){
+     box.textContent = translated;
+    }
+   }catch(error){
+    console.error(error);
+    if(box.isConnected){
+     box.textContent = "English translation is currently unavailable.";
+    }
+   }
+  });
+ }
+}
 async function saveHistory(){
  if(!isAdmin)return;
 
