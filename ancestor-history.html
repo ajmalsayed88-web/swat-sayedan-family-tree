@@ -244,8 +244,11 @@ function renderHistories(){
  const filtered = histories.filter(item =>
   (item.ancestor_name || "").toLowerCase().includes(term) ||
   (item.title || "").toLowerCase().includes(term) ||
-  (item.history || "").toLowerCase().includes(term)
- );
+  (item.history || "").toLowerCase().includes(term) ||
+  (item.ancestor_name_ur || "").toLowerCase().includes(term) ||
+  (item.title_ur || "").toLowerCase().includes(term) ||
+  (item.history_ur || "").toLowerCase().includes(term)
+);
 
  const list = document.getElementById("historyList");
 
