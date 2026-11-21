@@ -619,6 +619,7 @@ function transliterateNameToUrdu(name) {
 
   
 const currentLanguage = localStorage.getItem("manglorLanguage") || "en";
+  document.body.classList.toggle("urdu-print", currentLanguage === "ur");
 document.querySelector("header h1").textContent = currentLanguage === "ur" ? "منگلور سیدان کا شجرہ نسب" : "Manglor Sayedan Family Tree";
 function memberNameHTML(member) {
   const english = String(member.name || "");
