@@ -1105,11 +1105,10 @@ header.hero {
 
 @media (max-width: 600px) {
     header.hero {
-        min-height: 560px;
-        padding: 65px 18px 45px;
-        border-radius: 14px;
-    }
-
+    min-height: 0 !important;
+    height: calc(100vh - 150px) !important;
+    padding: 15px 20px !important;
+}
     .hero-logo {
         width: 135px;
         height: 135px;
