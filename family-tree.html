@@ -3564,7 +3564,17 @@ function toggleBranch(id){
      (viewportRect.left+viewportRect.width/2)
     )/zoom;
   }
+const nameRect=selected.getBoundingClientRect();
 
+viewport.scrollTop += (
+    nameRect.top + nameRect.height / 2 -
+    (viewportRect.top + viewportRect.height / 2)
+) / zoom;
+
+viewport.scrollLeft += (
+    nameRect.left + nameRect.width / 2 -
+    (viewportRect.left + viewportRect.width / 2)
+) / zoom;
   window.scrollTo(pageX,pageY);
   updateHorizontalBar();
   updateConnectorLines();
