@@ -1104,7 +1104,12 @@ header.hero {
 }
 
 @media (max-width: 600px) {
-   header.hero {
+    header.hero {
+        min-height: 560px;
+        padding: 65px 18px 45px;
+        border-radius: 14px;
+    }
+
     .hero-logo {
         width: 135px;
         height: 135px;
@@ -2059,37 +2064,26 @@ html[lang="ur"] .stat-card {
 
 /* COMPACT HOMEPAGE STATISTIC BOXES - ENGLISH & URDU */
 .home-stats {
-    display: grid;
-    grid-template-columns: repeat(3, minmax(0, 1fr));
-    gap: 16px;
-    width: min(760px, 100%);
-    margin: 35px auto 10px;
+    align-items: stretch !important;
+    gap: 12px !important;
+    margin: 18px auto 8px !important;
 }
 
 .stat-card {
-    background: linear-gradient(
-        145deg,
-        rgba(255,255,255,.14),
-        rgba(255,255,255,.06)
-    );
-    border: 1px solid #c9a44c;
-    border-radius: 16px;
-    padding: 22px 12px;
-    box-shadow: 0 6px 18px rgba(0,0,0,.16);
-    backdrop-filter: blur(6px);
+    min-height: 112px !important;
+    padding: 12px 8px !important;
+    display: flex !important;
+    flex-direction: column !important;
+    align-items: center !important;
+    justify-content: center !important;
+    line-height: 1.4 !important;
+    box-sizing: border-box !important;
 }
 
 .stat-icon {
-    width: 30px;
-    height: 30px;
-    display: block;
-    margin: 0 auto 5px;
-    color: white;
-}
-
-.stat-icon path,
-.stat-icon circle {
-    stroke: white;
+    width: 21px !important;
+    height: 21px !important;
+    margin: 0 auto 4px !important;
 }
 
 .stat-card strong {
@@ -2263,9 +2257,18 @@ html[lang="ur"] .stat-card span {
     }
 }
   
+/* CLEAN MINIMAL HOME PAGE */
+.home-stats {
+    display: none !important;
+}
 
 .hero-content button[onclick*="family-print.html"] {
     display: none !important;
+}
+
+header.hero {
+    min-height: 540px !important;
+    padding: 45px 20px !important;
 }
 
 .hero-logo {
@@ -2307,25 +2310,6 @@ html[lang="ur"] .stat-card span {
     color: #ffffff !important;
     font-size: 15px !important;
     margin: 10px 0 !important;
-}
-  .site-footer {
-    display: block !important;
-    position: relative !important;
-    width: 100% !important;
-    height: auto !important;
-    min-height: 110px !important;
-    padding: 22px 15px !important;
-    overflow: visible !important;
-    margin-top: 0 !important;
-}
-
-.site-footer p,
-.site-footer small {
-    display: block !important;
-    visibility: visible !important;
-    opacity: 1 !important;
-    line-height: 1.8 !important;
-    margin: 8px 0 !important;
 }
 </style>
 </head>
@@ -2375,7 +2359,7 @@ class="hero-logo">
   <p class="hero-description">
   Discover our roots, honour our ancestors, and preserve the proud heritage of Manglor Sayedan for future generations.
   </p>
-  <button class="hero-button" onclick="window.location.href='family-tree.html'">
+  <button class="hero-button" onclick="showFamilyTree()">
     Explore Family Tree →
 </button>
      <button class="hero-button" type="button"
