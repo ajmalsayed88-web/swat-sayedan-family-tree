@@ -4550,7 +4550,7 @@ function addSonToFather(fatherId){
  document.getElementById("cancelEdit").classList.remove("hidden");
 
  document.getElementById("addBox").classList.remove("hidden");
- document.getElementById("addBox").scrollIntoView({behavior:"smooth"});
+ // Keep the page position unchanged when editing an ancestor.
 }
 function editMember(id){
  const m=members.find(x=>String(x.id)===String(id));
