@@ -2341,17 +2341,28 @@ header.hero {
 }
 
 #familyTreeSection {
-    display: block !important;
+    display: flex !important;
+    flex-direction: column !important;
+    height: 100vh !important;
+    height: 100dvh !important;
+    min-height: 0 !important;
+    max-height: 100vh !important;
+    overflow: hidden !important;
     margin-top: 0 !important;
-  padding-top: 0 !important;
+    padding-top: 0 !important;
+    box-sizing: border-box !important;
 }
-  #familyTreeSection .tree-help {
+
+#familyTreeSection .tree-help {
     margin: 70px 0 6px !important;
 }
-  /* FAMILY TREE BOARD - FULL SCREEN HEIGHT */
-#familyTreeSection {
-    min-height: 65vh !important;
-    box-sizing: border-box !important;
+
+#familyTreeSection .tree-scroll {
+    flex: 1 1 auto !important;
+    height: auto !important;
+    min-height: 0 !important;
+    max-height: none !important;
+    overflow: auto !important;
 }
 </style>
 </head>
