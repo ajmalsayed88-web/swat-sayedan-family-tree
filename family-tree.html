@@ -3526,22 +3526,15 @@ function toggleBranch(id){
   if(selected){
    const visibleCards=[selected];
 
-   function collectDescendants(parentId){
-    if(!expandedIds.has(String(parentId)))return;
+   getChildren(id).forEach(child=>{
+    const childCard=document.querySelector(
+        `.person[data-member-id="${String(child.id)}"]`
+    );
 
-    getChildren(parentId).forEach(child=>{
-     const childCard=document.querySelector(
-      `.person[data-member-id="${String(child.id)}"]`
-     );
-
-     if(childCard){
-      visibleCards.push(childCard);
-      collectDescendants(child.id);
-     }
-    });
-   }
-
-   collectDescendants(id);
+    if(childCard){
+        visibleCards.push(childCard);
+    }
+});
 
    const rects=visibleCards.map(card=>
     card.getBoundingClientRect()
