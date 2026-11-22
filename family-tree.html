@@ -1815,7 +1815,7 @@ height:22px;
 .stat-icon circle{
  stroke:white;
 }
-    /* SMALL TOP NAVIGATION ICONS */
+ /* SMALL TOP NAVIGATION ICONS */
 .top-nav-icons{
  position:absolute;
  top:18px;
@@ -4555,7 +4555,7 @@ function addSonToFather(fatherId){
 function editMember(id){
  const m=members.find(x=>String(x.id)===String(id));
 
- if(!m||m.name==="Peer Baba")return;
+ if(!m)return;
 
  editingId=id;
 
