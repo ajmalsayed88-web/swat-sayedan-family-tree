@@ -1158,20 +1158,18 @@ margin-left: 0;
     min-height: 0;
 }
 
+/* FAMILY TREE - FIT TO SCREEN BOTTOM */
 #familyTreeSection .tree-scroll {
-    height: 65vh;
-    min-height: 450px;
-    max-height: 750px;
-    overflow-x: auto;
-    overflow-y: auto;
-    overscroll-behavior: contain;
-    scrollbar-width: thin;
-    scrollbar-color: #b89545 #e8eee8;
-}
-
-#familyTreeSection .tree-canvas {
-    min-width: max-content;
-    min-height: 100%;
+    display: block !important;
+    width: 100% !important;
+    height: calc(100vh - 110px) !important;
+    height: calc(100dvh - 110px) !important;
+    min-height: 300px !important;
+    max-height: none !important;
+    box-sizing: border-box !important;
+    overflow: auto !important;
+    scrollbar-width: auto !important;
+    scrollbar-color: #176344 #dce9df !important;
 }
 
 @media (max-width: 600px) {
