@@ -1911,22 +1911,19 @@ height:22px;
  color:#b08a35;
 }
     
-/* FAMILY TREE - EXTEND TO BOTTOM OF SCREEN */
+/* FAMILY TREE - FIT TO SCREEN BOTTOM */
 #familyTreeSection .tree-scroll {
     display: block !important;
-    flex: 0 0 calc(100vh - 150px) !important;
     width: 100% !important;
-    height: calc(100vh - 150px) !important;
-    height: calc(100dvh - 150px) !important;
+    height: calc(100vh - 110px) !important;
+    height: calc(100dvh - 110px) !important;
     min-height: 300px !important;
     max-height: none !important;
     box-sizing: border-box !important;
-    overflow-y: auto !important;
-    overflow-x: auto !important;
+    overflow: auto !important;
     scrollbar-width: auto !important;
     scrollbar-color: #176344 #dce9df !important;
 }
-
 
 #familyTreeSection .tree-scroll::-webkit-scrollbar {
     display: block !important;
