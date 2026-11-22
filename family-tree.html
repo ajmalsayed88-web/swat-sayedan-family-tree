@@ -3505,6 +3505,7 @@ function loadFatherOptions(){
 
 
 
+
 function toggleBranch(id){
  const viewport=document.getElementById("treeScroll");
  const memberId=String(id);
@@ -3532,9 +3533,7 @@ function toggleBranch(id){
      `.person[data-member-id="${String(child.id)}"]`
     );
 
-    if(childCard){
-     visibleCards.push(childCard);
-    }
+    if(childCard) visibleCards.push(childCard);
    });
 
    const rects=visibleCards.map(card=>
@@ -3573,51 +3572,6 @@ function toggleBranch(id){
 }
 
 
-   const rects=visibleCards.map(card=>
-    card.getBoundingClientRect()
-   );
-
-   const viewportRect=viewport.getBoundingClientRect();
-   const zoom=Math.max(treeZoom||1,0.2);
-
-   const branchTop=Math.min(...rects.map(r=>r.top));
-   const branchBottom=Math.max(...rects.map(r=>r.bottom));
-   const branchLeft=Math.min(...rects.map(r=>r.left));
-   const branchRight=Math.max(...rects.map(r=>r.right));
-
-   const topLimit=viewportRect.top+24;
-const bottomLimit=viewportRect.bottom-30;
-
-if(branchBottom>bottomLimit){
- viewport.scrollTop+=(branchBottom-bottomLimit)/zoom;
-}else if(branchTop<topLimit){
- viewport.scrollTop-=(topLimit-branchTop)/zoom;
-}
-
-   const branchCenter=(branchLeft+branchRight)/2;
-
-   viewport.scrollLeft+=
-    (
-     branchCenter-
-     (viewportRect.left+viewportRect.width/2)
-    )/zoom;
-    const nameRect=selected.getBoundingClientRect();
-
-viewport.scrollTop += (
-    nameRect.top + nameRect.height / 2 -
-    (viewportRect.top + viewportRect.height / 2)
-) / zoom;
-
-viewport.scrollLeft += (
-    nameRect.left + nameRect.width / 2 -
-    (viewportRect.left + viewportRect.width / 2)
-) / zoom;
-  }
-  window.scrollTo(pageX,pageY);
-  updateHorizontalBar();
-  updateConnectorLines();
- });
-}
 function makePersonCard(m){
  const node=document.createElement("div");
  node.className="family-node";
