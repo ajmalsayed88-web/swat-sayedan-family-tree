@@ -2482,6 +2482,16 @@ header.hero {
 #tree .person:not(.root) .expand-hint {
     color: #555555 !important;
 }
+  /* FINAL FIX - CLOSE UNOPENED BROTHER CARDS */
+#tree .children-row:not(:has(> .family-node > .children-row)) {
+    gap: 2px !important;
+}
+
+@media (max-width: 600px) {
+    #tree .children-row:not(:has(> .family-node > .children-row)) {
+        gap: 2px !important;
+    }
+}
 </style>
 </head>
 
