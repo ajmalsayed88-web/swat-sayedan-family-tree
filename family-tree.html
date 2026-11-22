@@ -3860,7 +3860,11 @@ let generationEdges = [];
 const TREE_CARD_WIDTH = 190;
 const TREE_SIBLING_GAP = 30;
 const TREE_FAMILY_GAP = 55;
-
+function getSiblingGap(children){
+ return children.some(child=>expandedIds.has(String(child.id)))
+  ? TREE_SIBLING_GAP
+  : 8;
+}
 function getConnectedIds(root){
  const connected=new Set();
  const stack=[root];
