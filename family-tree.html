@@ -443,6 +443,49 @@ display:block;
 .tree-scroll{
  scrollbar-width:auto;
 }
+.tree-horizontal-scroll{
+ display:block;
+}
+
+.tree-horizontal-scroll.is-visible{
+ display:block;
+}
+.tree-horizontal-scroll{
+    position:fixed;
+bottom:10px;
+left:0;
+width:100%;
+z-index:9999;
+box-shadow:0 2px 10px #0003;
+width:calc(100% - 36px);
+ height:20px;
+ overflow-x:scroll;
+ overflow-y:hidden;
+ margin-top:8px;
+ background:#dce9df;
+ border:1px solid #b8cdbd;
+ border-radius:10px;
+}
+#treeHorizontalScroll {
+    display: none !important;
+}
+.tree-horizontal-scroll::-webkit-scrollbar{
+ height:14px;
+}
+
+.tree-horizontal-scroll::-webkit-scrollbar-thumb{
+ background:#176344;
+ border:2px solid #dce9df;
+ border-radius:10px;
+}
+
+.tree-horizontal-scroll::-webkit-scrollbar-track{
+ background:#dce9df;
+}
+
+#treeHorizontalSpacer{
+ height:1px;
+}
 
 .tree-canvas{ 
  display:inline-block;
@@ -1105,10 +1148,9 @@ header.hero {
 }
 
 /* INDEPENDENT FAMILY TREE SCROLLING */
-#familyTreeSection {
-    width: 100%;
-    max-width: none;
-    margin-left: 0;
+width: 100%;
+max-width: none;
+margin-left: 0;
     display: flex;
     flex-direction: column;
     min-height: 0;
@@ -1118,11 +1160,11 @@ header.hero {
     height: 65vh;
     min-height: 450px;
     max-height: 750px;
-    overflow-x: auto !important;
-    overflow-y: auto !important;
+    overflow-x: auto;
+    overflow-y: auto;
     overscroll-behavior: contain;
-    scrollbar-width: auto !important;
-    scrollbar-color: #176344 #dce9df !important;
+    scrollbar-width: thin;
+    scrollbar-color: #b89545 #e8eee8;
 }
 
 #familyTreeSection .tree-canvas {
@@ -1772,7 +1814,7 @@ height:22px;
 .stat-icon circle{
  stroke:white;
 }
- /* SMALL TOP NAVIGATION ICONS */
+    /* SMALL TOP NAVIGATION ICONS */
 .top-nav-icons{
  position:absolute;
  top:18px;
@@ -1868,7 +1910,35 @@ height:22px;
 .contact-dropdown a:hover{
  color:#b08a35;
 }
-    
+    /* FAMILY TREE VERTICAL SCROLLBAR */
+#familyTreeSection .tree-scroll {
+    display: block !important;
+    flex: 0 0 76vh !important;
+    width: 100% !important;
+    height: 76vh !important;
+    min-height: 420px !important;
+    max-height: 850px !important;
+    box-sizing: border-box !important;
+    overflow-y: auto !important;
+    overflow-x: auto !important;
+    scrollbar-width: auto !important;
+    scrollbar-color: #176344 #dce9df !important;
+}
+
+#familyTreeSection .tree-scroll::-webkit-scrollbar {
+    display: block !important;
+    width: 14px;
+    height: 14px;
+}
+
+#familyTreeSection .tree-scroll::-webkit-scrollbar-thumb {
+    background: #176344;
+    border-radius: 10px;
+}
+
+#familyTreeSection .tree-scroll::-webkit-scrollbar-track {
+    background: #dce9df;
+}
   
     /* KEEP BACK TO HOME BUTTON VISIBLE */
 #familyTreeSection {
@@ -2313,28 +2383,12 @@ header.hero {
 }
 
 #familyTreeSection {
-    display: flex !important;
-    flex-direction: column !important;
-    height: 100vh !important;
-    height: 100dvh !important;
-    min-height: 0 !important;
-    max-height: 100vh !important;
-    overflow: hidden !important;
+    display: block !important;
     margin-top: 0 !important;
-    padding-top: 0 !important;
-    box-sizing: border-box !important;
+  padding-top: 0 !important;
 }
-
-#familyTreeSection .tree-help {
+  #familyTreeSection .tree-help {
     margin: 70px 0 6px !important;
-}
-
-#familyTreeSection .tree-scroll {
-    flex: 1 1 auto !important;
-    height: auto !important;
-    min-height: 0 !important;
-    max-height: none !important;
-    overflow: auto !important;
 }
 </style>
 </head>
@@ -2653,6 +2707,9 @@ Tap a person's card to open their children. Tap again to close their family bran
 <div id="searchStatus" role="status" aria-live="polite"></div>
 <div class="tree-scroll" id="treeScroll">
 <div id="tree" class="tree-canvas"></div>
+</div>
+    <div class="tree-horizontal-scroll" id="treeHorizontalScroll">
+ <div id="treeHorizontalSpacer"></div>
 </div>
 </section>
 
@@ -3504,8 +3561,6 @@ function loadFatherOptions(){
 }
 
 
-
-
 function toggleBranch(id){
  const viewport=document.getElementById("treeScroll");
  const memberId=String(id);
@@ -3525,16 +3580,25 @@ function toggleBranch(id){
    `.person[data-member-id="${memberId}"]`
   );
 
-  if(selected && viewport){
+  if(selected){
    const visibleCards=[selected];
 
-   getChildren(id).forEach(child=>{
-    const childCard=document.querySelector(
-     `.person[data-member-id="${String(child.id)}"]`
-    );
+   function collectDescendants(parentId){
+    if(!expandedIds.has(String(parentId)))return;
 
-    if(childCard) visibleCards.push(childCard);
-   });
+    getChildren(parentId).forEach(child=>{
+     const childCard=document.querySelector(
+      `.person[data-member-id="${String(child.id)}"]`
+     );
+
+     if(childCard){
+      visibleCards.push(childCard);
+      collectDescendants(child.id);
+     }
+    });
+   }
+
+   collectDescendants(id);
 
    const rects=visibleCards.map(card=>
     card.getBoundingClientRect()
@@ -3548,30 +3612,43 @@ function toggleBranch(id){
    const branchLeft=Math.min(...rects.map(r=>r.left));
    const branchRight=Math.max(...rects.map(r=>r.right));
 
-   const topLimit=viewportRect.top+24;
-   const bottomLimit=viewportRect.bottom-30;
+   const branchHeight=branchBottom-branchTop;
+   const availableHeight=viewport.clientHeight-40;
 
-   if(branchBottom>bottomLimit){
-    viewport.scrollTop+=(branchBottom-bottomLimit)/zoom;
-   }else if(branchTop<topLimit){
-    viewport.scrollTop-=(topLimit-branchTop)/zoom;
+   let targetTop=viewportRect.top+24;
+
+   if(branchHeight<=availableHeight){
+    targetTop=viewportRect.top+
+     (availableHeight-branchHeight)/2;
    }
+
+   viewport.scrollTop+=
+    (branchTop-targetTop)/zoom;
 
    const branchCenter=(branchLeft+branchRight)/2;
 
-   viewport.scrollLeft+=(
-    branchCenter-
-    (viewportRect.left+viewportRect.width/2)
-   )/zoom;
+   viewport.scrollLeft+=
+    (
+     branchCenter-
+     (viewportRect.left+viewportRect.width/2)
+    )/zoom;
   }
+const nameRect=selected.getBoundingClientRect();
 
+viewport.scrollTop += (
+    nameRect.top + nameRect.height / 2 -
+    (viewportRect.top + viewportRect.height / 2)
+) / zoom;
+
+viewport.scrollLeft += (
+    nameRect.left + nameRect.width / 2 -
+    (viewportRect.left + viewportRect.width / 2)
+) / zoom;
   window.scrollTo(pageX,pageY);
   updateHorizontalBar();
   updateConnectorLines();
  });
 }
-
-
 function makePersonCard(m){
  const node=document.createElement("div");
  node.className="family-node";
@@ -4068,7 +4145,46 @@ function collapseAll(){
 // FAMILY TREE CONTROLS
 const treeViewport = document.getElementById("treeScroll");
 const treeCanvas = document.getElementById("tree");
+const horizontalBar = document.getElementById("treeHorizontalScroll");
+const horizontalSpacer = document.getElementById("treeHorizontalSpacer");
+const treeSection = document.getElementById("familyTreeSection");
 
+let treeZoom = 1;
+const activePointers = new Map();
+let panStart = null;
+let pinchStart = null;
+let treeHasAutoFit = false;
+
+const treeObserver = new IntersectionObserver(entries=>{
+    entries.forEach(entry=>{
+        horizontalBar.classList.toggle("is-visible",entry.isIntersecting);
+    });
+},{threshold:0.05});
+
+treeObserver.observe(treeSection);
+
+function updateHorizontalBar(){
+    horizontalSpacer.style.width = treeViewport.scrollWidth + "px";
+    horizontalBar.scrollLeft = treeViewport.scrollLeft;
+}
+
+horizontalBar.addEventListener("scroll",()=>{
+    treeViewport.scrollLeft = horizontalBar.scrollLeft;
+});
+
+treeViewport.addEventListener("scroll",()=>{
+    horizontalBar.scrollLeft = treeViewport.scrollLeft;
+});
+
+new ResizeObserver(updateHorizontalBar).observe(treeCanvas);
+
+new MutationObserver(updateHorizontalBar).observe(treeCanvas,{
+    childList:true,
+    subtree:true
+});
+
+window.addEventListener("resize",updateHorizontalBar);
+updateHorizontalBar();
 
 function setTreeZoom(value,focalX,focalY){
     const oldZoom = treeZoom;
@@ -4428,12 +4544,12 @@ function addSonToFather(fatherId){
  document.getElementById("cancelEdit").classList.remove("hidden");
 
  document.getElementById("addBox").classList.remove("hidden");
- // Keep the page position unchanged when editing an ancestor.
+ document.getElementById("addBox").scrollIntoView({behavior:"smooth"});
 }
 function editMember(id){
  const m=members.find(x=>String(x.id)===String(id));
 
- if(!m)return;
+ if(!m||m.name==="Peer Baba")return;
 
  editingId=id;
 
