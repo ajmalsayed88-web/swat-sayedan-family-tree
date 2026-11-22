@@ -3886,34 +3886,9 @@ function renderGenerationGroup(roots,host,seen){
  const rows=[];
  const widthCache=new Map();
 
- function getBranchWidth(member,visiting=new Set()){
-  const key=String(member.id);
-
-  if(widthCache.has(key))return widthCache.get(key);
-  if(visiting.has(key))return TREE_CARD_WIDTH;
-
-  const nextVisiting=new Set(visiting);
-  nextVisiting.add(key);
-
-  let children=[];
-
-  if(expandedIds.has(key)){
-   children=getChildren(member.id);
-  }
-
-  let width=TREE_CARD_WIDTH;
-
-  if(children.length){
-   const childrenWidth=children.reduce((sum,child)=>
-    sum+getBranchWidth(child,nextVisiting),0
-   )+(children.length-1)*TREE_SIBLING_GAP;
-
-   width=Math.max(TREE_CARD_WIDTH,childrenWidth);
-  }
-
-  widthCache.set(key,width);
-  return width;
- }
+ function getBranchWidth(member){
+  return TREE_CARD_WIDTH;
+}
 
  function placeMember(member,left,depth){
   const key=String(member.id);
