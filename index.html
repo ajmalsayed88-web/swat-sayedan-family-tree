@@ -2770,6 +2770,25 @@ html[lang="en"] .stat-card .stat-number {
         font-size: 22px !important;
     }
 }
+  /* FIX HOMEPAGE CONTENT CUT-OFF */
+html:has(.upper-section:not(.tree-view-active)),
+body:has(.upper-section:not(.tree-view-active)) {
+    height: auto !important;
+    min-height: 100vh !important;
+    overflow-y: auto !important;
+}
+
+.upper-section {
+    height: auto !important;
+    max-height: none !important;
+    overflow-y: visible !important;
+}
+
+.upper-section header.hero {
+    height: auto !important;
+    min-height: 0 !important;
+    overflow: visible !important;
+}
 </style>
 </head>
 
