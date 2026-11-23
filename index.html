@@ -3110,9 +3110,7 @@ html[lang="ur"] .upper-section:not(.tree-view-active) .top-nav-icons {
     backdrop-filter: blur(8px) !important;
     -webkit-backdrop-filter: blur(8px) !important;
 }
-  /* STEP 4 — CENTER HOMEPAGE BUTTONS */
-
-/* HOMEPAGE — THREE BUTTONS IN ONE ROW */
+ /* STEP 4 — KEEP THREE HOMEPAGE BUTTONS IN ONE ROW */
 
 .upper-section:not(.tree-view-active) .hero-content {
     display: flex !important;
@@ -3120,34 +3118,30 @@ html[lang="ur"] .upper-section:not(.tree-view-active) .top-nav-icons {
     flex-wrap: wrap !important;
     justify-content: center !important;
     align-items: center !important;
-    gap: 8px !important;
+    width: 100% !important;
+    gap: 10px !important;
 }
 
 .upper-section:not(.tree-view-active) .hero-content > :not(.hero-button) {
     flex: 0 0 100% !important;
 }
 
-  .upper-section:not(.tree-view-active) .hero-content > .hero-button {
-      flex: 1 1 0 !important;
-      width: auto !important;
-      min-width: 0 !important;
-      max-width: 280px !important;
-      min-height: 54px !important;
-      margin: 0 !important;
-      padding: 12px 10px !important;
-      font-size: 14px !important;
-      line-height: 1.4 !important;
-      text-align: center !important;
-      justify-content: center !important;
-  }
-
-  @media (max-width: 600px) {
-      .upper-section:not(.tree-view-active) .hero-content > .hero-button {
-          min-height: 48px !important;
-          padding: 8px 5px !important;
-          font-size: 11px !important;
-      }
-  }
+.upper-section:not(.tree-view-active) .hero-content > .hero-button {
+    display: flex !important;
+    flex: 0 0 calc((100% - 20px) / 3) !important;
+    width: calc((100% - 20px) / 3) !important;
+    max-width: none !important;
+    min-width: 0 !important;
+    min-height: 58px !important;
+    margin: 0 !important;
+    padding: 10px 6px !important;
+    font-size: 14px !important;
+    line-height: 1.3 !important;
+    text-align: center !important;
+    align-items: center !important;
+    justify-content: center !important;
+    box-sizing: border-box !important;
+}
   /* STEP 5 — HOMEPAGE HEADING STYLE */
 
 .upper-section:not(.tree-view-active) .hero-label {
