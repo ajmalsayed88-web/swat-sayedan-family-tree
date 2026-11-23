@@ -170,8 +170,10 @@ button:hover { background:var(--dark); }
   background:var(--green);
   color:white;
 }
+
 .children-row {
   display:flex;
+  flex-direction:row;
   justify-content:center;
   align-items:flex-start;
   gap:12px;
@@ -180,6 +182,7 @@ button:hover { background:var(--dark); }
   padding-top:30px;
   position:relative;
 }
+
 .children-row::before {
   content:"";
   position:absolute;
@@ -187,6 +190,33 @@ button:hover { background:var(--dark); }
   left:50%;
   height:19px;
   border-left:2px solid var(--green);
+}
+
+.children-row::after {
+  content:"";
+  position:absolute;
+  top:19px;
+  left:95px;
+  right:95px;
+  border-top:2px solid var(--green);
+}
+
+.children-row > .person-branch {
+  position:relative;
+}
+
+.children-row > .person-branch::before {
+  content:"";
+  position:absolute;
+  top:-11px;
+  left:50%;
+  height:11px;
+  border-left:2px solid var(--green);
+  transform:translateX(-50%);
+}
+
+.person-branch > .children-row {
+  position:relative;
 }
 
 
