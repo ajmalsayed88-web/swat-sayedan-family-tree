@@ -3054,6 +3054,43 @@ html[lang="ur"] .upper-section:not(.tree-view-active) .top-nav-icons {
         padding: 12px 4px !important;
     }
 }
+  /* STEP 2 — CLEARER STATISTICS ICONS AND NUMBERS */
+
+.upper-section:not(.tree-view-active) .stat-icon {
+    width: 30px !important;
+    height: 30px !important;
+    margin: 0 auto 10px !important;
+    opacity: 0.95 !important;
+}
+
+.upper-section:not(.tree-view-active) .stat-card strong {
+    font-size: 30px !important;
+    line-height: 1.2 !important;
+    margin-bottom: 7px !important;
+    font-weight: 800 !important;
+    letter-spacing: 0.5px !important;
+}
+
+.upper-section:not(.tree-view-active) .stat-card span {
+    font-size: 13px !important;
+    font-weight: 600 !important;
+    letter-spacing: 0.2px !important;
+}
+
+@media (max-width: 600px) {
+    .upper-section:not(.tree-view-active) .stat-icon {
+        width: 24px !important;
+        height: 24px !important;
+    }
+
+    .upper-section:not(.tree-view-active) .stat-card strong {
+        font-size: 23px !important;
+    }
+
+    .upper-section:not(.tree-view-active) .stat-card span {
+        font-size: 10px !important;
+    }
+}
 </style>
 </head>
 
