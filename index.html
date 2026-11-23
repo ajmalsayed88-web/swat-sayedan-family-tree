@@ -2927,6 +2927,38 @@ html[lang="ur"] .upper-section:not(.tree-view-active) header.hero {
     border-radius: 0 !important;
     overflow: hidden !important;
 }
+  /* =================================
+   HOMEPAGE LAYOUT CONTROL PANEL
+   Adjust these values to move elements
+================================= */
+
+:root {
+    --home-logo-size: 115px;
+    --home-content-width: 850px;
+    --home-content-gap: 12px;
+    --home-stats-width: 650px;
+
+    --home-top-space: 64px;
+    --home-side-space: 20px;
+    --home-bottom-space: 20px;
+}
+
+/* Keep homepage as an independent layout */
+.upper-section:not(.tree-view-active) .hero {
+    position: relative !important;
+    box-sizing: border-box !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+}
+
+/* Keep main content in its own area */
+.upper-section:not(.tree-view-active) .hero-content {
+    width: 100% !important;
+    max-width: var(--home-content-width) !important;
+    margin: 0 auto !important;
+    box-sizing: border-box !important;
+}
 </style>
 </head>
 
