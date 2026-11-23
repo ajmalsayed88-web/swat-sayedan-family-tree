@@ -1,0 +1,569 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Manglor Sayedan | Family Tree</title>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Nastaliq+Urdu:wght@400;700&display=swap" rel="stylesheet">
+
+<style>
+:root {
+  --green:#145c3b;
+  --dark:#0b3828;
+  --gold:#c9a44c;
+  --light:#edf5ef;
+  --text:#193b2c;
+}
+* { box-sizing:border-box; }
+body {
+  margin:0;
+  background:#f3f7f3;
+  color:var(--text);
+  font-family:Arial,sans-serif;
+}
+header {
+  background:linear-gradient(135deg,var(--dark),#176344);
+  color:white;
+  text-align:center;
+  padding:28px 15px;
+  border-bottom:3px solid var(--gold);
+}
+header h1 {
+  color:#f5d98b;
+  margin:0 0 8px;
+  font-size:30px;
+}
+header p { margin:0; color:#e4eee6; }
+main {
+  max-width:1500px;
+  margin:auto;
+  padding:20px 12px 60px;
+}
+.search-panel {
+  max-width:650px;
+  margin:20px auto;
+  padding:20px;
+  background:white;
+  border-radius:14px;
+  box-shadow:0 4px 16px #123b2810;
+}
+.search-panel h2 {
+  text-align:center;
+  color:var(--green);
+  margin-top:0;
+}
+.search-row {
+  display:flex;
+  gap:8px;
+}
+input {
+  min-width:0;
+  flex:1;
+  padding:13px;
+  border:1px solid #c5d8ca;
+  border-radius:9px;
+  font-size:16px;
+}
+button {
+  border:0;
+  border-radius:9px;
+  padding:12px 17px;
+  background:var(--green);
+  color:white;
+  font-weight:bold;
+  cursor:pointer;
+}
+button:hover { background:var(--dark); }
+#status {
+  text-align:center;
+  margin:12px 0;
+  color:#52715f;
+}
+#results {
+  display:grid;
+  gap:7px;
+  margin-top:12px;
+}
+.result-button {
+  width:100%;
+  background:var(--light);
+  color:var(--text);
+  text-align:left;
+  border:1px solid #d5e4d8;
+}
+.result-button:hover { background:#dcece0; }
+#treeArea {
+  overflow:auto;
+  padding:25px 10px 50px;
+  min-height:180px;
+  background:white;
+  border:1px solid #e0e9e1;
+  border-radius:15px;
+}
+#treeArea:empty::before {
+  content:"Search for a family member to explore the family tree.";
+  display:block;
+  text-align:center;
+  color:#718477;
+  padding:35px 10px;
+}
+.tree-root {
+  display:flex;
+  justify-content:center;
+  min-width:max-content;
+}
+.person-branch {
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  min-width:max-content;
+}
+.person-card {
+  width:190px;
+  min-height:75px;
+  padding:12px 9px;
+  border:2px solid var(--green);
+  border-radius:12px;
+  background:#fff;
+  text-align:center;
+  box-shadow:0 3px 9px #00000012;
+  position:relative;
+  z-index:1;
+}
+.person-card.root {
+  background:linear-gradient(135deg,var(--dark),var(--green));
+  color:white;
+  border-color:var(--gold);
+}
+.person-card.selected {
+  background:#fff5d9;
+  border:3px solid var(--gold);
+}
+.person-name {
+  display:block;
+  font-size:16px;
+  font-weight:bold;
+  overflow-wrap:anywhere;
+}
+.person-details {
+  display:block;
+  margin-top:5px;
+  font-size:12px;
+  color:#64776b;
+}
+.person-card.root .person-details { color:#e4eee6; }
+.branch-button {
+  display:block;
+  width:auto;
+  max-width:175px;
+  margin:8px auto 0;
+  padding:6px 10px;
+  font-size:12px;
+  background:#e7f1e9;
+  color:var(--green);
+  border:1px solid #c8ddcd;
+}
+.branch-button:hover {
+  background:var(--green);
+  color:white;
+}
+.children-row {
+  display:flex;
+  justify-content:center;
+  align-items:flex-start;
+  gap:18px;
+  width:max-content;
+  margin:0 auto;
+  padding-top:38px;
+  position:relative;
+}
+.children-row::before {
+  content:"";
+  position:absolute;
+  top:0;
+  left:50%;
+  height:19px;
+  border-left:2px solid var(--green);
+}
+.children-row > .person-branch::before {
+  content:"";
+  display:block;
+  height:19px;
+  border-left:2px solid var(--green);
+  position:absolute;
+  top:0;
+}
+.person-branch > .children-row {
+  position:relative;
+}
+.branch-children {
+  margin-top:0;
+}
+.empty-message {
+  text-align:center;
+  color:#718477;
+  padding:12px;
+}
+#treeTitle {
+  text-align:center;
+  color:var(--green);
+  margin:25px 0 15px;
+}
+@media(max-width:600px) {
+  header h1 { font-size:23px; }
+  main { padding:12px 7px 35px; }
+  .search-panel { padding:14px; }
+  .search-row { flex-direction:column; }
+  .search-row button { width:100%; }
+  .person-card { width:165px; }
+  .children-row { gap:10px; }
+}
+</style>
+</head>
+
+<body>
+<header>
+  <h1>Manglor Sayedan</h1>
+  <p>Family Tree — Our Ancestors, Our Heritage</p>
+</header>
+
+<main>
+  <section class="search-panel">
+    <h2>Find a Family Member</h2>
+    <div class="search-row">
+      <input id="searchInput" type="search"
+        placeholder="Enter English or Urdu name..."
+        onkeydown="if(event.key==='Enter') searchFamily()">
+      <button onclick="searchFamily()">Search</button>
+    </div>
+    <div id="status">Search for a person's name to begin.</div>
+    <div id="results"></div>
+  </section>
+
+  <h2 id="treeTitle">Family Ancestral Tree</h2>
+  <section id="treeArea"></section>
+</main>
+
+<script>
+const SUPABASE_URL = "https://mkpgibnfftqihoztpnhy.supabase.co";
+const SUPABASE_KEY = "sb_publishable_t8OgRxv90fao6omiHsTmiw_1UfkbkUc";
+const db = window.supabase.createClient(SUPABASE_URL,SUPABASE_KEY);
+
+const statusBox = document.getElementById("status");
+const resultsBox = document.getElementById("results");
+const treeArea = document.getElementById("treeArea");
+
+let currentPath = [];
+let childCache = new Map();
+let expandedBranches = new Set();
+
+function say(message) {
+  statusBox.textContent = message;
+}
+
+function memberName(member) {
+  return member.urdu_name && member.urdu_name.trim()
+    ? member.urdu_name.trim()
+    : member.name;
+}
+
+async function searchFamily() {
+  const query = document.getElementById("searchInput").value.trim();
+
+  resultsBox.innerHTML = "";
+  treeArea.innerHTML = "";
+
+  if (!query) {
+    say("Please enter a family member's name.");
+    return;
+  }
+
+  say("Searching family members...");
+
+  const pattern = "%" + query.replace(/[%_]/g,"") + "%";
+
+  const [englishResult,urduResult] = await Promise.all([
+    db.from("family_members")
+      .select("id,name,urdu_name,father_id,branch")
+      .eq("approved",true)
+      .ilike("name",pattern)
+      .order("name")
+      .limit(20),
+
+    db.from("family_members")
+      .select("id,name,urdu_name,father_id,branch")
+      .eq("approved",true)
+      .ilike("urdu_name",pattern)
+      .order("name")
+      .limit(20)
+  ]);
+
+  if (englishResult.error || urduResult.error) {
+    say("Search failed. Please try again.");
+    return;
+  }
+
+  const combined = [
+    ...(englishResult.data || []),
+    ...(urduResult.data || [])
+  ];
+
+  const unique = [...new Map(
+    combined.map(member => [String(member.id),member])
+  ).values()];
+
+  if (!unique.length) {
+    say("No family member found with that name.");
+    return;
+  }
+
+  say(unique.length + " matching member(s) found. Select a person.");
+
+  unique.forEach(member => {
+    const button = document.createElement("button");
+    button.className = "result-button";
+    button.textContent = member.name +
+      (member.urdu_name ? " — " + member.urdu_name : "");
+
+    button.onclick = () => openFamilyTree(member);
+    resultsBox.appendChild(button);
+  });
+}
+
+async function getMemberById(id) {
+  const {data,error} = await db
+    .from("family_members")
+    .select("id,name,urdu_name,father_id,branch")
+    .eq("id",id)
+    .eq("approved",true)
+    .maybeSingle();
+
+  if (error) throw error;
+  return data;
+}
+
+async function getChildren(id) {
+  const key = String(id);
+
+  if (childCache.has(key)) return childCache.get(key);
+
+  const {data,error} = await db
+    .from("family_members")
+    .select("id,name,urdu_name,father_id,branch")
+    .eq("father_id",id)
+    .eq("approved",true)
+    .order("name");
+
+  if (error) throw error;
+
+  const children = data || [];
+  childCache.set(key,children);
+  return children;
+}
+
+async function buildAncestorPath(selected) {
+  const path = [selected];
+  const visited = new Set([String(selected.id)]);
+  let current = selected;
+  let foundPeerBaba = selected.name.trim().toLowerCase() === "peer baba";
+
+  for (let i=0; i<100 && current.father_id; i++) {
+    const parent = await getMemberById(current.father_id);
+
+    if (!parent) break;
+
+    const key = String(parent.id);
+    if (visited.has(key)) break;
+
+    visited.add(key);
+    path.push(parent);
+    current = parent;
+
+    if (parent.name.trim().toLowerCase() === "peer baba") {
+      foundPeerBaba = true;
+      break;
+    }
+  }
+
+  return {
+    path:path.reverse(),
+    foundPeerBaba
+  };
+}
+
+async function openFamilyTree(selected) {
+  treeArea.innerHTML = "";
+  resultsBox.innerHTML = "";
+  childCache.clear();
+  expandedBranches.clear();
+
+  say("Building the ancestral path...");
+
+  try {
+    const result = await buildAncestorPath(selected);
+    currentPath = result.path;
+
+    if (!currentPath.length) {
+      say("No family line could be found.");
+      return;
+    }
+
+    document.getElementById("treeTitle").textContent =
+      "Family Tree of " + selected.name;
+
+    if (!result.foundPeerBaba) {
+      say("Showing the available ancestral line. This person is not connected to Peer Baba in the recorded family data.");
+    } else {
+      say("Family tree opened. All siblings are shown at each generation.");
+    }
+
+    const root = document.createElement("div");
+    root.className = "tree-root";
+    treeArea.appendChild(root);
+
+    await renderPerson(currentPath[0],root,0);
+
+  } catch(error) {
+    console.error(error);
+    say("Could not build the family tree. Please refresh and try again.");
+  }
+}
+
+function makeCard(member,isRoot,isSelected) {
+  const branch = document.createElement("div");
+  branch.className = "person-branch";
+
+  const card = document.createElement("div");
+  card.className = "person-card" +
+    (isRoot ? " root" : "") +
+    (isSelected ? " selected" : "");
+
+  const name = document.createElement("span");
+  name.className = "person-name";
+  name.textContent = memberName(member);
+  name.dir = member.urdu_name ? "auto" : "ltr";
+  card.appendChild(name);
+
+  if (member.branch) {
+    const detail = document.createElement("span");
+    detail.className = "person-details";
+    detail.textContent = member.branch;
+    card.appendChild(detail);
+  }
+
+  branch.appendChild(card);
+  return branch;
+}
+
+async function renderPerson(member,host,pathIndex) {
+  const isRoot = pathIndex === 0;
+  const isSelected = pathIndex === currentPath.length - 1;
+
+  const branch = makeCard(member,isRoot,isSelected);
+  host.appendChild(branch);
+
+  if (isSelected) {
+    addExpandButton(member,branch);
+    return;
+  }
+
+  const nextMember = currentPath[pathIndex+1];
+  await renderChildren(member,branch,nextMember,pathIndex+1);
+}
+
+async function renderChildren(parent,host,nextPathMember,nextPathIndex) {
+  const children = await getChildren(parent.id);
+
+  if (!children.length) {
+    if (nextPathMember) {
+      const message = document.createElement("div");
+      message.className = "empty-message";
+      message.textContent = "No children are recorded under this ancestor.";
+      host.appendChild(message);
+    }
+    return;
+  }
+
+  const row = document.createElement("div");
+  row.className = "children-row";
+  host.appendChild(row);
+
+  for (const child of children) {
+    const isPathMember = nextPathMember &&
+      String(child.id) === String(nextPathMember.id);
+
+    const childBranch = makeCard(child,false,
+      String(child.id) === String(currentPath[currentPath.length-1].id));
+
+    row.appendChild(childBranch);
+
+    if (isPathMember) {
+      await renderChildren(child,childBranch,
+        currentPath[nextPathIndex+1],
+        nextPathIndex+1);
+    } else {
+      addExpandButton(child,childBranch);
+    }
+  }
+}
+
+function addExpandButton(member,host) {
+  const button = document.createElement("button");
+  button.className = "branch-button";
+  button.textContent = "＋ Show family";
+
+  const childArea = document.createElement("div");
+  childArea.className = "branch-children";
+
+  button.onclick = async () => {
+    const key = String(member.id);
+
+    if (expandedBranches.has(key)) {
+      expandedBranches.delete(key);
+      childArea.innerHTML = "";
+      button.textContent = "＋ Show family";
+      return;
+    }
+
+    button.disabled = true;
+    button.textContent = "Loading...";
+
+    try {
+      const children = await getChildren(member.id);
+
+      if (!children.length) {
+        button.textContent = "No children recorded";
+        button.disabled = true;
+        return;
+      }
+
+      expandedBranches.add(key);
+      childArea.innerHTML = "";
+
+      const row = document.createElement("div");
+      row.className = "children-row";
+      childArea.appendChild(row);
+
+      for (const child of children) {
+        const childBranch = makeCard(child,false,false);
+        row.appendChild(childBranch);
+        addExpandButton(child,childBranch);
+      }
+
+      button.textContent = "− Hide family";
+    } catch(error) {
+      console.error(error);
+      button.textContent = "Try again";
+    } finally {
+      button.disabled = false;
+    }
+  };
+
+  host.appendChild(button);
+  host.appendChild(childArea);
+}
+</script>
+</body>
+</html>
