@@ -3110,36 +3110,33 @@ html[lang="ur"] .upper-section:not(.tree-view-active) .top-nav-icons {
     backdrop-filter: blur(8px) !important;
     -webkit-backdrop-filter: blur(8px) !important;
 }
- /* STEP 4 — RESTORE HOMEPAGE LAYOUT */
+ /* STEP 4 — THREE HOMEPAGE BUTTONS IN ONE ROW */
 
 .upper-section:not(.tree-view-active) .hero-content {
-    display: flex !important;
-    flex-direction: row !important;
-    flex-wrap: wrap !important;
-    justify-content: center !important;
-    align-items: center !important;
+    display: grid !important;
+    grid-template-columns: repeat(3, minmax(0, 1fr)) !important;
     width: 100% !important;
     gap: 10px !important;
+    justify-content: center !important;
+    align-items: center !important;
 }
 
 .upper-section:not(.tree-view-active) .hero-content > :not(.hero-button) {
-    flex: 0 0 100% !important;
+    grid-column: 1 / -1 !important;
 }
 
 .upper-section:not(.tree-view-active) .hero-content > .hero-button {
-    display: flex !important;
-    flex: 0 0 calc((100% - 20px) / 3) !important;
-    width: calc((100% - 20px) / 3) !important;
-    max-width: none !important;
+    grid-column: auto !important;
+    width: 100% !important;
     min-width: 0 !important;
+    max-width: none !important;
     min-height: 58px !important;
     margin: 0 !important;
-    padding: 10px 6px !important;
-    font-size: 14px !important;
+    padding: 8px 4px !important;
+    font-size: 13px !important;
     line-height: 1.3 !important;
     text-align: center !important;
-    align-items: center !important;
-    justify-content: center !important;
+    white-space: normal !important;
     box-sizing: border-box !important;
 }
   /* STEP 5 — HOMEPAGE HEADING STYLE */
