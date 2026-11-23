@@ -3316,15 +3316,20 @@ html[lang="ur"] .upper-section:not(.tree-view-active) .hero-label {
         min-height: 46px !important;
     }
 }
-  /* COMPACT HERITAGE LABEL */
+  /* CENTER HERITAGE LABEL BELOW LOGO */
+.upper-section:not(.tree-view-active) .hero-logo {
+    grid-row: 1 !important;
+}
+
 .upper-section:not(.tree-view-active) .hero-label {
+    grid-row: 2 !important;
+    justify-self: center !important;
     display: inline-block !important;
     width: fit-content !important;
     max-width: 90% !important;
     padding: 5px 12px !important;
     margin: 0 auto 4px !important;
-    font-size: 11px !important;
-    letter-spacing: 1px !important;
+    text-align: center !important;
     white-space: nowrap !important;
     box-sizing: border-box !important;
 }
