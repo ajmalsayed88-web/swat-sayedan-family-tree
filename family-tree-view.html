@@ -171,6 +171,7 @@ button:hover { background:var(--dark); }
   color:white;
 }
 
+
 .children-row {
   display:flex;
   flex-direction:row;
@@ -206,38 +207,36 @@ button:hover { background:var(--dark); }
 }
 
 .children-row > .person-branch::before {
-  content:"▼";
-  position:absolute;
-  top:-17px;
-  left:50%;
-  transform:translateX(-50%);
-  color:var(--green);
-  font-size:14px;
-  line-height:14px;
-  height:17px;
-}
-
-.person-branch > .children-row {
-  position:relative;
-}
-
-
-.children-row > .person-branch::before {
   content:"";
-  display:block;
-  height:30px;
-  border-left:2px solid var(--green);
   position:absolute;
-  top:0;
+  top:-11px;
   left:50%;
+  height:11px;
+  border-left:2px solid var(--green);
   transform:translateX(-50%);
 }
+
+.children-row > .person-branch::after {
+  content:"";
+  position:absolute;
+  top:-7px;
+  left:50%;
+  transform:translateX(-50%);
+  width:0;
+  height:0;
+  border-left:5px solid transparent;
+  border-right:5px solid transparent;
+  border-top:7px solid var(--green);
+}
+
 .person-branch > .children-row {
   position:relative;
 }
+
 .branch-children {
   margin-top:0;
 }
+
 .empty-message {
   text-align:center;
   color:#718477;
