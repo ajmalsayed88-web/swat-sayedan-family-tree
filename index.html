@@ -2770,24 +2770,124 @@ html[lang="en"] .stat-card .stat-number {
         font-size: 22px !important;
     }
 }
-  /* FIX HOMEPAGE CONTENT CUT-OFF */
+  /* HOMEPAGE — FIT TO SCREEN */
 html:has(.upper-section:not(.tree-view-active)),
 body:has(.upper-section:not(.tree-view-active)) {
-    height: auto !important;
-    min-height: 100vh !important;
-    overflow-y: auto !important;
+    width: 100%;
+    height: 100%;
+    min-height: 100%;
+    overflow: hidden !important;
+    scrollbar-width: none;
 }
 
-.upper-section {
-    height: auto !important;
-    max-height: none !important;
-    overflow-y: visible !important;
+html:has(.upper-section:not(.tree-view-active))::-webkit-scrollbar,
+body:has(.upper-section:not(.tree-view-active))::-webkit-scrollbar {
+    display: none;
 }
 
-.upper-section header.hero {
-    height: auto !important;
+.upper-section:not(.tree-view-active) {
+    width: 100%;
+    height: 100vh;
+    height: 100svh;
+    overflow: hidden;
+}
+
+.upper-section:not(.tree-view-active) .hero {
+    width: 100%;
+    height: 100%;
     min-height: 0 !important;
-    overflow: visible !important;
+    padding: 64px 20px 20px !important;
+    margin: 0;
+    border-radius: 0;
+    overflow: hidden;
+}
+
+html[lang="en"] .upper-section:not(.tree-view-active) .hero-content {
+    width: 100%;
+    max-width: 850px;
+    margin: auto;
+}
+
+html[lang="en"] .upper-section:not(.tree-view-active) .hero-logo {
+    width: clamp(82px, 15vh, 125px) !important;
+    height: clamp(82px, 15vh, 125px) !important;
+    margin-bottom: 10px !important;
+}
+
+html[lang="en"] .upper-section:not(.tree-view-active) .hero-label {
+    margin: 4px 0 10px !important;
+    font-size: 11px !important;
+    letter-spacing: 2px !important;
+}
+
+html[lang="en"] .upper-section:not(.tree-view-active) .hero h1 {
+    font-size: clamp(27px, 4vw, 42px) !important;
+    margin: 0 0 9px !important;
+}
+
+html[lang="en"] .upper-section:not(.tree-view-active) .hero-description {
+    max-width: 650px !important;
+    margin: 0 auto 13px !important;
+    font-size: 14px !important;
+    line-height: 1.6 !important;
+}
+
+html[lang="en"] .upper-section:not(.tree-view-active) .hero-button {
+    margin: 5px !important;
+    padding: 10px 17px !important;
+    font-size: 13px !important;
+}
+
+html[lang="en"] .upper-section:not(.tree-view-active) .home-stats {
+    margin: 16px auto 0 !important;
+    max-width: 650px;
+    gap: 12px !important;
+}
+
+html[lang="en"] .upper-section:not(.tree-view-active) .stat-card {
+    min-height: 90px !important;
+    padding: 10px 7px !important;
+}
+
+@media (max-width: 600px) {
+    .upper-section:not(.tree-view-active) .hero {
+        padding: 58px 12px 12px !important;
+    }
+
+    html[lang="en"] .upper-section:not(.tree-view-active) .hero-logo {
+        width: 86px !important;
+        height: 86px !important;
+    }
+
+    html[lang="en"] .upper-section:not(.tree-view-active) .hero-label {
+        font-size: 9px !important;
+        letter-spacing: 1px !important;
+    }
+
+    html[lang="en"] .upper-section:not(.tree-view-active) .hero h1 {
+        font-size: 28px !important;
+    }
+
+    html[lang="en"] .upper-section:not(.tree-view-active) .hero-description {
+        font-size: 12px !important;
+        line-height: 1.5 !important;
+    }
+
+    html[lang="en"] .upper-section:not(.tree-view-active) .hero-button {
+        padding: 9px 10px !important;
+        font-size: 11px !important;
+        margin: 4px 2px !important;
+    }
+
+    html[lang="en"] .upper-section:not(.tree-view-active) .home-stats {
+        gap: 6px !important;
+        margin-top: 12px !important;
+    }
+
+    html[lang="en"] .upper-section:not(.tree-view-active) .stat-card {
+        min-height: 76px !important;
+        padding: 7px 3px !important;
+    }
 }
 </style>
 </head>
