@@ -476,6 +476,7 @@ async function renderPerson(member,host,pathIndex) {
   await renderChildren(member,branch,nextMember,pathIndex+1);
 }
 
+
 async function renderChildren(parent,host,nextPathMember,nextPathIndex) {
   const children = await getChildren(parent.id);
 
@@ -497,15 +498,24 @@ async function renderChildren(parent,host,nextPathMember,nextPathIndex) {
     const isPathMember = nextPathMember &&
       String(child.id) === String(nextPathMember.id);
 
-    const childBranch = makeCard(child,false,
-      String(child.id) === String(currentPath[currentPath.length-1].id));
+    const isSelected = String(child.id) ===
+      String(currentPath[currentPath.length - 1].id);
+
+    const childBranch = makeCard(child,false,isSelected);
 
     row.appendChild(childBranch);
 
     if (isPathMember) {
-      await renderChildren(child,childBranch,
-        currentPath[nextPathIndex+1],
-        nextPathIndex+1);
+      if (nextPathIndex === currentPath.length - 1) {
+        addExpandButton(child,childBranch);
+      } else {
+        await renderChildren(
+          child,
+          childBranch,
+          currentPath[nextPathIndex + 1],
+          nextPathIndex + 1
+        );
+      }
     } else {
       addExpandButton(child,childBranch);
     }
