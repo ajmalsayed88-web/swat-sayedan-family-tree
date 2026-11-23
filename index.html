@@ -3110,6 +3110,26 @@ html[lang="ur"] .upper-section:not(.tree-view-active) .top-nav-icons {
     backdrop-filter: blur(8px) !important;
     -webkit-backdrop-filter: blur(8px) !important;
 }
+  /* STEP 4 — HOMEPAGE BUTTON ALIGNMENT */
+
+.upper-section:not(.tree-view-active) .hero-content > .hero-button {
+    display: block !important;
+    width: 260px !important;
+    min-height: 48px !important;
+    margin: 10px auto !important;
+    box-sizing: border-box !important;
+    text-align: center !important;
+    justify-content: center !important;
+    border-radius: 12px !important;
+}
+
+@media (max-width: 600px) {
+    .upper-section:not(.tree-view-active) .hero-content > .hero-button {
+        width: min(280px, 88%) !important;
+        min-height: 44px !important;
+        margin: 8px auto !important;
+    }
+}
 </style>
 </head>
 
