@@ -3286,6 +3286,97 @@ html[lang="ur"] .upper-section:not(.tree-view-active) .hero-label {
     line-height: 1.5 !important;
     text-align: center !important;
 }
+  /* MATCH HOMEPAGE LAYOUT — ENGLISH AND URDU */
+
+.upper-section:not(.tree-view-active) .hero-content {
+    display: grid !important;
+    grid-template-columns: repeat(3, minmax(0, 1fr)) !important;
+    gap: 7px !important;
+    width: 100% !important;
+    max-width: 850px !important;
+    margin: 0 auto !important;
+    padding: 0 !important;
+    align-content: center !important;
+    justify-items: stretch !important;
+    box-sizing: border-box !important;
+}
+
+.upper-section:not(.tree-view-active) .hero-content > :not(.hero-button) {
+    grid-column: 1 / -1 !important;
+}
+
+.upper-section:not(.tree-view-active) .hero-logo {
+    width: 110px !important;
+    height: 110px !important;
+    margin: 0 auto 2px !important;
+    transform: none !important;
+    grid-row: 1 !important;
+}
+
+.upper-section:not(.tree-view-active) .hero-label {
+    grid-row: 2 !important;
+    margin: 0 auto 4px !important;
+    padding: 3px 10px !important;
+    line-height: 1.7 !important;
+    text-align: center !important;
+}
+
+.upper-section:not(.tree-view-active) .hero h1 {
+    font-size: clamp(30px, 4vw, 42px) !important;
+    line-height: 1.5 !important;
+    margin: 0 auto 4px !important;
+    text-align: center !important;
+}
+
+.upper-section:not(.tree-view-active) .hero-description {
+    max-width: 650px !important;
+    font-size: 16px !important;
+    line-height: 1.7 !important;
+    margin: 0 auto 7px !important;
+    padding: 2px 4px !important;
+    text-align: center !important;
+}
+
+.upper-section:not(.tree-view-active) .hero-button {
+    width: 100% !important;
+    min-width: 0 !important;
+    max-width: none !important;
+    min-height: 48px !important;
+    margin: 0 !important;
+    padding: 7px 4px !important;
+    font-size: 13px !important;
+    line-height: 1.5 !important;
+    text-align: center !important;
+    box-sizing: border-box !important;
+}
+
+.upper-section:not(.tree-view-active) .home-stats {
+    grid-column: 1 / -1 !important;
+    width: min(680px, 94%) !important;
+    margin: 7px auto 0 !important;
+    gap: 7px !important;
+}
+
+.upper-section:not(.tree-view-active) .stat-card {
+    min-height: 60px !important;
+    padding: 5px 3px !important;
+}
+
+@media (max-width: 600px) {
+    .upper-section:not(.tree-view-active) .hero-content {
+        gap: 4px !important;
+    }
+
+    .upper-section:not(.tree-view-active) .hero-logo {
+        width: 110px !important;
+        height: 110px !important;
+    }
+
+    .upper-section:not(.tree-view-active) .hero-button {
+        min-height: 46px !important;
+        font-size: 11px !important;
+    }
+}
 </style>
 </head>
 
