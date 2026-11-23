@@ -3333,9 +3333,45 @@ html[lang="ur"] .upper-section:not(.tree-view-active) .hero-label {
     white-space: nowrap !important;
     box-sizing: border-box !important;
 }
-  /* URDU LOGO — MOVE SLIGHTLY UP */
-html[lang="ur"] .upper-section:not(.tree-view-active) .hero-logo {
-    transform: translateY(-12px) !important;
+  /* SAME HOMEPAGE SPACING — ENGLISH AND URDU */
+
+.upper-section:not(.tree-view-active) .hero-content {
+    row-gap: 7px !important;
+}
+
+.upper-section:not(.tree-view-active) .hero-logo {
+    grid-row: 1 !important;
+    width: 110px !important;
+    height: 110px !important;
+    margin: 0 auto 2px !important;
+    transform: none !important;
+}
+
+.upper-section:not(.tree-view-active) .hero-label {
+    grid-row: 2 !important;
+    line-height: 1.5 !important;
+    margin: 0 auto 4px !important;
+    padding: 3px 10px !important;
+    text-align: center !important;
+}
+
+.upper-section:not(.tree-view-active) .hero h1 {
+    line-height: 1.5 !important;
+    margin: 0 auto 4px !important;
+    padding: 2px 0 !important;
+    text-align: center !important;
+}
+
+.upper-section:not(.tree-view-active) .hero-description {
+    line-height: 1.6 !important;
+    margin: 0 auto 7px !important;
+    padding: 2px 4px !important;
+    text-align: center !important;
+}
+
+.upper-section:not(.tree-view-active) .hero-button {
+    line-height: 1.5 !important;
+    text-align: center !important;
 }
 </style>
 </head>
