@@ -3014,6 +3014,46 @@ html[lang="ur"] .upper-section:not(.tree-view-active) .top-nav-icons {
         --home-logo-size: 100px;
     }
 }
+  /* STEP 1 — PROFESSIONAL STATISTICS BOXES */
+
+.upper-section:not(.tree-view-active) .home-stats {
+    display: grid !important;
+    grid-template-columns: repeat(3, minmax(0, 1fr)) !important;
+    width: min(680px, 94%) !important;
+    gap: 14px !important;
+    margin: 28px auto 10px !important;
+}
+
+.upper-section:not(.tree-view-active) .stat-card {
+    min-width: 0 !important;
+    min-height: 135px !important;
+    display: flex !important;
+    flex-direction: column !important;
+    align-items: center !important;
+    justify-content: center !important;
+    padding: 16px 8px !important;
+    box-sizing: border-box !important;
+    border-radius: 15px !important;
+    text-align: center !important;
+}
+
+.upper-section:not(.tree-view-active) .stat-card span {
+    width: 100% !important;
+    line-height: 1.4 !important;
+    overflow-wrap: break-word !important;
+}
+
+@media (max-width: 600px) {
+    .upper-section:not(.tree-view-active) .home-stats {
+        width: 96% !important;
+        gap: 7px !important;
+    }
+
+    .upper-section:not(.tree-view-active) .stat-card {
+        min-height: 110px !important;
+        padding: 12px 4px !important;
+    }
+}
 </style>
 </head>
 
