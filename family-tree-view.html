@@ -206,13 +206,15 @@ button:hover { background:var(--dark); }
 }
 
 .children-row > .person-branch::before {
-  content:"";
+  content:"▼";
   position:absolute;
-  top:-11px;
+  top:-13px;
   left:50%;
-  height:11px;
-  border-left:2px solid var(--green);
   transform:translateX(-50%);
+  color:var(--green);
+  font-size:13px;
+  line-height:13px;
+  height:13px;
 }
 
 .person-branch > .children-row {
