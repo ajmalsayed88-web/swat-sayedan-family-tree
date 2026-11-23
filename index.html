@@ -3219,6 +3219,103 @@ html[lang="ur"] .upper-section:not(.tree-view-active) .hero-label {
     box-sizing: border-box !important;
     flex: 0 0 110px !important;
 }
+  /* FINAL HOMEPAGE SCREEN FIT */
+
+.upper-section:not(.tree-view-active) {
+    height: 100dvh !important;
+    min-height: 100dvh !important;
+    max-height: 100dvh !important;
+    overflow: hidden !important;
+    margin: 0 !important;
+    padding: 0 !important;
+}
+
+.upper-section:not(.tree-view-active) .hero {
+    height: 100dvh !important;
+    min-height: 100dvh !important;
+    max-height: 100dvh !important;
+    padding: 45px 16px 10px !important;
+    margin: 0 !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    overflow: hidden !important;
+    box-sizing: border-box !important;
+}
+
+.upper-section:not(.tree-view-active) .hero-content {
+    display: grid !important;
+    grid-template-columns: repeat(3, minmax(0, 1fr)) !important;
+    align-content: center !important;
+    justify-content: center !important;
+    align-items: center !important;
+    gap: 5px !important;
+    width: 100% !important;
+    max-width: 850px !important;
+    margin: 0 auto !important;
+    padding: 0 !important;
+    box-sizing: border-box !important;
+}
+
+.upper-section:not(.tree-view-active) .hero-content > :not(.hero-button) {
+    grid-column: 1 / -1 !important;
+}
+
+.upper-section:not(.tree-view-active) .hero-logo {
+    margin: 0 auto 2px !important;
+}
+
+.upper-section:not(.tree-view-active) .hero-label {
+    margin: 0 auto 4px !important;
+}
+
+.upper-section:not(.tree-view-active) .hero h1 {
+    margin: 0 auto 5px !important;
+}
+
+.upper-section:not(.tree-view-active) .hero-description {
+    margin: 0 auto 7px !important;
+    line-height: 1.4 !important;
+}
+
+.upper-section:not(.tree-view-active) .hero-button {
+    margin: 0 !important;
+    min-height: 48px !important;
+    padding: 7px 4px !important;
+}
+
+.upper-section:not(.tree-view-active) .home-stats {
+    margin: 7px auto 0 !important;
+    gap: 7px !important;
+}
+
+.upper-section:not(.tree-view-active) .stat-card {
+    min-height: 60px !important;
+    padding: 5px 3px !important;
+}
+
+.upper-section:not(.tree-view-active) .stat-icon {
+    margin-bottom: 3px !important;
+}
+
+.upper-section:not(.tree-view-active) .stat-card strong {
+    margin-bottom: 2px !important;
+}
+
+@media (max-width: 600px) {
+    .upper-section:not(.tree-view-active) .hero {
+        padding: 42px 10px 8px !important;
+    }
+
+    .upper-section:not(.tree-view-active) .hero-content {
+        gap: 4px !important;
+    }
+
+    .upper-section:not(.tree-view-active) .hero-button {
+        font-size: 11px !important;
+        min-height: 46px !important;
+    }
+}
 </style>
 </head>
 
