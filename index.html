@@ -2959,6 +2959,56 @@ html[lang="ur"] .upper-section:not(.tree-view-active) header.hero {
     margin: 0 auto !important;
     box-sizing: border-box !important;
 }
+  /* STEP 2 — LOCK TOP NAVIGATION POSITIONS */
+
+:root {
+    --home-dashboard-top: 18px;
+    --home-dashboard-left: 22px;
+    --home-dashboard-right: 22px;
+
+    --home-navigation-top: 18px;
+    --home-navigation-side: 18px;
+}
+
+/* Dashboard button */
+.upper-section:not(.tree-view-active) .dashboard-toggle {
+    position: absolute !important;
+    top: var(--home-dashboard-top) !important;
+    left: var(--home-dashboard-left) !important;
+    right: auto !important;
+    z-index: 30 !important;
+}
+
+/* Top navigation icons */
+.upper-section:not(.tree-view-active) .top-nav-icons {
+    position: absolute !important;
+    top: var(--home-navigation-top) !important;
+    right: var(--home-navigation-side) !important;
+    left: auto !important;
+    z-index: 30 !important;
+}
+
+/* Urdu position */
+html[lang="ur"] .upper-section:not(.tree-view-active) .dashboard-toggle {
+    left: auto !important;
+    right: var(--home-dashboard-right) !important;
+}
+
+html[lang="ur"] .upper-section:not(.tree-view-active) .top-nav-icons {
+    right: auto !important;
+    left: var(--home-navigation-side) !important;
+}
+
+/* Mobile spacing */
+@media (max-width: 600px) {
+    :root {
+        --home-dashboard-top: 10px;
+        --home-dashboard-left: 10px;
+        --home-dashboard-right: 10px;
+        --home-navigation-top: 12px;
+        --home-navigation-side: 10px;
+    }
+}
 </style>
 </head>
 
