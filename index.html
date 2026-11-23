@@ -3377,6 +3377,278 @@ html[lang="ur"] .upper-section:not(.tree-view-active) .hero-label {
         font-size: 11px !important;
     }
 }
+ /* =========================================
+   FINAL SHARED HOMEPAGE DESIGN — ENGLISH & URDU
+   ========================================= */
+
+/* SAME BACKGROUND AND SCREEN SIZE */
+.upper-section:not(.tree-view-active) {
+    width: 100% !important;
+    height: 100dvh !important;
+    min-height: 100dvh !important;
+    max-height: 100dvh !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    overflow: hidden !important;
+    background: #0b3828 !important;
+}
+
+.upper-section:not(.tree-view-active) .hero {
+    width: 100% !important;
+    height: 100dvh !important;
+    min-height: 100dvh !important;
+    max-height: 100dvh !important;
+    margin: 0 !important;
+    padding: 45px 16px 10px !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    box-sizing: border-box !important;
+    overflow: hidden !important;
+    text-align: center !important;
+}
+
+/* SAME CONTENT POSITION */
+.upper-section:not(.tree-view-active) .hero-content {
+    display: grid !important;
+    grid-template-columns: repeat(3, minmax(0, 1fr)) !important;
+    grid-auto-flow: row !important;
+    align-content: center !important;
+    align-items: center !important;
+    justify-items: stretch !important;
+    direction: ltr !important;
+    gap: 7px !important;
+    width: 100% !important;
+    max-width: 850px !important;
+    margin: 0 auto !important;
+    padding: 0 !important;
+    box-sizing: border-box !important;
+}
+
+.upper-section:not(.tree-view-active) .hero-content > :not(.hero-button) {
+    grid-column: 1 / -1 !important;
+}
+
+/* SAME LOGO */
+.upper-section:not(.tree-view-active) .hero-logo {
+    grid-row: 1 !important;
+    width: 110px !important;
+    height: 110px !important;
+    min-width: 110px !important;
+    min-height: 110px !important;
+    max-width: 110px !important;
+    max-height: 110px !important;
+    aspect-ratio: 1 / 1 !important;
+    object-fit: contain !important;
+    border-radius: 50% !important;
+    margin: 0 auto 2px !important;
+    transform: none !important;
+    box-sizing: border-box !important;
+}
+
+/* SAME HERITAGE LABEL */
+.upper-section:not(.tree-view-active) .hero-label {
+    grid-row: 2 !important;
+    display: inline-block !important;
+    width: fit-content !important;
+    max-width: 95% !important;
+    margin: 0 auto 4px !important;
+    padding: 5px 12px !important;
+    border: 1px solid rgba(245,217,139,0.55) !important;
+    border-radius: 30px !important;
+    background: rgba(0,0,0,0.16) !important;
+    color: #f5d98b !important;
+    font-size: 12px !important;
+    font-weight: 700 !important;
+    letter-spacing: 1.5px !important;
+    line-height: 1.7 !important;
+    text-align: center !important;
+    box-sizing: border-box !important;
+}
+
+/* SAME MAIN HEADING */
+.upper-section:not(.tree-view-active) .hero h1 {
+    grid-column: 1 / -1 !important;
+    font-size: clamp(30px, 4vw, 42px) !important;
+    font-weight: 800 !important;
+    line-height: 1.6 !important;
+    margin: 0 auto 4px !important;
+    padding: 0 !important;
+    text-align: center !important;
+}
+
+/* SAME DESCRIPTION */
+.upper-section:not(.tree-view-active) .hero-description {
+    grid-column: 1 / -1 !important;
+    max-width: 650px !important;
+    margin: 0 auto 7px !important;
+    padding: 2px 4px !important;
+    color: #f2f5ef !important;
+    font-size: 16px !important;
+    font-weight: 400 !important;
+    line-height: 1.8 !important;
+    text-align: center !important;
+    box-sizing: border-box !important;
+}
+
+/* SAME THREE BUTTONS */
+.upper-section:not(.tree-view-active) .hero-button {
+    grid-column: auto !important;
+    width: 100% !important;
+    min-width: 0 !important;
+    max-width: none !important;
+    min-height: 48px !important;
+    margin: 0 !important;
+    padding: 7px 4px !important;
+    font-size: 13px !important;
+    line-height: 1.7 !important;
+    text-align: center !important;
+    white-space: normal !important;
+    box-sizing: border-box !important;
+}
+
+/* SAME STATISTICS ROW */
+.upper-section:not(.tree-view-active) .home-stats {
+    grid-column: 1 / -1 !important;
+    display: grid !important;
+    grid-template-columns: repeat(3, minmax(0, 1fr)) !important;
+    direction: ltr !important;
+    width: min(680px, 94%) !important;
+    gap: 7px !important;
+    margin: 7px auto 0 !important;
+    box-sizing: border-box !important;
+}
+
+.upper-section:not(.tree-view-active) .stat-card {
+    min-width: 0 !important;
+    min-height: 60px !important;
+    display: flex !important;
+    flex-direction: column !important;
+    align-items: center !important;
+    justify-content: center !important;
+    padding: 5px 3px !important;
+    border: 1px solid rgba(245,217,139,0.75) !important;
+    border-radius: 15px !important;
+    background: linear-gradient(
+        145deg,
+        rgba(255,255,255,0.19),
+        rgba(255,255,255,0.06)
+    ) !important;
+    box-shadow: 0 5px 18px rgba(0,0,0,0.18) !important;
+    text-align: center !important;
+    box-sizing: border-box !important;
+}
+
+.upper-section:not(.tree-view-active) .stat-icon {
+    width: 22px !important;
+    height: 22px !important;
+    margin: 0 auto 3px !important;
+}
+
+.upper-section:not(.tree-view-active) .stat-card strong,
+.upper-section:not(.tree-view-active) .stat-card h3 {
+    font-size: 20px !important;
+    line-height: 1.3 !important;
+    margin: 0 0 2px !important;
+}
+
+.upper-section:not(.tree-view-active) .stat-card span,
+.upper-section:not(.tree-view-active) .stat-card p {
+    font-size: 10px !important;
+    line-height: 1.6 !important;
+    margin: 0 !important;
+}
+
+/* SAME TOP NAVIGATION POSITIONS */
+.upper-section:not(.tree-view-active) .dashboard-toggle {
+    left: 22px !important;
+    right: auto !important;
+}
+
+.upper-section:not(.tree-view-active) .top-nav-icons {
+    left: auto !important;
+    right: 18px !important;
+}
+
+/* KEEP URDU FONT AND RIGHT-TO-LEFT TEXT */
+html[lang="ur"] body {
+    font-family: 'Noto Nastaliq Urdu', serif !important;
+}
+
+html[lang="ur"] .upper-section:not(.tree-view-active) .hero-label,
+html[lang="ur"] .upper-section:not(.tree-view-active) .hero h1,
+html[lang="ur"] .upper-section:not(.tree-view-active) .hero-description,
+html[lang="ur"] .upper-section:not(.tree-view-active) .hero-button,
+html[lang="ur"] .upper-section:not(.tree-view-active) .stat-card {
+    direction: rtl !important;
+    letter-spacing: 0 !important;
+}
+
+/* SAME MOBILE DESIGN */
+@media (max-width: 600px) {
+    .upper-section:not(.tree-view-active) .hero {
+        padding: 42px 10px 8px !important;
+    }
+
+    .upper-section:not(.tree-view-active) .hero-content {
+        gap: 4px !important;
+    }
+
+    .upper-section:not(.tree-view-active) .hero-logo {
+        width: 110px !important;
+        height: 110px !important;
+    }
+
+    .upper-section:not(.tree-view-active) .hero-label {
+        font-size: 10px !important;
+        padding: 4px 8px !important;
+    }
+
+    .upper-section:not(.tree-view-active) .hero h1 {
+        font-size: 32px !important;
+    }
+
+    .upper-section:not(.tree-view-active) .hero-description {
+        font-size: 14px !important;
+        line-height: 1.8 !important;
+    }
+
+    .upper-section:not(.tree-view-active) .hero-button {
+        min-height: 46px !important;
+        padding: 6px 3px !important;
+        font-size: 11px !important;
+    }
+
+    .upper-section:not(.tree-view-active) .home-stats {
+        width: 96% !important;
+        gap: 5px !important;
+    }
+
+    .upper-section:not(.tree-view-active) .stat-card {
+        min-height: 60px !important;
+        padding: 4px 2px !important;
+    }
+
+    .upper-section:not(.tree-view-active) .stat-card strong,
+    .upper-section:not(.tree-view-active) .stat-card h3 {
+        font-size: 18px !important;
+    }
+
+    .upper-section:not(.tree-view-active) .stat-card span,
+    .upper-section:not(.tree-view-active) .stat-card p {
+        font-size: 9px !important;
+    }
+
+    .upper-section:not(.tree-view-active) .dashboard-toggle {
+        left: 10px !important;
+        right: auto !important;
+    }
+
+    .upper-section:not(.tree-view-active) .top-nav-icons {
+        right: 10px !important;
+        left: auto !important;
+    }
+} 
 </style>
 </head>
 
