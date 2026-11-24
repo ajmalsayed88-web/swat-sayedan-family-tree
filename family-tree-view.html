@@ -566,61 +566,6 @@ async function renderChildren(parent,host,nextPathMember,nextPathIndex) {
     }
 }
 
-function addExpandButton(member,host) {
-  const button = document.createElement("button");
-  button.className = "branch-button";
-  button.textContent = "＋ Show family";
-
-  const childArea = document.createElement("div");
-  childArea.className = "branch-children";
-
-  button.onclick = async () => {
-    const key = String(member.id);
-
-    if (expandedBranches.has(key)) {
-      expandedBranches.delete(key);
-      childArea.innerHTML = "";
-      button.textContent = "＋ Show family";
-      return;
-    }
-
-    button.disabled = true;
-    button.textContent = "Loading...";
-
-    try {
-      const children = await getChildren(member.id);
-
-      if (!children.length) {
-        button.textContent = "No children recorded";
-        button.disabled = true;
-        return;
-      }
-
-      expandedBranches.add(key);
-      childArea.innerHTML = "";
-
-      const row = document.createElement("div");
-      row.className = "children-row";
-      childArea.appendChild(row);
-
-      for (const child of children) {
-        const childBranch = makeCard(child,false,false);
-        row.appendChild(childBranch);
-        addExpandButton(child,childBranch);
-      }
-
-      button.textContent = "− Hide family";
-    } catch(error) {
-      console.error(error);
-      button.textContent = "Try again";
-    } finally {
-      button.disabled = false;
-    }
-  };
-
-  host.appendChild(button);
-  host.appendChild(childArea);
-}
 </script>
 </body>
 </html>
