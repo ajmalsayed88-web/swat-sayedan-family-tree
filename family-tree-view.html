@@ -553,7 +553,7 @@ async function renderChildren(parent,host,nextPathMember,nextPathIndex) {
 
     if (isPathMember) {
       if (nextPathIndex === currentPath.length - 1) {
-        addExpandButton(child,childBranch);
+        await renderChildren(child,childBranch,null,nextPathIndex);
       } else {
         await renderChildren(
           child,
