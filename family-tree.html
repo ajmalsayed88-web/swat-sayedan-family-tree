@@ -3418,7 +3418,7 @@ function showAdmin(value,owner=false){
 
   document.getElementById("loginBox").classList.toggle("hidden",value);
   document.getElementById("adminBox").classList.toggle("hidden",!value);
-  document.getElementById("addBox").classList.toggle("hidden",!value);
+  document.getElementById("addBox").classList.add("hidden");
   document.getElementById("urduNameManagerSection").classList.toggle("hidden",!value);
 if(value) renderUrduNameManager();
   document.getElementById("dashboardAdminPanel").classList.toggle("hidden",!value);
@@ -4709,6 +4709,7 @@ function cancelEditing(){
  document.getElementById("cancelEdit").classList.add("hidden");
 document.getElementById("cancelEdit").textContent="Cancel Edit";
  loadFatherOptions();
+  document.getElementById("addBox").classList.add("hidden");
 }
 
 async function deleteMember(id){
@@ -4816,9 +4817,14 @@ else if(destination === "branches"){
         .scrollIntoView({behavior:"smooth"});
 }
     else if(destination === "add"){
-        document.getElementById("addBox")
-            .scrollIntoView({behavior:"smooth"});
+    if(!isAdmin){
+        document.getElementById("loginModal").classList.remove("hidden");
+        return;
     }
+
+    document.getElementById("addBox").classList.remove("hidden");
+    document.getElementById("addBox").scrollIntoView({behavior:"smooth"});
+}
 
     else if(destination === "login" ||
             destination === "admin" ||
