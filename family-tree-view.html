@@ -514,14 +514,13 @@ async function renderPerson(member,host,pathIndex) {
   host.appendChild(branch);
 
   if (isSelected) {
-  await renderChildren(member,branch,null,pathIndex);
-  return;
-}
+    await renderChildren(member,branch,null,pathIndex);
+    return;
+  }
 
   const nextMember = currentPath[pathIndex+1];
   await renderChildren(member,branch,nextMember,pathIndex+1);
 }
-
 
 async function renderChildren(parent,host,nextPathMember,nextPathIndex) {
   const children = await getChildren(parent.id);
