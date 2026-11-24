@@ -523,23 +523,51 @@ async function renderPerson(member,host,pathIndex) {
 }
 
 
-if (isPathMember) {
-  if (nextPathIndex === currentPath.length - 1) {
-    await renderChildren(
-      child,
-      childBranch,
-      null,
-      nextPathIndex
-    );
-  } else {
-    await renderChildren(
-      child,
-      childBranch,
-      currentPath[nextPathIndex + 1],
-      nextPathIndex + 1
-    );
+
+async function renderChildren(parent,host,nextPathMember,nextPathIndex) {
+  const children = await getChildren(parent.id);
+
+  if (!children.length) {
+    if (nextPathMember) {
+      const message = document.createElement("div");
+      message.className = "empty-message";
+      message.textContent = "No children are recorded under this ancestor.";
+      host.appendChild(message);
+    }
+    return;
+  }
+
+  const row = document.createElement("div");
+  row.className = "children-row";
+  host.appendChild(row);
+
+  for (const child of children) {
+    const isPathMember = nextPathMember &&
+      String(child.id) === String(nextPathMember.id);
+
+    const isSelected = String(child.id) ===
+      String(currentPath[currentPath.length - 1].id);
+
+    const childBranch = makeCard(child,false,isSelected);
+    row.appendChild(childBranch);
+
+    if (isPathMember) {
+      if (nextPathIndex === currentPath.length - 1) {
+        await renderChildren(child,childBranch,null,nextPathIndex);
+      } else {
+        await renderChildren(
+          child,
+          childBranch,
+          currentPath[nextPathIndex + 1],
+          nextPathIndex + 1
+        );
+      }
+    } else {
+      addExpandButton(child,childBranch);
+    }
   }
 }
+
 function addExpandButton(member,host) {
   const button = document.createElement("button");
   button.className = "branch-button";
