@@ -514,9 +514,9 @@ async function renderPerson(member,host,pathIndex) {
   host.appendChild(branch);
 
   if (isSelected) {
-    addExpandButton(member,branch);
-    return;
-  }
+  await renderChildren(member,branch,null,pathIndex);
+  return;
+}
 
   const nextMember = currentPath[pathIndex+1];
   await renderChildren(member,branch,nextMember,pathIndex+1);
