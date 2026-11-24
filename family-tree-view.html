@@ -466,8 +466,6 @@ async function openFamilyTree(selected) {
 
     if (!result.foundPeerBaba) {
       say("Showing the available ancestral line. This person is not connected to Peer Baba in the recorded family data.");
-    } else {
-      say("Family tree opened. All siblings are shown at each generation.");
     }
 
     const root = document.createElement("div");
