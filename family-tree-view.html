@@ -307,7 +307,35 @@ const db = window.supabase.createClient(SUPABASE_URL,SUPABASE_KEY);
 const statusBox = document.getElementById("status");
 const resultsBox = document.getElementById("results");
 const treeArea = document.getElementById("treeArea");
+let isDragging = false;
+let dragStartX = 0;
+let dragStartY = 0;
+let startScrollLeft = 0;
+let startScrollTop = 0;
 
+treeArea.addEventListener("mousedown", function(e) {
+  if (e.button !== 0) return;
+
+  isDragging = true;
+  dragStartX = e.clientX;
+  dragStartY = e.clientY;
+  startScrollLeft = treeArea.scrollLeft;
+  startScrollTop = treeArea.scrollTop;
+
+  treeArea.style.cursor = "grabbing";
+});
+
+window.addEventListener("mousemove", function(e) {
+  if (!isDragging) return;
+
+  treeArea.scrollLeft = startScrollLeft - (e.clientX - dragStartX);
+  treeArea.scrollTop = startScrollTop - (e.clientY - dragStartY);
+});
+
+window.addEventListener("mouseup", function() {
+  isDragging = false;
+  treeArea.style.cursor = "grab";
+});
 let currentPath = [];
 let childCache = new Map();
 let expandedBranches = new Set();
