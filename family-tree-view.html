@@ -191,11 +191,12 @@ transform:translateX(-50%);
 .children-row::before {
   content:"";
   position:absolute;
-  top:0;
+  top:-2px;
   left:50%;
-  height:19px;
+  height:21px;
   border-left:2px solid var(--green);
   transform:translateX(-50%);
+  z-index:0;
 }
 .children-row::after {
   content:"";
