@@ -138,15 +138,17 @@ overflow-y: auto;
   display:flex;
   flex-direction:column;
   align-items:center;
-  width:220px;
-  min-width:220px;
-  flex:0 0 220px;
+  width:max-content;
+  min-width:0;
+  flex:0 0 auto;
   position:relative;
 }
 .person-card {
-  width:180px;
+  width:fit-content;
+  min-width:130px;
+  max-width:260px;
   min-height:75px;
-  padding:12px 9px;
+  padding:12px 12px;
   border:2px solid var(--green);
   border-radius:12px;
   background:#fff;
@@ -280,9 +282,9 @@ overflow-y: auto;
   .search-row button { width:100%; }
   .person-card { width:200px; }
   .person-branch {
-  width:200px;
-  min-width:200px;
-  flex-basis:200px;
+  width:max-content;
+  min-width:0;
+  flex-basis:auto;
 }
   .children-row { gap:10px; }
 }
