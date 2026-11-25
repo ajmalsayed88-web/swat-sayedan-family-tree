@@ -538,18 +538,46 @@ async function openFamilyTree(selected) {
       say("Showing the available ancestral line. This person is not connected to Peer Baba in the recorded family data.");
     }
 
-    const root = document.createElement("div");
-    root.className = "tree-root";
-    treeArea.appendChild(root);
+    const canvas = document.createElement("div");
+canvas.style.position = "relative";
+canvas.style.width = "100%";
+canvas.style.minHeight = "1px";
+treeArea.appendChild(canvas);
 
-    await renderPerson(currentPath[0],root,0);
+const root = document.createElement("div");
+root.className = "tree-root";
+canvas.appendChild(root);
 
-  } catch(error) {
-    console.error(error);
-    say("Could not build the family tree. Please refresh and try again.");
-  }
-}
+await renderPerson(currentPath[0],root,0);
 
+const branches = [
+  ...root.querySelectorAll(".person-branch")
+];
+
+const rootRect = root.getBoundingClientRect();
+
+const leftmost = Math.min(
+  rootRect.left,
+  ...branches.map(b => b.getBoundingClientRect().left)
+);
+
+const rightmost = Math.max(
+  rootRect.right,
+  ...branches.map(b => b.getBoundingClientRect().right)
+);
+
+const contentLeft =
+  treeArea.getBoundingClientRect().left +
+  treeArea.clientLeft +
+  10;
+
+const shift = contentLeft - leftmost;
+
+root.style.position = "relative";
+root.style.left = shift + "px";
+
+canvas.style.width =
+  (rightmost - leftmost) + "px";
 function makeCard(member,isRoot,isSelected) {
   const branch = document.createElement("div");
   branch.className = "person-branch";
