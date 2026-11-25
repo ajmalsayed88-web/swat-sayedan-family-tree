@@ -4719,6 +4719,70 @@ document.getElementById("cancelEdit").textContent="Cancel Edit";
 }
 
 
+async function loadRecentlyDeleted(){
+ if(!isAdmin)return;
+
+ const box=document.getElementById("recentlyDeletedList");
+ const container=document.getElementById("deletedMembersContainer");
+
+ box.classList.remove("hidden");
+ container.textContent="Loading...";
+
+ const {data,error}=await db.from("family_members")
+  .select("*")
+  .eq("approved",true)
+  .not("deleted_at","is",null)
+  .order("deleted_at",{ascending:false});
+
+ if(error){
+  container.textContent="Error: "+error.message;
+  return;
+ }
+
+ container.innerHTML="";
+
+ if(!data||data.length===0){
+  container.textContent="No deleted members found.";
+  return;
+ }
+
+ data.forEach(member=>{
+  const item=document.createElement("div");
+  item.style.padding="10px";
+  item.style.borderBottom="1px solid #ccc";
+
+  const name=document.createElement("strong");
+  name.textContent=member.name+" ";
+
+  const restore=document.createElement("button");
+  restore.textContent="Restore";
+  restore.onclick=()=>restoreDeletedMember(member.id);
+
+  item.appendChild(name);
+  item.appendChild(restore);
+  container.appendChild(item);
+ });
+}
+
+async function restoreDeletedMember(id){
+ if(!isAdmin)return;
+
+ if(!confirm("Restore this family member?"))return;
+
+ const {error}=await db.from("family_members")
+  .update({deleted_at:null})
+  .eq("id",id);
+
+ if(error){
+  status("Restore failed: "+error.message);
+  return;
+ }
+
+ status("Family member restored successfully.");
+ await loadMembers();
+ await loadRecentlyDeleted();
+}
+
 async function deleteMember(id){
  if(!isAdmin)return;
 
