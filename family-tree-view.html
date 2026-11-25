@@ -578,6 +578,11 @@ root.style.left = shift + "px";
 
 canvas.style.width =
   (rightmost - leftmost) + "px";
+      } catch (error) {
+    console.error(error);
+    say("Unable to build the family tree. Please try again.");
+  }
+}
 function makeCard(member,isRoot,isSelected) {
   const branch = document.createElement("div");
   branch.className = "person-branch";
