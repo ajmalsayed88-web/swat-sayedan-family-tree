@@ -619,37 +619,7 @@ async function renderChildren(parent,host,nextPathMember,nextPathIndex) {
   }
     }
 }
-const treeArea = document.getElementById("treeArea");
 
-let isDragging = false;
-let startX = 0;
-let scrollLeft = 0;
-
-treeArea.addEventListener("mousedown", function(e) {
-  isDragging = true;
-  startX = e.pageX;
-  scrollLeft = treeArea.scrollLeft;
-  treeArea.style.cursor = "grabbing";
-});
-
-treeArea.addEventListener("mouseup", function() {
-  isDragging = false;
-  treeArea.style.cursor = "grab";
-});
-
-treeArea.addEventListener("mouseleave", function() {
-  isDragging = false;
-  treeArea.style.cursor = "grab";
-});
-
-treeArea.addEventListener("mousemove", function(e) {
-  if (!isDragging) return;
-  e.preventDefault();
-  const walk = e.pageX - startX;
-  treeArea.scrollLeft = scrollLeft - walk;
-});
-
-treeArea.style.cursor = "grab";
 </script>
 </body>
 </html>
