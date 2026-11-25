@@ -333,28 +333,38 @@ const treeArea = document.getElementById("treeArea");
 }, { passive: false });
 let isDragging = false;
 let dragStartX = 0;
-let dragStartY = 0;
 let startScrollLeft = 0;
-let startScrollTop = 0;
 
-treeArea.addEventListener("mousedown", function(e) {
+treeArea.addEventListener("pointerdown", function(e) {
   if (e.button !== 0) return;
 
   isDragging = true;
   dragStartX = e.clientX;
-  dragStartY = e.clientY;
   startScrollLeft = treeArea.scrollLeft;
-  startScrollTop = treeArea.scrollTop;
 
+  treeArea.setPointerCapture(e.pointerId);
   treeArea.style.cursor = "grabbing";
+  e.preventDefault();
 });
 
-window.addEventListener("mousemove", function(e) {
+treeArea.addEventListener("pointermove", function(e) {
   if (!isDragging) return;
 
-  treeArea.scrollLeft = startScrollLeft - (e.clientX - dragStartX);
-  treeArea.scrollTop = startScrollTop - (e.clientY - dragStartY);
+  treeArea.scrollLeft =
+    startScrollLeft - (e.clientX - dragStartX);
 });
+
+treeArea.addEventListener("pointerup", function() {
+  isDragging = false;
+  treeArea.style.cursor = "grab";
+});
+
+treeArea.addEventListener("pointercancel", function() {
+  isDragging = false;
+  treeArea.style.cursor = "grab";
+});
+
+treeArea.style.cursor = "grab";
 
 window.addEventListener("mouseup", function() {
   isDragging = false;
