@@ -3373,8 +3373,7 @@ if (currentLanguage === "ur") {
 
 async function loadMembers(){
  const {data,error}=await db.from("family_members")
- .select("*").eq("approved",true).order("name");
-
+ .select("*").eq("approved",true).is("deleted_at",null).order("name");
  if(error){
   status("Database error: "+error.message);
   return;
