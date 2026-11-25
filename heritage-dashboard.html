@@ -1,0 +1,342 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Manglor Sayedan | Heritage Dashboard</title>
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;0,600;0,700;1,600&family=Playfair+Display:wght@600;700;800&display=swap" rel="stylesheet">
+
+<style>
+* {
+    box-sizing: border-box;
+}
+
+body {
+    margin: 0;
+    min-height: 100vh;
+    font-family: Arial, sans-serif;
+    color: #fff;
+    background: #082f23;
+}
+
+.heritage-page {
+    min-height: 100vh;
+    background:
+        linear-gradient(rgba(4,35,25,.68), rgba(4,35,25,.88)),
+        linear-gradient(135deg, #163f30, #071f19);
+    padding: 25px;
+}
+
+.heritage-header {
+    text-align: center;
+    max-width: 1100px;
+    margin: auto;
+    padding: 45px 15px 30px;
+}
+
+.heritage-title {
+    color: #f0d38a;
+    font-family: "Playfair Display", serif;
+    font-size: clamp(36px, 6vw, 66px);
+    letter-spacing: 3px;
+    margin: 15px 0;
+}
+
+.heritage-subtitle {
+    color: #e8dfc8;
+    font-family: "Cormorant Garamond", serif;
+    font-size: 23px;
+    letter-spacing: 2px;
+}
+
+.open-heritage {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 18px;
+    margin: 30px auto;
+    padding: 17px 25px;
+    min-width: 310px;
+    border: 2px solid #d8b65d;
+    border-radius: 14px;
+    background: linear-gradient(145deg, #164a36, #092d21);
+    color: #f1d58d;
+    font-family: "Cormorant Garamond", serif;
+    font-size: 25px;
+    font-style: italic;
+    font-weight: 700;
+    box-shadow: 0 0 22px #d8b65d35;
+    cursor: pointer;
+}
+
+.crown-icon {
+    width: 30px;
+    height: 30px;
+    fill: #e4c36d;
+}
+
+.arrow-circle {
+    width: 35px;
+    height: 35px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    border: 2px solid #e4c36d;
+    border-radius: 50%;
+    color: #f1d58d;
+    font-family: Arial, sans-serif;
+    font-style: normal;
+    font-size: 23px;
+}
+
+.heritage-stats {
+    max-width: 850px;
+    margin: 25px auto 45px;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 15px;
+}
+
+.heritage-stat {
+    padding: 20px 10px;
+    text-align: center;
+    background: #ffffff12;
+    border: 1px solid #c9a44c;
+    border-radius: 12px;
+}
+
+.heritage-stat strong {
+    display: block;
+    color: #f1d58d;
+    font-family: "Playfair Display", serif;
+    font-size: 30px;
+}
+
+.heritage-stat span {
+    display: block;
+    margin-top: 7px;
+    color: #eee8d9;
+    font-size: 13px;
+}
+
+.heritage-menu {
+    max-width: 850px;
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 18px;
+}
+
+.heritage-card {
+    min-height: 125px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 15px;
+    padding: 20px;
+    border: 1px solid #d9b65d;
+    border-radius: 12px;
+    background: linear-gradient(145deg, #d8b65d, #a98235);
+    color: #123727;
+    text-decoration: none;
+    font-family: "Playfair Display", serif;
+    font-size: 20px;
+    font-weight: 700;
+    text-align: center;
+    box-shadow: 0 7px 18px #0004;
+    transition: .25s ease;
+}
+
+.heritage-card:hover {
+    transform: translateY(-5px);
+    background: linear-gradient(145deg, #f0d58a, #c9a44c);
+}
+
+.menu-icon {
+    width: 38px;
+    height: 38px;
+    flex: 0 0 38px;
+    fill: none;
+    stroke: #123727;
+    stroke-width: 1.7;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+}
+
+.welcome-section {
+    max-width: 950px;
+    margin: 55px auto 10px;
+    padding: 35px 20px;
+    text-align: center;
+    color: #284536;
+    background: #f1e8d2;
+    border: 2px solid #c9a44c;
+    border-radius: 12px;
+}
+
+.welcome-section h2 {
+    margin-top: 0;
+    color: #145c3b;
+    font-family: "Playfair Display", serif;
+    font-size: 30px;
+}
+
+.welcome-section p {
+    max-width: 700px;
+    margin: auto;
+    line-height: 1.8;
+}
+
+@media(max-width:600px) {
+    .heritage-page {
+        padding: 12px;
+    }
+
+    .heritage-header {
+        padding-top: 35px;
+    }
+
+    .heritage-subtitle {
+        font-size: 18px;
+    }
+
+    .open-heritage {
+        min-width: 0;
+        width: 100%;
+        gap: 10px;
+        font-size: 21px;
+        padding: 14px 10px;
+    }
+
+    .heritage-stats {
+        gap: 7px;
+    }
+
+    .heritage-stat {
+        padding: 15px 5px;
+    }
+
+    .heritage-stat strong {
+        font-size: 23px;
+    }
+
+    .heritage-stat span {
+        font-size: 10px;
+    }
+
+    .heritage-menu {
+        gap: 10px;
+    }
+
+    .heritage-card {
+        min-height: 115px;
+        flex-direction: column;
+        gap: 8px;
+        padding: 12px 6px;
+        font-size: 14px;
+    }
+
+    .menu-icon {
+        width: 32px;
+        height: 32px;
+    }
+}
+</style>
+</head>
+
+<body>
+
+<main class="heritage-page">
+
+    <header class="heritage-header">
+        <h1 class="heritage-title">MANGLOR SAYEDAN</h1>
+        <p class="heritage-subtitle">
+            OUR HERITAGE • OUR ROOTS • OUR FAMILY
+        </p>
+
+        <button class="open-heritage" type="button"
+        onclick="document.getElementById('heritageMenu').scrollIntoView({behavior:'smooth'})">
+
+            <svg class="crown-icon" viewBox="0 0 24 24">
+                <path d="M2 7l5 4 5-8 5 8 5-4-2 12H4L2 7z"/>
+                <path d="M5 22h14"/>
+            </svg>
+
+            Open Heritage Dashboard
+
+            <span class="arrow-circle">→</span>
+        </button>
+
+        <section class="heritage-stats">
+            <div class="heritage-stat">
+                <strong>0</strong>
+                <span>Family Members</span>
+            </div>
+            <div class="heritage-stat">
+                <strong>0</strong>
+                <span>Generations</span>
+            </div>
+            <div class="heritage-stat">
+                <strong>0</strong>
+                <span>Family Roots</span>
+            </div>
+        </section>
+    </header>
+
+    <section class="heritage-menu" id="heritageMenu">
+
+        <a class="heritage-card" href="family-tree.html">
+            <svg class="menu-icon" viewBox="0 0 24 24">
+                <circle cx="9" cy="7" r="3"/>
+                <circle cx="17" cy="8" r="2.5"/>
+                <path d="M3 20v-2a6 6 0 0 1 12 0v2H3z"/>
+                <path d="M16 14a5 5 0 0 1 5 5v1h-4"/>
+            </svg>
+            Family Members
+        </a>
+
+        <a class="heritage-card" href="family-tree-view.html">
+            <svg class="menu-icon" viewBox="0 0 24 24">
+                <rect x="9" y="2" width="6" height="5" rx="1"/>
+                <rect x="2" y="17" width="6" height="5" rx="1"/>
+                <rect x="16" y="17" width="6" height="5" rx="1"/>
+                <path d="M12 7v5M5 12h14M5 12v5M19 12v5"/>
+            </svg>
+            Family Tree View
+        </a>
+
+        <a class="heritage-card" href="family-print.html">
+            <svg class="menu-icon" viewBox="0 0 24 24">
+                <circle cx="10.5" cy="10.5" r="6.5"/>
+                <path d="m16 16 5 5"/>
+                <path d="M8 10h5M8 13h3"/>
+            </svg>
+            Family Search & Print
+        </a>
+
+        <a class="heritage-card" href="ancestor-history.html">
+            <svg class="menu-icon" viewBox="0 0 24 24">
+                <path d="M3 5.5A3.5 3.5 0 0 1 6.5 2H12v19H6.5A3.5 3.5 0 0 0 3 24z"/>
+                <path d="M21 5.5A3.5 3.5 0 0 0 17.5 2H12v19h5.5A3.5 3.5 0 0 1 21 24z"/>
+            </svg>
+            Ancestors History
+        </a>
+
+    </section>
+
+    <section class="welcome-section">
+        <h2>Welcome to Our Family Heritage</h2>
+        <p>
+            Discover our roots, honour our ancestors, and preserve
+            the proud heritage of Manglor Sayedan for future generations.
+        </p>
+    </section>
+
+</main>
+
+</body>
+</html>
