@@ -4708,6 +4708,7 @@ document.getElementById("cancelEdit").textContent="Cancel Edit";
   document.getElementById("addBox").classList.add("hidden");
 }
 
+
 async function deleteMember(id){
  if(!isAdmin)return;
 
@@ -4720,9 +4721,11 @@ async function deleteMember(id){
   return;
  }
 
- if(!confirm("Delete "+m.name+"? This cannot be undone."))return;
+ if(!confirm("Move "+m.name+" to Recently Deleted?"))return;
 
- const {error}=await db.from("family_members").delete().eq("id",id);
+ const {error}=await db.from("family_members")
+ .update({deleted_at:new Date().toISOString()})
+ .eq("id",id);
 
  if(error){
   status("Delete failed: "+error.message);
@@ -4730,9 +4733,10 @@ async function deleteMember(id){
  }
 
  expandedIds.delete(String(id));
- status("Member deleted.");
+ status("Member moved to Recently Deleted.");
  await loadMembers();
 }
+
 
 function toggleDashboard(){
  const panel=document.getElementById("dashboardPanel");
