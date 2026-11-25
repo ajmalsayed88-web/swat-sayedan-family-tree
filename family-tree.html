@@ -3431,6 +3431,7 @@ if(value) renderUrduNameManager();
     document.getElementById("dashboardBranchManagement").classList.toggle("hidden",!value);
   document.getElementById("dashboardAddMember").classList.toggle("hidden",!value);
   document.getElementById("dashboardRecentlyDeleted").classList.toggle("hidden",!value);
+  document.getElementById("dashboardRecentlyDeleted").classList.remove("hidden");
   document.getElementById("dashboardManageAdmins").classList.toggle("hidden",!(value&&owner));
 }
 
