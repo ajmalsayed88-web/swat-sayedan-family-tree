@@ -341,39 +341,37 @@ button.secondary{
 button.danger{
  background:#a52b2b;
 }
-.top-login-button{
- position:absolute;
- top:18px;
- right:22px;
- width:auto;
- min-width:110px;
- padding:10px 20px;
- margin:0;
- border:1px solid #e4c36d;
- border-radius:8px;
- background:#c9a44c;
- color:#0b3828;
- font-size:14px;
- font-weight:bold;
- box-shadow:0 3px 10px #0002;
-}
+let isDragging = false;
+let dragStartX = 0;
+let dragStartY = 0;
+let startScrollLeft = 0;
+let startScrollTop = 0;
 
-.top-login-button:hover{
- background:#f0d58b;
- color:#0b3828;
-}
+treeArea.addEventListener("mousedown", function(e) {
+  if (e.button !== 0) return;
 
-.login-modal{
- position:fixed;
- inset:0;
- z-index:9999;
- background:rgba(0,0,0,.65);
- display:flex;
- align-items:center;
- justify-content:center;
- padding:20px;
-}
+  isDragging = true;
+  dragStartX = e.clientX;
+  dragStartY = e.clientY;
+  startScrollLeft = treeArea.scrollLeft;
+  startScrollTop = treeArea.scrollTop;
 
+  treeArea.style.cursor = "grabbing";
+});
+
+window.addEventListener("mousemove", function(e) {
+  if (!isDragging) return;
+
+  treeArea.scrollLeft = startScrollLeft - (e.clientX - dragStartX);
+  treeArea.scrollTop = startScrollTop - (e.clientY - dragStartY);
+});
+
+window.addEventListener("mouseup", function() {
+  isDragging = false;
+  treeArea.style.cursor = "grab";
+});
+
+treeArea.style.cursor = "grab";
 .login-modal.hidden{
  display:none;
 }
