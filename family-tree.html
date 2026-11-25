@@ -4690,6 +4690,8 @@ function editMember(id){
  document.getElementById("father").value=m.father_id||"";
 
  document.getElementById("formTitle").textContent="Edit Family Member";
+  document.getElementById("cancelEdit").classList.remove("hidden");
+document.getElementById("addBox").scrollIntoView({behavior:"smooth"});
  document.getElementById("cancelEdit").classList.remove("hidden");
  document.getElementById("addBox").scrollIntoView({behavior:"smooth"});
 }
