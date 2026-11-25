@@ -578,6 +578,19 @@ root.style.left = shift + "px";
 
 canvas.style.width =
   (rightmost - leftmost) + "px";
+    const selectedCard = root.querySelector(
+  ".person-card.selected"
+);
+
+if (selectedCard) {
+  const selectedRect =
+    selectedCard.getBoundingClientRect();
+
+  treeArea.scrollLeft +=
+    selectedRect.left -
+    treeArea.getBoundingClientRect().left -
+    (treeArea.clientWidth - selectedRect.width) / 2;
+}
       } catch (error) {
     console.error(error);
     say("Unable to build the family tree. Please try again.");
