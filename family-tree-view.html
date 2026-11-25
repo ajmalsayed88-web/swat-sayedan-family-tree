@@ -323,6 +323,8 @@ const db = window.supabase.createClient(SUPABASE_URL,SUPABASE_KEY);
 const statusBox = document.getElementById("status");
 const resultsBox = document.getElementById("results");
 const treeArea = document.getElementById("treeArea");
+  let treeCanvas = null;
+let currentZoom = 1;
   treeArea.addEventListener("wheel", function(e) {
   e.preventDefault();
   treeArea.scrollTop += e.deltaY;
