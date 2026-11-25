@@ -2678,14 +2678,19 @@ onclick="window.location.href='family-print.html'">
  <button id="dashboardAddMember" class="dashboard-item hidden"
   onclick="dashboardGo('add')">Add Family Member</button>
 <button id="dashboardRecentlyDeleted" class="dashboard-item hidden"
-  <div id="recentlyDeletedList" class="hidden"
+  
+<button id="dashboardRecentlyDeleted" class="dashboard-item hidden"
+ onclick="loadRecentlyDeleted()">Recently Deleted</button>
+
+<div id="recentlyDeletedList" class="hidden"
  style="padding:10px;color:inherit;">
  <strong>Recently Deleted Members</strong>
  <div id="deletedMembersContainer"></div>
 </div>
- onclick="loadRecentlyDeleted()">Recently Deleted</button>
- <button id="dashboardManageAdmins" class="dashboard-item hidden"
-  onclick="dashboardGo('manage')">Manage Administrators</button>
+
+<button id="dashboardManageAdmins" class="dashboard-item hidden"
+ onclick="dashboardGo('manage')">Manage Administrators</button>
+
 
 </nav>
 
