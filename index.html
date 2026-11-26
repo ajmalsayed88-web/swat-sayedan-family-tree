@@ -5915,6 +5915,24 @@ async function restoreMember(id){
  await loadMembers();
  await loadDeletedMembers();
 }
+  function toggleDashboard(){
+ const panel=document.getElementById("dashboardPanel");
+ const backdrop=document.getElementById("dashboardBackdrop");
+
+ const isOpen=panel.classList.toggle("open");
+ backdrop.classList.toggle("hidden",!isOpen);
+
+ document.querySelector(".dashboard-toggle")
+  .setAttribute("aria-expanded",String(isOpen));
+}
+
+function closeDashboard(){
+ document.getElementById("dashboardPanel").classList.remove("open");
+ document.getElementById("dashboardBackdrop").classList.add("hidden");
+
+ document.querySelector(".dashboard-toggle")
+  .setAttribute("aria-expanded","false");
+}
  async function start(){
  if(SUPABASE_URL.includes("PASTE_")||SUPABASE_KEY.includes("PASTE_")){
   status("Please add your Supabase Project URL and Publishable key in the code.");
