@@ -5932,6 +5932,40 @@ async function restoreMember(id){
  await loadMembers();
  await loadDeletedMembers();
 }
+  function dashboardGo(page){
+ closeDashboard();
+
+ if(page==="home"){
+  document.getElementById("familyTreeSection").classList.add("hidden");
+  document.getElementById("branchManagementSection").classList.add("hidden");
+  document.getElementById("loginModal").classList.add("hidden");
+  document.querySelector(".upper-section").classList.remove("tree-view-active");
+ }
+
+ if(page==="tree"){
+  showFamilyTree();
+ }
+
+ if(page==="search"){
+  showFamilyTree();
+  setTimeout(()=>{
+   document.getElementById("searchInput").focus();
+  },400);
+ }
+
+ if(page==="login" || page==="admin" || page==="manage"){
+  document.getElementById("loginModal").classList.remove("hidden");
+ }
+
+ if(page==="branches"){
+  document.getElementById("branchManagementSection").classList.remove("hidden");
+ }
+
+ if(page==="add"){
+  document.getElementById("addBox").classList.remove("hidden");
+  document.getElementById("addBox").scrollIntoView({behavior:"smooth"});
+ }
+}
   function toggleDashboard(){
  const panel=document.getElementById("dashboardPanel");
  const backdrop=document.getElementById("dashboardBackdrop");
