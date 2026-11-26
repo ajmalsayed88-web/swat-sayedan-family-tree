@@ -5861,7 +5861,7 @@ async function deleteMember(id){
 
  if(!confirm("Delete "+m.name+"? This cannot be undone."))return;
 
- const {error}=await db.from("family_members").delete().eq("id",id);
+ const {error}=await db.from("family_members").update({deleted_at:new Date().toISOString()}).eq("id",id);
 
  if(error){
   status("Delete failed: "+error.message);
