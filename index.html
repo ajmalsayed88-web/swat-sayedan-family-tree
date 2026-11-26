@@ -5897,7 +5897,24 @@ async function loadDeletedMembers(){
   list.appendChild(row);
  });
 }
+async function restoreMember(id){
+ if(!isAdmin)return;
 
+ if(!confirm("Restore this family member?"))return;
+
+ const {error}=await db.from("family_members")
+  .update({deleted_at:null})
+  .eq("id",id);
+
+ if(error){
+  status("Restore failed: "+error.message);
+  return;
+ }
+
+ status("Family member restored.");
+ await loadMembers();
+ await loadDeletedMembers();
+}
  async function start(){
  if(SUPABASE_URL.includes("PASTE_")||SUPABASE_KEY.includes("PASTE_")){
   status("Please add your Supabase Project URL and Publishable key in the code.");
