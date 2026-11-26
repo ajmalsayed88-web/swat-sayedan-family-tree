@@ -5854,7 +5854,24 @@ function cancelEditing(){
 document.getElementById("cancelEdit").textContent="Cancel Edit";
  loadFatherOptions();
 }
+async function deleteMember(id){
+ if(!isAdmin)return;
 
+ if(!confirm("Are you sure you want to delete this family member?"))return;
+
+ const {error}=await db.from("family_members")
+  .update({deleted_at:new Date().toISOString()})
+  .eq("id",id);
+
+ if(error){
+  status("Delete failed: "+error.message);
+  return;
+ }
+
+ status("Family member moved to Deleted Family Members.");
+ await loadMembers();
+ await loadDeletedMembers();
+}
 async function loadDeletedMembers(){
  if(!isAdmin)return;
 
