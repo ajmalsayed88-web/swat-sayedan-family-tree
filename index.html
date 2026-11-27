@@ -3770,20 +3770,48 @@ html[lang="ur"] .upper-section:not(.tree-view-active) .stat-card {
         gap:6px;
     }
 }
-  /* ROYAL EMERALD GREEN BUTTONS */
+  /* 3D ROYAL EMERALD BUTTONS */
 .upper-section:not(.tree-view-active) .hero-buttons-left .premium-arrow {
-    background: linear-gradient(135deg, #075E46, #087A59, #064B3A) !important;
+    background: linear-gradient(
+        145deg,
+        #16A879 0%,
+        #087A55 45%,
+        #034832 100%
+    ) !important;
+
     color: #FFFFFF !important;
-    border: 1px solid #15966C !important;
-    box-shadow: 0 4px 12px rgba(0, 65, 45, 0.28) !important;
+    border: 1px solid #35C995 !important;
+    border-radius: 12px !important;
+
+    box-shadow:
+        inset 0 2px 3px rgba(255,255,255,0.30),
+        inset 0 -4px 5px rgba(0,0,0,0.22),
+        0 5px 0 #023D2C,
+        0 8px 14px rgba(0,40,25,0.35) !important;
+
+    transform: translateY(0);
+    transition: all 0.2s ease !important;
 }
 
-.upper-section:not(.tree-view-active) .hero-buttons-left .premium-arrow .premium-icon {
-    color: #FFFFFF !important;
-}
-
+.upper-section:not(.tree-view-active) .hero-buttons-left .premium-arrow .premium-icon,
 .upper-section:not(.tree-view-active) .hero-buttons-left .premium-arrow .arrow-tip {
     color: #FFFFFF !important;
+}
+
+.upper-section:not(.tree-view-active) .hero-buttons-left .premium-arrow:hover {
+    transform: translateY(-3px) !important;
+    box-shadow:
+        inset 0 2px 3px rgba(255,255,255,0.35),
+        inset 0 -4px 5px rgba(0,0,0,0.20),
+        0 8px 0 #023D2C,
+        0 12px 18px rgba(0,40,25,0.40) !important;
+}
+
+.upper-section:not(.tree-view-active) .hero-buttons-left .premium-arrow:active {
+    transform: translateY(3px) !important;
+    box-shadow:
+        inset 0 3px 5px rgba(0,0,0,0.25),
+        0 2px 0 #023D2C !important;
 }
 </style>
 </head>
