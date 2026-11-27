@@ -3732,6 +3732,18 @@ html[lang="ur"] .upper-section:not(.tree-view-active) .stat-card {
   margin:8px auto !important;
   flex:0 0 auto !important;
 }
+  /* FORCE ALL FOUR HOMEPAGE BUTTONS INTO ONE COLUMN */
+.upper-section:not(.tree-view-active) .hero-content{
+    grid-template-columns: minmax(0, 310px) !important;
+    justify-content: center !important;
+}
+
+.upper-section:not(.tree-view-active) .hero-content > .premium-arrow{
+    grid-column: 1 !important;
+    width: 100% !important;
+    max-width: 310px !important;
+    margin: 5px auto !important;
+}
 </style>
 </head>
 
