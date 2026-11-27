@@ -1991,7 +1991,20 @@ html[lang="ur"] .dashboard-toggle {
     right: 22px;
     font-family: inherit;
 }
+/* URDU HOMEPAGE BUTTONS BELOW DASHBOARD ON RIGHT */
+html[lang="ur"] .upper-section:not(.tree-view-active) .hero-buttons-left {
+    left: auto !important;
+    right: 22px !important;
+    direction: rtl !important;
+    align-items: stretch !important;
+}
 
+@media(max-width:600px) {
+    html[lang="ur"] .upper-section:not(.tree-view-active) .hero-buttons-left {
+        left: auto !important;
+        right: 10px !important;
+    }
+}
 html[lang="ur"] .dashboard-panel {
     left: auto;
     right: 0;
