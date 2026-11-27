@@ -3744,6 +3744,32 @@ html[lang="ur"] .upper-section:not(.tree-view-active) .stat-card {
     max-width: 310px !important;
     margin: 5px auto !important;
 }
+  /* FOUR HOMEPAGE BUTTONS BELOW DASHBOARD ON LEFT */
+.upper-section:not(.tree-view-active) .hero-buttons-left{
+    position:absolute;
+    top:72px;
+    left:22px;
+    width:250px;
+    display:flex;
+    flex-direction:column;
+    gap:8px;
+    z-index:20;
+}
+
+.upper-section:not(.tree-view-active) .hero-buttons-left .premium-arrow{
+    width:100% !important;
+    max-width:250px !important;
+    margin:0 !important;
+}
+
+@media(max-width:600px){
+    .upper-section:not(.tree-view-active) .hero-buttons-left{
+        top:65px;
+        left:10px;
+        width:185px;
+        gap:6px;
+    }
+}
 </style>
 </head>
 
@@ -3792,7 +3818,7 @@ class="hero-logo">
   <p class="hero-description">
   Discover our roots, honour our ancestors, and preserve the proud heritage of Manglor Sayedan for future generations.
   </p>
- 
+ <div class="hero-buttons-left">
 <button class="hero-button premium-arrow" type="button"
 onclick="window.location.href='family-tree.html'">
   <svg class="premium-icon" viewBox="0 0 32 32" fill="none" aria-hidden="true">
@@ -3834,7 +3860,7 @@ onclick="window.location.href='ancestor-history.html'">
   <span class="lang-ur">آباؤ اجداد کی تاریخ</span>
   <span class="arrow-tip">›</span>
 </button>
-
+</div>
   
 <div class="home-stats">
 
