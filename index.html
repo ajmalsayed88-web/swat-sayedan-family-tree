@@ -3746,11 +3746,15 @@ html[lang="ur"] .upper-section:not(.tree-view-active) .stat-card {
 }
 
 .upper-section:not(.tree-view-active) .hero-buttons-left .premium-arrow{
+    display:flex !important;
+    visibility:visible !important;
+    opacity:1 !important;
     width:100% !important;
     max-width:250px !important;
+    min-height:48px !important;
     margin:0 !important;
+    flex-shrink:0 !important;
 }
-
 @media(max-width:600px){
     .upper-section:not(.tree-view-active) .hero-buttons-left{
         top:65px;
