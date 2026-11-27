@@ -3669,6 +3669,64 @@ html[lang="ur"] .upper-section:not(.tree-view-active) .stat-card {
     font-size: 14px !important;
     line-height: 1.2 !important;
 }
+  
+/* ROYAL EMERALD PREMIUM ARROW BUTTONS */
+.hero-content .premium-arrow{
+  display:flex !important;
+  align-items:center;
+  justify-content:flex-start;
+  gap:13px;
+  position:relative;
+  width:min(310px,90%) !important;
+  min-width:0 !important;
+  min-height:49px;
+  padding:9px 22px 9px 13px !important;
+  margin:8px auto !important;
+  box-sizing:border-box;
+  border:1px solid #d9bb72;
+  border-left:4px solid #e5c77d;
+  border-radius:7px 0 0 7px;
+  background:linear-gradient(110deg,#0b3023,#20563d 65%,#123b2a);
+  color:#f7e5b4;
+  font-size:14px;
+  font-weight:700;
+  letter-spacing:.25px;
+  text-align:left;
+  box-shadow:0 5px 13px #0004,
+             inset 0 1px 0 #ffffff20;
+  clip-path:polygon(0 0,91% 0,100% 50%,91% 100%,0 100%);
+  transition:transform .3s ease,filter .3s ease;
+}
+
+.hero-content .premium-arrow:hover{
+  background:linear-gradient(110deg,#174b34,#286b49,#17432f);
+  transform:perspective(500px) rotateY(-6deg) translateX(4px);
+  filter:drop-shadow(0 5px 7px #0006);
+}
+
+.hero-content .premium-arrow:active{
+  transform:perspective(500px) rotateY(10deg) scale(.97);
+}
+
+.premium-icon{
+  width:27px;
+  height:27px;
+  flex-shrink:0;
+  filter:drop-shadow(0 1px 3px #d8b45b80);
+}
+
+.premium-arrow .arrow-tip{
+  margin-left:auto;
+  color:#f5d98b;
+  font-size:27px;
+  line-height:1;
+  font-weight:400;
+}
+
+.premium-arrow .lang-ur{
+  font-family:Arial,sans-serif;
+}
+
 </style>
 </head>
 
@@ -3717,22 +3775,49 @@ class="hero-logo">
   <p class="hero-description">
   Discover our roots, honour our ancestors, and preserve the proud heritage of Manglor Sayedan for future generations.
   </p>
- <button class="hero-button" onclick="window.location.href='family-tree.html'">
-    Explore Family Tree →
+ 
+<button class="hero-button premium-arrow" type="button"
+onclick="window.location.href='family-tree.html'">
+  <svg class="premium-icon" viewBox="0 0 32 32" fill="none" aria-hidden="true">
+    <defs><linearGradient id="gold1" x2="1" y2="1"><stop stop-color="#FFF1B5"/><stop offset=".5" stop-color="#C69A43"/><stop offset="1" stop-color="#FFE6A0"/></linearGradient></defs>
+    <circle cx="12" cy="10" r="5" stroke="url(#gold1)" stroke-width="2"/>
+    <path d="M3 27c0-6 4-9 9-9s9 3 9 9M22 7a5 5 0 0 1 0 9M24 19c3 1 5 4 5 8" stroke="url(#gold1)" stroke-width="2" stroke-linecap="round"/>
+  </svg>
+  <span>Explore Family Tree</span>
+  <span class="arrow-tip">›</span>
 </button>
-<button class="hero-button" type="button"
+
+<button class="hero-button premium-arrow" type="button"
 onclick="window.location.href='family-tree-view.html'">
-    Family Tree View →
+  <svg class="premium-icon" viewBox="0 0 32 32" fill="none" aria-hidden="true">
+    <defs><linearGradient id="gold2" x2="1" y2="1"><stop stop-color="#FFF1B5"/><stop offset=".5" stop-color="#C69A43"/><stop offset="1" stop-color="#FFE6A0"/></linearGradient></defs>
+    <path d="M16 27V7M16 13 7 5M16 13l9-8M7 5v7M25 5v7M16 20l-7-6M16 20l7-6M9 14v6M23 14v6" stroke="url(#gold2)" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/>
+  </svg>
+  <span>Family Tree View</span>
+  <span class="arrow-tip">›</span>
 </button>
-<button class="hero-button" type="button"
+
+<button class="hero-button premium-arrow" type="button"
 onclick="window.location.href='family-print.html'">
-    Family Search & Print →
+  <svg class="premium-icon" viewBox="0 0 32 32" fill="none" aria-hidden="true">
+    <defs><linearGradient id="gold3" x2="1" y2="1"><stop stop-color="#FFF1B5"/><stop offset=".5" stop-color="#C69A43"/><stop offset="1" stop-color="#FFE6A0"/></linearGradient></defs>
+    <path d="M8 4h12l5 5v19H8zM20 4v6h5M12 15h9M12 19h9M12 23h6" stroke="url(#gold3)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+  </svg>
+  <span>Family Search & Print</span>
+  <span class="arrow-tip">›</span>
 </button>
-<button class="hero-button history-button" type="button"
+
+<button class="hero-button history-button premium-arrow" type="button"
 onclick="window.location.href='ancestor-history.html'">
-    <span class="lang-en">Ancestors History →</span>
-    <span class="lang-ur">آباؤ اجداد کی تاریخ ←</span>
+  <svg class="premium-icon" viewBox="0 0 32 32" fill="none" aria-hidden="true">
+    <defs><linearGradient id="gold4" x2="1" y2="1"><stop stop-color="#FFF1B5"/><stop offset=".5" stop-color="#C69A43"/><stop offset="1" stop-color="#FFE6A0"/></linearGradient></defs>
+    <path d="M4 12h24M6 12v14M12 12v14M20 12v14M26 12v14M3 27h26M4 10 16 4l12 6z" stroke="url(#gold4)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+  </svg>
+  <span class="lang-en">Ancestors History</span>
+  <span class="lang-ur">آباؤ اجداد کی تاریخ</span>
+  <span class="arrow-tip">›</span>
 </button>
+
   
 <div class="home-stats">
 
